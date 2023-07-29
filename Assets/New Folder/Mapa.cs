@@ -53,6 +53,15 @@ public partial class @Mapa: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""gancho"",
+                    ""type"": ""Button"",
+                    ""id"": ""2abb9968-c5e4-4e92-8820-1a4d1d167d9d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -110,6 +119,17 @@ public partial class @Mapa: IInputActionCollection2, IDisposable
                     ""action"": ""Atacar"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c06e6e92-6f54-46a9-8fda-df4243ce296c"",
+                    ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""gancho"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -121,6 +141,7 @@ public partial class @Mapa: IInputActionCollection2, IDisposable
         m_Player_Movimiento = m_Player.FindAction("Movimiento", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Atacar = m_Player.FindAction("Atacar", throwIfNotFound: true);
+        m_Player_gancho = m_Player.FindAction("gancho", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -185,6 +206,7 @@ public partial class @Mapa: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movimiento;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Atacar;
+    private readonly InputAction m_Player_gancho;
     public struct PlayerActions
     {
         private @Mapa m_Wrapper;
@@ -192,6 +214,7 @@ public partial class @Mapa: IInputActionCollection2, IDisposable
         public InputAction @Movimiento => m_Wrapper.m_Player_Movimiento;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Atacar => m_Wrapper.m_Player_Atacar;
+        public InputAction @gancho => m_Wrapper.m_Player_gancho;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -210,6 +233,9 @@ public partial class @Mapa: IInputActionCollection2, IDisposable
             @Atacar.started += instance.OnAtacar;
             @Atacar.performed += instance.OnAtacar;
             @Atacar.canceled += instance.OnAtacar;
+            @gancho.started += instance.OnGancho;
+            @gancho.performed += instance.OnGancho;
+            @gancho.canceled += instance.OnGancho;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -223,6 +249,9 @@ public partial class @Mapa: IInputActionCollection2, IDisposable
             @Atacar.started -= instance.OnAtacar;
             @Atacar.performed -= instance.OnAtacar;
             @Atacar.canceled -= instance.OnAtacar;
+            @gancho.started -= instance.OnGancho;
+            @gancho.performed -= instance.OnGancho;
+            @gancho.canceled -= instance.OnGancho;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -245,5 +274,6 @@ public partial class @Mapa: IInputActionCollection2, IDisposable
         void OnMovimiento(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAtacar(InputAction.CallbackContext context);
+        void OnGancho(InputAction.CallbackContext context);
     }
 }

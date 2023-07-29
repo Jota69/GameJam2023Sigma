@@ -10,11 +10,7 @@ public class ImputPlayer : MonoBehaviour
     public Vector2 moveVector = Vector2.zero;
     private Rigidbody2D rb;
     private Animator animator;
-    private Transform playerTransform;
     private bool isGrounded;
-    private CapsuleCollider2D capsuleCollider;
-    private Vector2 originalColliderSize;
-    private float originalColliderOffsetY;
     private float TiempoEntreAtaque;
     private float TiempoSiguienteAtaque;
 
@@ -36,10 +32,6 @@ public class ImputPlayer : MonoBehaviour
         controladorGolpe = transform.GetChild(0).GetComponent<Transform>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        playerTransform = GetComponent<Transform>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
-        originalColliderSize = capsuleCollider.size;
-        originalColliderOffsetY = capsuleCollider.offset.y;
         TiempoEntreAtaque = atrackClip.length;
 
         _myInput = new Mapa();
@@ -151,11 +143,11 @@ public class ImputPlayer : MonoBehaviour
     }
 
 
-    //private void OnDrawGizmos()
-    //{
-    //   Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
-    //}
+    private void OnDrawGizmos()
+    {
+       Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
+    }
 
 
     void DebugRaycast()

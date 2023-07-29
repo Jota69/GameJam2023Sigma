@@ -13,7 +13,8 @@ public class PlayerController2 : MonoBehaviour
     private bool isGrounded;
     private float TiempoEntreAtaque;
     private float TiempoSiguienteAtaque;
-    public bool isActive;  
+    public bool isActive;
+    private bool pausePlayer;
     private PlayerController2 playerController;
 
     [SerializeField] private AnimationClip atrackClip;
@@ -86,34 +87,36 @@ public class PlayerController2 : MonoBehaviour
     private void OnJumpPerformed(InputAction.CallbackContext value) {
 
 
-
-        
+        if (!pausePlayer)
+        {
             if (isGrounded)
             {
                 rb.AddForce(Vector2.up * jumpForce);
             }
-        
-        
+        }
 
-        
+
+
+
+
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext value)
     {
 
-        
-        moveVector = value.ReadValue<Vector2>();
-        animator.SetBool("Corriendo",true);
 
-
-        
+        if (!pausePlayer)
+        {
+            moveVector = value.ReadValue<Vector2>();
+            animator.SetBool("Corriendo", true);
             if ((moveVector.x < 0 && transform.rotation.y >= 0) || (moveVector.x > 0 && transform.rotation.y < 0))
             {
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
             }
-        
-        
-        
+        }
+
+
+
     }
 
     private void OnMovementCancelled(InputAction.CallbackContext value)
@@ -125,7 +128,7 @@ public class PlayerController2 : MonoBehaviour
 
     private void OnAtackPerformed(InputAction.CallbackContext value)
     {
-        if (value.performed && TiempoSiguienteAtaque<=0)
+        if (value.performed && TiempoSiguienteAtaque<=0 && isActive)
         {
             animator.SetTrigger("Atacar");
             Golpe();
@@ -156,11 +159,11 @@ public class PlayerController2 : MonoBehaviour
 
     private void PausarPlayer()
     {
-        isActive = false;
+        pausePlayer = true;
     }
     private void DesausarPlayer()
     {
-        isActive = true;
+        pausePlayer = false;
     }
 
 

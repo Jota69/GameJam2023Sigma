@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private float TiempoEntreAtaque;
     private float TiempoSiguienteAtaque;
-    public bool isActive;  
+    public bool isActive;
+    private bool pausePlayer;
 
     [SerializeField] private AnimationClip atrackClip;
     [SerializeField] private Transform controladorGolpe;
@@ -86,16 +87,14 @@ public class PlayerController : MonoBehaviour
     }
     private void OnJumpPerformed(InputAction.CallbackContext value) {
 
-
-        
+        if (!pausePlayer)
+        {
             if (isGrounded)
             {
                 rb.AddForce(Vector2.up * jumpForce);
             }
+        }
         
-
-        
-
         
     }
 
@@ -103,14 +102,16 @@ public class PlayerController : MonoBehaviour
     {
 
         
+        if (!pausePlayer)
+        {
             moveVector = value.ReadValue<Vector2>();
             animator.SetBool("Corriendo", true);
             if ((moveVector.x < 0 && transform.rotation.y >= 0) || (moveVector.x > 0 && transform.rotation.y < 0))
             {
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
             }
-        
-        
+        }
+
         
     }
 
@@ -154,11 +155,11 @@ public class PlayerController : MonoBehaviour
 
     private void PausarPlayer() 
     { 
-        isActive = false;
+        pausePlayer = true;
     }
     private void DesausarPlayer()
     {
-        isActive = true;
+        pausePlayer = false;
     }
 
 

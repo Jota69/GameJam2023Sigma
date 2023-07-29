@@ -12,6 +12,7 @@ public class Dialogos2 : MonoBehaviour
     [SerializeField, TextArea(4, 5)] private string[] lineasDialogo;
     [SerializeField] private GameObject viñeta;
     private int LineIndex;
+    private bool leido;
     private bool activeDialog;
 
 
@@ -21,7 +22,7 @@ public class Dialogos2 : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) 
+        if (collision.CompareTag("Player")&&!leido) 
         {
             EmpezarDialogo();
         }
@@ -34,7 +35,7 @@ public class Dialogos2 : MonoBehaviour
         if (activeDialog && Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button1) && activeDialog)
         {
 
-            if (viñeta.GetComponentInChildren<TextMeshPro>().text == lineasDialogo[LineIndex])
+            if (viñeta.GetComponentInChildren<TextMeshProUGUI>().text == lineasDialogo[LineIndex])
             {
                 NextDialogLine();
                 
@@ -61,7 +62,6 @@ public class Dialogos2 : MonoBehaviour
         viñeta.SetActive(true);
         viñeta.GetComponent<Animator>().SetBool("abrir", true);
         LineIndex = 0;
-        Debug.Log(viñeta.GetComponentInChildren<TextMeshPro>().text);
         StartCoroutine(mostrarLinea());
     }
     private void NextDialogLine()
@@ -75,13 +75,8 @@ public class Dialogos2 : MonoBehaviour
         {
             StartCoroutine(ocultar());
             activeDialog = false;
-            if (ultPlayerTarget == player1)
-            {
-                Eventos.eve.DespausarPlayer1.Invoke();
-            }else
-            {
-                Eventos.eve.DespausarPlayer2.Invoke();
-            }
+            Eventos.eve.DespausarPlayer1.Invoke();
+            Eventos.eve.DespausarPlayer2.Invoke();
             
 
         }
@@ -94,10 +89,10 @@ public class Dialogos2 : MonoBehaviour
 
     private IEnumerator mostrarLinea()
     {
-        viñeta.GetComponentInChildren<TextMeshPro>().text = string.Empty;
+        viñeta.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
         foreach (char line in lineasDialogo[LineIndex])
         {
-            viñeta.GetComponentInChildren<TextMeshPro>().text += line;
+            viñeta.GetComponentInChildren<TextMeshProUGUI>().text += line;
             yield return new WaitForSeconds(tiempoEntreChar);
         }
     }

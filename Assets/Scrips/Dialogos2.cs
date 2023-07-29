@@ -5,13 +5,27 @@ using TMPro;
 
 public class Dialogos2 : MonoBehaviour
 {
+    [SerializeField] private GameObject player1;
+    [SerializeField] private GameObject player2;
+    private GameObject ultPlayerTarget;
     public float tiempoEntreChar;
     [SerializeField, TextArea(4, 5)] private string[] lineasDialogo;
     [SerializeField] private GameObject viñeta;
     private int LineIndex;
     private bool activeDialog;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player")) 
+        {
+            EmpezarDialogo();
+        }
+    }
     private void Update()
     {
+       
+
+
         if (activeDialog && Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button1) && activeDialog)
         {
 
@@ -27,8 +41,17 @@ public class Dialogos2 : MonoBehaviour
 
     private void EmpezarDialogo()
     {
+        if (player1.GetComponent<PlayerController>().isActive)
+        {
+            ultPlayerTarget = player1;
+        }
+        else
+        {
+            ultPlayerTarget = player2;
+        }
         Eventos.eve.IniciarDialogo2.RemoveListener(EmpezarDialogo);
-        Eventos.eve.PausarPersonaje.Invoke();
+        Eventos.eve.PausarPlayer1.Invoke();
+        Eventos.eve.PausarPlayer2.Invoke();
         activeDialog = true;
         viñeta.SetActive(true);
         viñeta.GetComponent<Animator>().SetBool("abrir", true);
@@ -46,14 +69,21 @@ public class Dialogos2 : MonoBehaviour
         {
             StartCoroutine(ocultar());
             activeDialog = false;
-            Eventos.eve.DespausarPersonaje.Invoke();
+            if (ultPlayerTarget == player1)
+            {
+                Eventos.eve.DespausarPlayer1.Invoke();
+            }else
+            {
+                Eventos.eve.DespausarPlayer2.Invoke();
+            }
+            
 
         }
     }
 
     private void OnEnable()
     {
-        Eventos.eve.IniciarDialogo2.AddListener(EmpezarDialogo);
+        //Eventos.eve.IniciarDialogo2.AddListener(EmpezarDialogo);
     }
 
     private IEnumerator mostrarLinea()

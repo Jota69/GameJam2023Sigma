@@ -19,7 +19,6 @@ public class ImputPlayer : MonoBehaviour
     [SerializeField] private Transform controladorGolpe;
     [SerializeField] private float radioGolpe;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private LayerMask snackeLayer;
     [SerializeField] private float raycastDistance = 1f;
     [SerializeField] private float raycastDistance2 = 1f;
     [SerializeField] private float jumpForce;
@@ -60,7 +59,7 @@ public class ImputPlayer : MonoBehaviour
 
     private void Update()
     {
-        //DebugRaycast();
+        DebugRaycast();
         isGrounded = CheckGrounded();
         
         bool isJumping = !isGrounded && rb.velocity.y > 0;
@@ -136,11 +135,6 @@ public class ImputPlayer : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, Vector2.down, raycastDistance, groundLayer);
         return (hit.collider != null);
     }
-    private bool CheckHeadHitSnacke() {
-        Vector2 raycastOrigin = transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, Vector2.up, raycastDistance2, snackeLayer);
-        return (hit.collider != null);
-    }
 
 
     private void OnDrawGizmos()
@@ -153,7 +147,7 @@ public class ImputPlayer : MonoBehaviour
     void DebugRaycast()
     {
         Vector2 raycastOrigin = transform.position;
-        Debug.DrawRay(raycastOrigin, Vector2.up * raycastDistance2, Color.red);
+        Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistance2, Color.red);
     }
 
 

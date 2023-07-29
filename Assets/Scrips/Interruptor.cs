@@ -9,9 +9,9 @@ public class Interruptor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("interruptor"))
+        if (collision.CompareTag("Player"))
         {
-            Eventos.eve.moverPlataforma.Invoke(id);
+            Eventos.eve.moverPlataforma?.Invoke(id);
         }
     }
 

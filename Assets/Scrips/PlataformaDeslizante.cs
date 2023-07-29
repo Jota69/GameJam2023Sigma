@@ -7,23 +7,29 @@ public class PlataformaDeslizante : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField] private GameObject plataformaAmover;
-    [SerializeField] private bool activado1;
+    [SerializeField] private bool iniciaActivado;
     [SerializeField] private int idPlataforma;
 
     private bool activado;
 
+    private void Start()
+    {
+        
+    }
+
     private void ActivarPlataforma(int idResiver)
     {
-        if (idResiver==idPlataforma && activado)
+        if (idResiver==idPlataforma && !activado)
         if (plataformaAmover.GetComponent<Animator>().GetBool("deslizar") == true) 
         {
             plataformaAmover.GetComponent<Animator>().SetBool("deslizar", false);
-            activado = false;
+            activado = true;
+
         }
         else 
         {
             plataformaAmover.GetComponent<Animator>().SetBool("deslizar", true);
-            activado = false;
+            activado = true;
         }
     }
 

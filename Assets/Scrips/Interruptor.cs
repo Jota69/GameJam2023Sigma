@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Interruptor : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    [SerializeField] private int id;
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.CompareTag("interruptor"))
+        {
+            Eventos.eve.moverPlataforma.Invoke(id);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

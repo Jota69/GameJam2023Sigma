@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ImputPlayer : MonoBehaviour
+public class PlayerController2 : MonoBehaviour
 {
-
+    
     private Mapa _myInput;
     public Vector2 moveVector = Vector2.zero;
     private Rigidbody2D rb;
-    private Animator animator;
+    public Animator animator;
     private bool isGrounded;
     private float TiempoEntreAtaque;
     private float TiempoSiguienteAtaque;
-
+    public bool isActive = false;  
 
     [SerializeField] private AnimationClip atrackClip;
     [SerializeField] private Transform controladorGolpe;
@@ -24,7 +24,7 @@ public class ImputPlayer : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
     [SerializeField] private int dañoGolpe;
-
+ 
 
     private void Awake()
     {
@@ -61,8 +61,11 @@ public class ImputPlayer : MonoBehaviour
     {
         DebugRaycast();
         isGrounded = CheckGrounded();
+
         
-        bool isJumping = !isGrounded && rb.velocity.y > 0;
+        
+
+            bool isJumping = !isGrounded && rb.velocity.y > 0;
         bool isFalling = !isGrounded && rb.velocity.y < 0;
 
         if (isFalling || isJumping) animator.ResetTrigger("Atacar");
@@ -73,20 +76,24 @@ public class ImputPlayer : MonoBehaviour
 
         animator.SetBool("Callendo", isFalling);
         animator.SetBool("Saltando", isJumping);
+    
     }
-
     private void OnJumpPerformed(InputAction.CallbackContext value) {
 
-        if (isGrounded)
+        
+        
+            if (isGrounded)
         {
             rb.AddForce(Vector2.up * jumpForce);
         }
-        
+
         
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext value)
     {
+
+        
         moveVector = value.ReadValue<Vector2>();
         animator.SetBool("Corriendo",true);
         
@@ -95,7 +102,7 @@ public class ImputPlayer : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
         }
-
+        
     }
 
     private void OnMovementCancelled(InputAction.CallbackContext value)

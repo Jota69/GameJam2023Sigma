@@ -24,6 +24,7 @@ public class Eventos : MonoBehaviour
 
     public UnityEvent enemigoMuertoCount;
     public UnityEvent<int> moverPlataforma;
+    public UnityEvent IniciarDialogo2;
 
 
 

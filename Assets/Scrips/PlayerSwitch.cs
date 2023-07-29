@@ -74,6 +74,7 @@ public class PlayerSwitch : MonoBehaviour
         else
         {
             player1.isActive = true;
+
             player1.animator.enabled = true; // Activar el Animator
             player2.isActive = false;
             player2.animator.enabled = false;

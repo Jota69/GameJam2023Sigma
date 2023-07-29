@@ -110,6 +110,7 @@ public class ImputPlayer : MonoBehaviour
         if (value.performed && TiempoSiguienteAtaque<=0)
         {
             animator.SetTrigger("Atacar");
+
             Golpe();
             TiempoSiguienteAtaque = TiempoEntreAtaque;
         } 

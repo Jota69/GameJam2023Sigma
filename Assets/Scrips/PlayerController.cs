@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         controladorGolpe = transform.GetChild(0).GetComponent<Transform>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        TiempoEntreAtaque = atrackClip.length;
+        //TiempoEntreAtaque = atrackClip.length;
 
         _myInput = new Mapa();
         _myInput.Enable();
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         _myInput.Player.Movimiento.canceled += OnMovementCancelled;
 
         //Otras acciones
-        //_myInput.Player.Atacar.performed += OnAtackPerformed;
+        _myInput.Player.Atacar.performed += OnAtackPerformed;
         _myInput.Player.Jump.performed += OnJumpPerformed;
 
     }

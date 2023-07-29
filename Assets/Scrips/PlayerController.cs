@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private float TiempoEntreAtaque;
     private float TiempoSiguienteAtaque;
-    public bool isActive = false;  
+    public bool isActive;  
 
     [SerializeField] private AnimationClip atrackClip;
     [SerializeField] private Transform controladorGolpe;
@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        isActive = true;
         controladorGolpe = transform.GetChild(0).GetComponent<Transform>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
         _myInput.Player.Movimiento.canceled += OnMovementCancelled;
 
         //Otras acciones
-        _myInput.Player.Atacar.performed += OnAtackPerformed;
+        //_myInput.Player.Atacar.performed += OnAtackPerformed;
         _myInput.Player.Jump.performed += OnJumpPerformed;
 
     }
@@ -66,7 +67,7 @@ public class PlayerController : MonoBehaviour
         
         
 
-            bool isJumping = !isGrounded && rb.velocity.y > 0;
+        bool isJumping = !isGrounded && rb.velocity.y > 0;
         bool isFalling = !isGrounded && rb.velocity.y < 0;
 
         if (isFalling || isJumping) animator.ResetTrigger("Atacar");
@@ -81,12 +82,16 @@ public class PlayerController : MonoBehaviour
     }
     private void OnJumpPerformed(InputAction.CallbackContext value) {
 
-        
-        
-            if (isGrounded)
+
+        if (isActive)
         {
-            rb.AddForce(Vector2.up * jumpForce);
+            if (isGrounded)
+            {
+                rb.AddForce(Vector2.up * jumpForce);
+            }
         }
+
+        
 
         
     }
@@ -99,10 +104,14 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Corriendo",true);
         
 
-        if ((moveVector.x < 0 && transform.rotation.y>=0) || (moveVector.x>0 && transform.rotation.y<0))
+        if (isActive)
         {
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
+            if ((moveVector.x < 0 && transform.rotation.y >= 0) || (moveVector.x > 0 && transform.rotation.y < 0))
+            {
+                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
+            }
         }
+        
         
     }
 
@@ -119,7 +128,7 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetTrigger("Atacar");
             Golpe();
-            TiempoSiguienteAtaque = TiempoEntreAtaque;
+           TiempoSiguienteAtaque = TiempoEntreAtaque;
         } 
         
     }
@@ -145,11 +154,11 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void OnDrawGizmos()
-    {
-       Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //   Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
+    //}
 
 
     void DebugRaycast()

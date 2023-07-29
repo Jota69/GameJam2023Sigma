@@ -840,7 +840,7 @@ Transform:
   m_GameObject: {fileID: 679232368}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.147, y: 0, z: 0}
+  m_LocalPosition: {x: 0.237, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1062,7 +1062,7 @@ GameObject:
   - component: {fileID: 930974908}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1418,6 +1418,9 @@ MonoBehaviour:
   player1: {fileID: 1779537378}
   player2: {fileID: 930974908}
   player1Active: 1
+  Player1: {fileID: 1779537372}
+  Player2: {fileID: 930974914}
+  virtualCamera: {fileID: 1765889973}
 --- !u!4 &1299857789
 Transform:
   m_ObjectHideFlags: 0
@@ -2024,7 +2027,7 @@ GameObject:
   - component: {fileID: 1779537378}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2221,9 +2224,6 @@ MonoBehaviour:
   moveVector: {x: 0, y: 0}
   animator: {fileID: 1779537370}
   isActive: 0
-  atrackClip: {fileID: 7400000, guid: b00287ff9ee5710489944ed27347dcad, type: 2}
-  controladorGolpe: {fileID: 1723904366}
-  radioGolpe: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -2231,7 +2231,6 @@ MonoBehaviour:
   raycastDistance2: 1
   jumpForce: 300
   speed: 5
-  "da\xF1oGolpe": 5
 --- !u!1 &1858463527
 GameObject:
   m_ObjectHideFlags: 0

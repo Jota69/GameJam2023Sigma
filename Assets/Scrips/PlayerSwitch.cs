@@ -1,11 +1,15 @@
+using Cinemachine;
 using UnityEngine;
 
 public class PlayerSwitch : MonoBehaviour
 {
+
     public PlayerController player1;
     public PlayerController2 player2;
     public bool player1Active = true;
-
+    public Transform Player1;
+    public Transform Player2;
+    public CinemachineVirtualCamera virtualCamera;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -25,6 +29,7 @@ public class PlayerSwitch : MonoBehaviour
             player1.enabled = false;
             player2.enabled = true;
             player1Active = false;
+            virtualCamera.Follow = Player2; // Cambiar el objetivo de la cámara al personaje 2
         }
         else
         {
@@ -35,6 +40,7 @@ public class PlayerSwitch : MonoBehaviour
             player1.enabled = true;
             player2.enabled = false;
             player1Active = true;
+            virtualCamera.Follow = Player1; // Cambiar el objetivo de la cámara al personaje 1
         }
     }
 }

@@ -13,7 +13,8 @@ public class PlayerController2 : MonoBehaviour
     private bool isGrounded;
     private float TiempoEntreAtaque;
     private float TiempoSiguienteAtaque;
-    public bool isActive = false;  
+    public bool isActive;  
+    private PlayerController2 playerController;
 
     [SerializeField] private AnimationClip atrackClip;
     [SerializeField] private Transform controladorGolpe;
@@ -28,6 +29,7 @@ public class PlayerController2 : MonoBehaviour
 
     private void Awake()
     {
+        isActive = false;
         controladorGolpe = transform.GetChild(0).GetComponent<Transform>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -65,7 +67,7 @@ public class PlayerController2 : MonoBehaviour
         
         
 
-            bool isJumping = !isGrounded && rb.velocity.y > 0;
+        bool isJumping = !isGrounded && rb.velocity.y > 0;
         bool isFalling = !isGrounded && rb.velocity.y < 0;
 
         if (isFalling || isJumping) animator.ResetTrigger("Atacar");
@@ -80,12 +82,16 @@ public class PlayerController2 : MonoBehaviour
     }
     private void OnJumpPerformed(InputAction.CallbackContext value) {
 
-        
-        
-            if (isGrounded)
+
+
+        if (isActive)
         {
-            rb.AddForce(Vector2.up * jumpForce);
+            if (isGrounded)
+            {
+                rb.AddForce(Vector2.up * jumpForce);
+            }
         }
+        
 
         
     }
@@ -96,12 +102,16 @@ public class PlayerController2 : MonoBehaviour
         
         moveVector = value.ReadValue<Vector2>();
         animator.SetBool("Corriendo",true);
-        
 
-        if ((moveVector.x < 0 && transform.rotation.y>=0) || (moveVector.x>0 && transform.rotation.y<0))
+
+        if (isActive)
         {
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
+            if ((moveVector.x < 0 && transform.rotation.y >= 0) || (moveVector.x > 0 && transform.rotation.y < 0))
+            {
+                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
+            }
         }
+        
         
     }
 

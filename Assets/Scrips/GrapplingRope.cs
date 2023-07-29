@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GrapplingRope : MonoBehaviour
 {
+
+    [SerializeField] private PlayerController player;
     [Header("General Refernces:")]
     public GrapplingGun grapplingGun;
     public LineRenderer m_lineRenderer;
@@ -24,6 +26,11 @@ public class GrapplingRope : MonoBehaviour
     [HideInInspector] public bool isGrappling = true;
 
     bool strightLine = true;
+
+    private void Awake()
+    {
+        player = GetComponent<PlayerController>();
+    }
 
     private void OnEnable()
     {
@@ -53,8 +60,11 @@ public class GrapplingRope : MonoBehaviour
 
     private void Update()
     {
-        moveTime += Time.deltaTime;
-        DrawRope();
+        
+            moveTime += Time.deltaTime;
+            DrawRope();
+        
+        
     }
 
     void DrawRope()

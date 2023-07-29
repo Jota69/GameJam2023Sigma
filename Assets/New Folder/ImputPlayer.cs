@@ -153,16 +153,16 @@ public class ImputPlayer : MonoBehaviour
 
     //private void OnDrawGizmos()
     //{
-    //    Gizmos.color = Color.yellow;
+    //   Gizmos.color = Color.yellow;
     //    Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
     //}
 
 
-    //void DebugRaycast()
-    //{
-    //    Vector2 raycastOrigin = transform.position;
-    //    Debug.DrawRay(raycastOrigin, Vector2.up * raycastDistance2, Color.red);
-    //}
+    void DebugRaycast()
+    {
+        Vector2 raycastOrigin = transform.position;
+        Debug.DrawRay(raycastOrigin, Vector2.up * raycastDistance2, Color.red);
+    }
 
 
 }

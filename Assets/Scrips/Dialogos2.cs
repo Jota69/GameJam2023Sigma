@@ -14,6 +14,11 @@ public class Dialogos2 : MonoBehaviour
     private int LineIndex;
     private bool activeDialog;
 
+
+    private void Start()
+    {
+        
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")) 
@@ -56,6 +61,7 @@ public class Dialogos2 : MonoBehaviour
         viñeta.SetActive(true);
         viñeta.GetComponent<Animator>().SetBool("abrir", true);
         LineIndex = 0;
+        Debug.Log(viñeta.GetComponentInChildren<TextMeshPro>().text);
         StartCoroutine(mostrarLinea());
     }
     private void NextDialogLine()

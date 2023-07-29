@@ -109,6 +109,7 @@ public class ImputPlayer : MonoBehaviour
     {
         if (value.performed && TiempoSiguienteAtaque<=0)
         {
+            Debug.Log("aa");
             animator.SetTrigger("Atacar");
 
             Golpe();

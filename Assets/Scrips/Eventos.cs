@@ -23,6 +23,7 @@ public class Eventos : MonoBehaviour
     }
 
     public UnityEvent enemigoMuertoCount;
+    public UnityEvent <int> moverPlataforma;
 
 
 

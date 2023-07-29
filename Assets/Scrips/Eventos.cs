@@ -25,6 +25,10 @@ public class Eventos : MonoBehaviour
     public UnityEvent enemigoMuertoCount;
     public UnityEvent<int> moverPlataforma;
     public UnityEvent IniciarDialogo2;
+    public UnityEvent PausarPlayer1;
+    public UnityEvent PausarPlayer2;
+    public UnityEvent DespausarPlayer1;
+    public UnityEvent DespausarPlayer2;
 
 
 

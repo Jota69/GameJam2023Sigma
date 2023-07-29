@@ -51,6 +51,9 @@ public class PlayerController2 : MonoBehaviour
         _myInput.Player.Atacar.performed += OnAtackPerformed;
         _myInput.Player.Jump.performed += OnJumpPerformed;
 
+        //Eventos
+        Eventos.eve.PausarPlayer2.AddListener(PausarPlayer);
+        Eventos.eve.DespausarPlayer2.AddListener(DesausarPlayer);
     }
 
     private void FixedUpdate()
@@ -151,6 +154,15 @@ public class PlayerController2 : MonoBehaviour
         Vector2 raycastOrigin = transform.position;
         RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, Vector2.down, raycastDistance, groundLayer);
         return (hit.collider != null);
+    }
+
+    private void PausarPlayer()
+    {
+        isActive = false;
+    }
+    private void DesausarPlayer()
+    {
+        isActive = true;
     }
 
 

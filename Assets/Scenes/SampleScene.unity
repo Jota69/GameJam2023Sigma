@@ -857,11 +857,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveVector: {x: 0, y: 0}
+  rb: {fileID: 0}
+  animator: {fileID: 0}
+  isGrounded: 0
+  TiempoEntreAtaque: 0
+  TiempoSiguienteAtaque: 0
   atrackClip: {fileID: 7400000, guid: b00287ff9ee5710489944ed27347dcad, type: 2}
   controladorGolpe: {fileID: 22261160}
   radioGolpe: 1
   groundLayer:
-    serializedVersion: 2
     m_Bits: 64
   raycastDistance: 1
   raycastDistance2: 1
@@ -1008,8 +1012,8 @@ SpringJoint2D:
   m_Distance: 7.248117
   m_DampingRatio: 1
   m_Frequency: 1
---- !u!58 &1779537377
-CircleCollider2D:
+--- !u!70 &1779537377
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1042,8 +1046,9 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0013001371, y: 0}
-  m_Radius: 0.13149479
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.21, y: 0.38}
+  m_Direction: 0
 --- !u!1 &1858463527
 GameObject:
   m_ObjectHideFlags: 0

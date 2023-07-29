@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         _myInput.Player.Movimiento.canceled += OnMovementCancelled;
 
         //Otras acciones
-        _myInput.Player.Atacar.performed += OnAtackPerformed;
+        //_myInput.Player.Atacar.performed += OnAtackPerformed;
         _myInput.Player.Jump.performed += OnJumpPerformed;
 
     }

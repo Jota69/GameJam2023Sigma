@@ -51,10 +51,10 @@ public class PlayerSwitch : MonoBehaviour
         if (player1Active)
         {
             player1.isActive = false;
-            player1.animator.enabled = false;
+            
             player2.isActive = true;
-            player2.animator.enabled = true;
-            player1.enabled = false;
+           
+           
             player2.enabled = true;
             player1Active = false;
             virtualCamera.Follow = Player2; // Cambiar el objetivo de la cámara al personaje 2
@@ -62,7 +62,7 @@ public class PlayerSwitch : MonoBehaviour
 
             Material materialP1 = p1.GetComponent<Renderer>().material;
             Color colorP1 = materialP1.color;
-            colorP1.a = 0.5f;
+            colorP1.a = 0.25f;
             materialP1.color = colorP1;
 
             Material materialP2 = p2.GetComponent<Renderer>().material;
@@ -75,17 +75,17 @@ public class PlayerSwitch : MonoBehaviour
         {
             player1.isActive = true;
 
-            player1.animator.enabled = true; // Activar el Animator
+            
             player2.isActive = false;
-            player2.animator.enabled = false;
+            
             player1.enabled = true;
-            player2.enabled = false;
+            
             player1Active = true;
             virtualCamera.Follow = Player1; // Cambiar el objetivo de la cámara al personaje 1
 
             Material materialP2 = p2.GetComponent<Renderer>().material;
             Color colorP2 = materialP2.color;
-            colorP2.a = 0.5f;
+            colorP2.a = 0.25f;
             materialP2.color = colorP2;
 
             Material materialP1 = p1.GetComponent<Renderer>().material;

@@ -87,13 +87,12 @@ public class PlayerController : MonoBehaviour
     private void OnJumpPerformed(InputAction.CallbackContext value) {
 
 
-        if (isActive)
-        {
+        
             if (isGrounded)
             {
                 rb.AddForce(Vector2.up * jumpForce);
             }
-        }
+        
 
         
 
@@ -103,15 +102,14 @@ public class PlayerController : MonoBehaviour
     private void OnMovementPerformed(InputAction.CallbackContext value)
     {
 
-        if (isActive)
-        {
+        
             moveVector = value.ReadValue<Vector2>();
             animator.SetBool("Corriendo", true);
             if ((moveVector.x < 0 && transform.rotation.y >= 0) || (moveVector.x > 0 && transform.rotation.y < 0))
             {
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
             }
-        }
+        
         
         
     }

@@ -87,13 +87,12 @@ public class PlayerController2 : MonoBehaviour
 
 
 
-        if (isActive)
-        {
+        
             if (isGrounded)
             {
                 rb.AddForce(Vector2.up * jumpForce);
             }
-        }
+        
         
 
         
@@ -107,13 +106,12 @@ public class PlayerController2 : MonoBehaviour
         animator.SetBool("Corriendo",true);
 
 
-        if (isActive)
-        {
+        
             if ((moveVector.x < 0 && transform.rotation.y >= 0) || (moveVector.x > 0 && transform.rotation.y < 0))
             {
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
             }
-        }
+        
         
         
     }

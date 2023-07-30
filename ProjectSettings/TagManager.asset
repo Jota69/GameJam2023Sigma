@@ -16,7 +16,7 @@ TagManager:
   - Terreno
   - Player1
   - Player2
-  - 
+  - Arma
   - 
   - 
   - 
@@ -42,4 +42,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Fondo
+    uniqueID: 1373707261
     locked: 0

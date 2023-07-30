@@ -26,7 +26,15 @@ public class PlayerController2 : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
     [SerializeField] private int dañoGolpe;
- 
+
+
+    private bool isIdle = true;
+    public bool IsIdle
+    {
+        get { return isIdle; }
+        set { isIdle = value; }
+    }
+
 
     private void Awake()
     {
@@ -68,8 +76,12 @@ public class PlayerController2 : MonoBehaviour
         DebugRaycast();
         isGrounded = CheckGrounded();
 
-        
-        
+        // Detectar si el personaje está en reposo
+        bool isAlmostIdle = isGrounded && rb.velocity.magnitude < 0.1f;
+
+        // Actualizar isIdle a true si el personaje está en reposo, de lo contrario, actualizar a false
+        isIdle = isAlmostIdle;
+
 
         bool isJumping = !isGrounded && rb.velocity.y > 0;
         bool isFalling = !isGrounded && rb.velocity.y < 0;
@@ -84,39 +96,41 @@ public class PlayerController2 : MonoBehaviour
         animator.SetBool("Saltando", isJumping);
     
     }
-    private void OnJumpPerformed(InputAction.CallbackContext value) {
-
-
+    private void OnJumpPerformed(InputAction.CallbackContext value)
+    {
         if (!pausePlayer)
         {
             if (isGrounded)
             {
                 rb.AddForce(Vector2.up * jumpForce);
             }
+
+            // Actualizar isIdle a false porque el personaje está saltando (acción activa)
+            isIdle = false;
         }
-
-
-
-
-
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext value)
     {
-
-
         if (!pausePlayer)
         {
             moveVector = value.ReadValue<Vector2>();
             animator.SetBool("Corriendo", true);
+
             if ((moveVector.x < 0 && transform.rotation.y >= 0) || (moveVector.x > 0 && transform.rotation.y < 0))
             {
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
             }
+
+            // Actualizar isIdle a false porque el personaje se está moviendo (acción activa)
+            isIdle = false;
         }
-
-
-
+        else
+        {
+            // Si el player está en pausa (modo ocio), no está realizando ninguna acción activa.
+            // Entonces, actualiza isIdle a true.
+            isIdle = true;
+        }
     }
 
     private void OnMovementCancelled(InputAction.CallbackContext value)

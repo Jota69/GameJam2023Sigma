@@ -428,12 +428,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24f6c3e00132e94ea32f6bf8b301e3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1: {fileID: 1779537367}
-  player2: {fileID: 930974907}
   tiempoEntreChar: 0.05
   lineasDialogo:
   - kgkjgefrjd
-  "vi\xF1eta": {fileID: 1809548857}
+  vineta: {fileID: 0}
 --- !u!4 &339137565
 Transform:
   m_ObjectHideFlags: 0
@@ -855,7 +853,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.95, y: -1.5695028, z: -10}
+  m_LocalPosition: {x: -7.36, y: -1.4895027, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1953,7 +1951,7 @@ Transform:
   m_GameObject: {fileID: 1765889972}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.95, y: -1.5695028, z: -10}
+  m_LocalPosition: {x: -7.36, y: -1.4895027, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2019,7 +2017,7 @@ Animator:
   m_GameObject: {fileID: 1779537367}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: be4285fe0c9ae0447914d0cd7f375bbc, type: 2}
+  m_Controller: {fileID: 9100000, guid: c341e80db47e00a4799190ec232b80d8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2072,12 +2070,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3204480812468917802, guid: 65595bdc410890346b939241e0728bc0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7ed3d06a5823e4c4faea775a3788e5cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.21, y: 0.38}
+  m_Size: {x: 14.4, y: 25.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -2092,8 +2090,8 @@ Transform:
   m_GameObject: {fileID: 1779537367}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.95, y: -2.9, z: 0}
-  m_LocalScale: {x: 5.1386623, y: 5.1386623, z: 5.1386623}
+  m_LocalPosition: {x: -7.36, y: -2.82, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 5.1386623}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 22261160}
@@ -2119,7 +2117,7 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0.06759882, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 8.525954
+  m_Distance: 7.944912
   m_DampingRatio: 1
   m_Frequency: 1
 --- !u!70 &1779537377
@@ -2156,8 +2154,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.21, y: 0.38}
+  m_Offset: {x: 0.085463524, y: -1.3061655}
+  m_Size: {x: 5.5393696, y: 17.600348}
   m_Direction: 0
 --- !u!114 &1779537378
 MonoBehaviour:
@@ -2181,7 +2179,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   raycastDistance: 1
-  raycastDistance2: 1
+  raycastDistance2: 2
   jumpForce: 300
   speed: 5
   "da\xF1oGolpe": 0

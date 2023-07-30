@@ -5,12 +5,10 @@ using TMPro;
 
 public class Dialogos2 : MonoBehaviour
 {
-    [SerializeField] private GameObject player1;
-    [SerializeField] private GameObject player2;
-    private GameObject ultPlayerTarget;
+
     public float tiempoEntreChar;
     [SerializeField, TextArea(4, 5)] private string[] lineasDialogo;
-    [SerializeField] private GameObject viñeta;
+    [SerializeField] private GameObject vineta;
     private int LineIndex;
     private bool leido;
     private bool activeDialog;
@@ -35,7 +33,7 @@ public class Dialogos2 : MonoBehaviour
         if (activeDialog && Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button1) && activeDialog)
         {
 
-            if (viñeta.GetComponentInChildren<TextMeshProUGUI>().text == lineasDialogo[LineIndex])
+            if (vineta.GetComponentInChildren<TextMeshProUGUI>().text == lineasDialogo[LineIndex])
             {
                 NextDialogLine();
                 
@@ -47,29 +45,22 @@ public class Dialogos2 : MonoBehaviour
 
     private void EmpezarDialogo()
     {
-        if (player1.GetComponent<PlayerController>().isActive)
-        {
-            ultPlayerTarget = player1;
-        }
-        else
-        {
-            ultPlayerTarget = player2;
-        }
+
         Eventos.eve.IniciarDialogo2.RemoveListener(EmpezarDialogo);
         Eventos.eve.PausarPlayer1.Invoke();
         Eventos.eve.PausarPlayer2.Invoke();
         activeDialog = true;
-        viñeta.SetActive(true);
-        viñeta.GetComponent<Animator>().SetBool("abrir", true);
+        vineta.SetActive(true);
+        vineta.GetComponent<Animator>().SetBool("abrir", true);
         LineIndex = 0;
-        StartCoroutine(mostrarLinea());
+        mostrarLinea();
     }
     private void NextDialogLine()
     {
         LineIndex++;
         if (LineIndex < lineasDialogo.Length)
         {
-            StartCoroutine(mostrarLinea());
+            mostrarLinea();
         }
         else
         {
@@ -87,20 +78,16 @@ public class Dialogos2 : MonoBehaviour
         //Eventos.eve.IniciarDialogo2.AddListener(EmpezarDialogo);
     }
 
-    private IEnumerator mostrarLinea()
+    private void mostrarLinea()
     {
-        viñeta.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
-        foreach (char line in lineasDialogo[LineIndex])
-        {
-            viñeta.GetComponentInChildren<TextMeshProUGUI>().text += line;
-            yield return new WaitForSeconds(tiempoEntreChar);
-        }
+        vineta.GetComponentInChildren<TextMeshProUGUI>().text = lineasDialogo[LineIndex];
+        
     }
     private IEnumerator ocultar()
     {
-        viñeta.GetComponent<Animator>().SetBool("abrir", false);
+        vineta.GetComponent<Animator>().SetBool("abrir", false);
         yield return new WaitForSeconds(0.5f);
-        viñeta.SetActive(false);
+        vineta.SetActive(false);
 
     }
 

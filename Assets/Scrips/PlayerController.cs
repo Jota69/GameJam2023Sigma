@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private float TiempoSiguienteAtaque;
     public bool isActive;
     private bool pausePlayer;
+    private PlayerController2 playerController;
 
     [SerializeField] private AnimationClip atrackClip;
     [SerializeField] private Transform controladorGolpe;
@@ -25,6 +26,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
     [SerializeField] private int dañoGolpe;
+    private bool isIdle = true;
+    public bool IsIdle
+    {
+        get { return isIdle; }
+        set { isIdle = value; }
+    }
 
 
 
@@ -69,6 +76,11 @@ public class PlayerController : MonoBehaviour
         DebugRaycast();
         isGrounded = CheckGrounded();
 
+        bool isAlmostIdle = isGrounded && rb.velocity.magnitude < 0.1f;
+
+        // Actualizar isIdle a true si el personaje está en reposo, de lo contrario, actualizar a false
+        isIdle = isAlmostIdle;
+
         if (pausePlayer) 
         {
             moveVector = Vector2.zero;
@@ -96,6 +108,7 @@ public class PlayerController : MonoBehaviour
             {
                 rb.AddForce(Vector2.up * jumpForce);
             }
+            isIdle = false;
         }
         
         
@@ -113,9 +126,17 @@ public class PlayerController : MonoBehaviour
             {
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
             }
+            isIdle = false;
+
+        }
+        else
+        {
+            // Si el player está en pausa (modo ocio), no está realizando ninguna acción activa.
+            // Entonces, actualiza isIdle a true.
+            isIdle = true;
         }
 
-        
+
     }
 
     private void OnMovementCancelled(InputAction.CallbackContext value)

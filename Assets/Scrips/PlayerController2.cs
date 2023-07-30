@@ -26,7 +26,13 @@ public class PlayerController2 : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
     [SerializeField] private int dañoGolpe;
- 
+    private bool isIdle = true;
+    public bool IsIdle
+    {
+        get { return isIdle; }
+        set { isIdle = value; }
+    }
+
 
     private void Awake()
     {
@@ -73,6 +79,11 @@ public class PlayerController2 : MonoBehaviour
             moveVector = Vector2.zero;
         }
 
+        bool isAlmostIdle = isGrounded && rb.velocity.magnitude < 0.1f;
+
+        // Actualizar isIdle a true si el personaje está en reposo, de lo contrario, actualizar a false
+        isIdle = isAlmostIdle;
+
 
         bool isJumping = !isGrounded && rb.velocity.y > 0;
         bool isFalling = !isGrounded && rb.velocity.y < 0;
@@ -96,6 +107,8 @@ public class PlayerController2 : MonoBehaviour
             {
                 rb.AddForce(Vector2.up * jumpForce);
             }
+
+            isIdle = false;
         }
 
 
@@ -116,6 +129,13 @@ public class PlayerController2 : MonoBehaviour
             {
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
             }
+            isIdle = false;
+        }
+        else
+        {
+            // Si el player está en pausa (modo ocio), no está realizando ninguna acción activa.
+            // Entonces, actualiza isIdle a true.
+            isIdle = true;
         }
 
 

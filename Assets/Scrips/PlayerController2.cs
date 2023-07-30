@@ -68,8 +68,11 @@ public class PlayerController2 : MonoBehaviour
         DebugRaycast();
         isGrounded = CheckGrounded();
 
-        
-        
+        if (pausePlayer)
+        {
+            moveVector = Vector2.zero;
+        }
+
 
         bool isJumping = !isGrounded && rb.velocity.y > 0;
         bool isFalling = !isGrounded && rb.velocity.y < 0;

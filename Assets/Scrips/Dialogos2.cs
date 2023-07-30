@@ -74,20 +74,35 @@ public class Dialogos2 : MonoBehaviour
         }
     }
 
-    public string InvertirFraseCompleta(string frase)
-    {
-        string[] palabras = frase.Split(' ');
-        for (int i = 0; i < palabras.Length; i++)
-        {
-            palabras[i] = InvertirPalabra(palabras[i]);
-        }
-        return string.Join(" ", palabras);
-    }
     public string InvertirPalabra(string palabra)
     {
         char[] caracteres = palabra.ToCharArray();
         System.Array.Reverse(caracteres);
         return new string(caracteres);
+    }
+
+    public string InvertirFraseCompleta(string frase)
+    {
+        string[] palabras = frase.Split(' ');
+
+        // Invertir cada palabra individualmente
+        for (int i = 0; i < palabras.Length; i++)
+        {
+            if (palabras[i].EndsWith("?"))
+            {
+                string palabraSinInterrogacion = palabras[i].Substring(0, palabras[i].Length - 1);
+                palabras[i] = InvertirPalabra(palabraSinInterrogacion) + "?";
+            }
+            else
+            {
+                palabras[i] = InvertirPalabra(palabras[i]);
+            }
+        }
+
+        // Invertir el orden de las palabras en la frase
+        System.Array.Reverse(palabras);
+
+        return string.Join(" ", palabras);
     }
 
     private void OnEnable()

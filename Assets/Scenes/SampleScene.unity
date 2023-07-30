@@ -430,7 +430,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiempoEntreChar: 0.05
   lineasDialogo:
-  - aloH
+  - Hola
+  - como estas
+  - bien y tu?
   vineta: {fileID: 1809548857}
 --- !u!4 &339137565
 Transform:

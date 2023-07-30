@@ -4,24 +4,37 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
-    [SerializeField] private Vector2 velocidadMovimiento;
+    public Transform[] backgrounds;
+    private float[] parallaxScales;
+    public float smoothing = 1f;
+    private Transform cam;
+    private Vector3 previousCamPos;
 
-    private Vector2 offset;
-
-    private Material material;
-    private Rigidbody2D player1;
-
-
-    private void Awake()
+    void Awake()
     {
-        material = GetComponent<SpriteRenderer>().material;
-      player1 = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
+        cam = Camera.main.transform;
     }
+    void Start()
+    {
+        previousCamPos = cam.position;
+        parallaxScales = new float[backgrounds.Length];
+        for (int i = 0; i < backgrounds.Length; i++)
+        {
+            parallaxScales[i] = backgrounds[i].position.z * -1;
+        }
+    }
+    void Update()
+    {
+        for (int i = 0; i < backgrounds.Length; i++)
+        {
 
-    private void Update()
-    {       
-        offset = (player1.velocity.x*0.1f)*velocidadMovimiento* Time.deltaTime;
-        material.mainTextureOffset += offset;
+            float parallax = (previousCamPos.x - cam.position.x) * parallaxScales[i];
+            float backgroundTargetPosX = backgrounds[i].position.x + parallax;
+            Vector3 backgroundTargetPos = new Vector3(backgroundTargetPosX, backgrounds[i].position.y, backgrounds[i].position.z);
+            backgrounds[i].position = Vector3.Lerp(backgrounds[i].position, backgroundTargetPos, smoothing * Time.deltaTime);
+        }
+
+        previousCamPos = cam.position;
     }
 
 

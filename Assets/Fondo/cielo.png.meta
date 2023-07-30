@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: aaaeb3a14ffb40549b8ff3a7aaf2b37f
+guid: 71a3d4e08f91f07408816a795f005836
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -556427085808890511
-    second: montanas_0
+      213: -5510333123701120307
+    second: cielo_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -40,13 +40,13 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -94,29 +94,17 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: montanas_0
+      name: cielo_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2796
-        height: 412
+        width: 3000
+        height: 1500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 17d84f6738c2748f0800000000000000
-      internalID: -556427085808890511
+      spriteID: dc2e9bf083d5783b0800000000000000
+      internalID: -5510333123701120307
       vertices: []
       indices: 
       edges: []
@@ -133,7 +121,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -141,7 +129,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      montanas_0: -556427085808890511
+      cielo_0: -5510333123701120307
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

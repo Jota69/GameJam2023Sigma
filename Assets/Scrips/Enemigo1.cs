@@ -41,7 +41,7 @@ public class Enemigo : MonoBehaviour
 
     private void Update()
     {
-        DebugRaycast();
+        //DebugRaycast();
 
         isGrounded = CheckGrounded();
         if (!atacando)

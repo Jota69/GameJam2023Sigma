@@ -1,16 +1,13 @@
 fileFormatVersion: 2
-guid: bb7a89bfa7efbbd49a96acbb1b614ba2
+guid: d24f422382754a84996c91777d913086
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 649508864095423869
-    second: nubes 1_0
+      213: 1947557737251824015
+    second: piedras__0
   - first:
-      213: 5146789780026925280
-    second: nubes 1_1
-  - first:
-      213: -4446776116319133092
-    second: nubes 1_2
+      213: 8534330256257617633
+    second: piedras__1
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -100,71 +97,17 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: nubes 1_0
-      rect:
-        serializedVersion: 2
-        x: 2876
-        y: 947
-        width: 59
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d7d00e2eed4830900800000000000000
-      internalID: 649508864095423869
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nubes 1_1
-      rect:
-        serializedVersion: 2
-        x: 2827
-        y: 922
-        width: 58
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0e0ad1c39021d6740800000000000000
-      internalID: 5146789780026925280
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nubes 1_2
+      name: piedras__0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2997
-        height: 886
+        width: 892
+        height: 393
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,8 +115,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c526b17aea0e942c0800000000000000
-      internalID: -4446776116319133092
+      spriteID: f816574817d170b10800000000000000
+      internalID: 1947557737251824015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: piedras__1
+      rect:
+        serializedVersion: 2
+        x: 2022
+        y: 0
+        width: 598
+        height: 409
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ee8a18b628007670800000000000000
+      internalID: 8534330256257617633
       vertices: []
       indices: 
       edges: []
@@ -189,9 +153,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      nubes 1_0: 649508864095423869
-      nubes 1_1: 5146789780026925280
-      nubes 1_2: -4446776116319133092
+      piedras__0: 1947557737251824015
+      piedras__1: 8534330256257617633
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

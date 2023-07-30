@@ -14,6 +14,8 @@ public class PlayerSwitch : MonoBehaviour
     public GameObject p2;
     public Material skin;
 
+    public float gapDistance = 5.0f;
+
 
     private void Start()
     {
@@ -26,10 +28,32 @@ public class PlayerSwitch : MonoBehaviour
 
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            // Verificar si el personaje actual está en "modo ocio" antes de permitir el cambio
+            if ((player1Active && player1.IsIdle) || (!player1Active && player2.IsIdle))
         {
             SwitchPlayer();
         }
+        }
+
+
+        // Mantener el desplazamiento constante entre los personajes
+        if (player1Active)
+        {
+
+            Debug.Log("SwitchPlayer - Player 1 isIdle: " + player1.IsIdle);
+            Vector3 targetPosition = Player1.position - Player1.forward * gapDistance;
+            Player2.position = targetPosition;
+        }
+        else
+        {
+            Debug.Log("SwitchPlayer - Player 2 isIdle: " + player2.IsIdle);
+            Vector3 targetPosition = Player2.position - Player2.forward * gapDistance;
+            Player1.position = targetPosition;
+        }
+
     }
 
     public void SwitchPlayer()
@@ -94,6 +118,12 @@ public class PlayerSwitch : MonoBehaviour
             Color colorP1 = materialP1.color;
             colorP1.a = 1.0f;
             materialP1.color = colorP1;
+
+
+            // Teletransportar al personaje inactivo (pj1) al lugar correcto con el desfase
+            Vector3 targetPosition = Player2.position - Player2.forward * gapDistance;
+            Player1.position = targetPosition;
+            Player1.rotation = Player2.rotation;
         }
 
     }

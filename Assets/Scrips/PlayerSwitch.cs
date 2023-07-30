@@ -14,7 +14,7 @@ public class PlayerSwitch : MonoBehaviour
     public GameObject p2;
     public Material skin;
 
-    public float gapDistance = 5.0f;
+    
 
 
     private void Start()
@@ -43,12 +43,12 @@ public class PlayerSwitch : MonoBehaviour
         if (player1Active)
         {
 
-            Vector3 targetPosition = Player1.position - Player1.forward * gapDistance;
+            Vector3 targetPosition = Player1.position;
             Player2.position = targetPosition;
         }
         else
         {
-            Vector3 targetPosition = Player2.position - Player2.forward * gapDistance;
+            Vector3 targetPosition = Player2.position;
             Player1.position = targetPosition;
         }
 
@@ -70,6 +70,7 @@ public class PlayerSwitch : MonoBehaviour
         //    player1Active = true;
         //    virtualCamera.Follow = Player1; // Cambiar el objetivo de la cámara al personaje 1
         //}
+         
 
         if (player1Active)
         {
@@ -81,7 +82,7 @@ public class PlayerSwitch : MonoBehaviour
 
             player2.enabled = true;
             player1Active = false;
-            virtualCamera.Follow = Player2; // Cambiar el objetivo de la cámara al personaje 2
+            
 
 
             Material materialP1 = p1.GetComponent<Renderer>().material;
@@ -105,7 +106,7 @@ public class PlayerSwitch : MonoBehaviour
             player1.enabled = true;
             
             player1Active = true;
-            virtualCamera.Follow = Player1; // Cambiar el objetivo de la cámara al personaje 1
+         
 
             Material materialP2 = p2.GetComponent<Renderer>().material;
             Color colorP2 = materialP2.color;
@@ -119,7 +120,7 @@ public class PlayerSwitch : MonoBehaviour
 
 
             // Teletransportar al personaje inactivo (pj1) al lugar correcto con el desfase
-            Vector3 targetPosition = Player2.position - Player2.forward * gapDistance;
+            Vector3 targetPosition = Player2.position;
             Player1.position = targetPosition;
             Player1.rotation = Player2.rotation;
         }

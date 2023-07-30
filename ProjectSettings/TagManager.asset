@@ -17,7 +17,7 @@ TagManager:
   - Player1
   - Player2
   - Arma
-  - 
+  - Fondo
   - 
   - 
   - 
@@ -45,4 +45,16 @@ TagManager:
     locked: 0
   - name: Fondo
     uniqueID: 1373707261
+    locked: 0
+  - name: Terreno
+    uniqueID: 2481871089
+    locked: 0
+  - name: Enemigos
+    uniqueID: 3111453581
+    locked: 0
+  - name: Player
+    uniqueID: 2172854779
+    locked: 0
+  - name: otros
+    uniqueID: 3098651107
     locked: 0

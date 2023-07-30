@@ -132,16 +132,16 @@ public class Enemigo : MonoBehaviour
 
     
 
-    void DebugRaycast()
-    {
-        Vector2 raycastOrigin = inicioRaycastGround.transform.position;
-        Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistancia2, Color.red);
-    }
-    private void OnDrawGizmos()
-    {
-       Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
-    }
+    //void DebugRaycast()
+    //{
+    //    Vector2 raycastOrigin = inicioRaycastGround.transform.position;
+    //    Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistancia2, Color.red);
+    //}
+    //private void OnDrawGizmos()
+    //{
+    //   Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
+    //}
 
     //private void OnDrawGizmos()
     //{

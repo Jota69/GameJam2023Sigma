@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        DebugRaycast();
+        //DebugRaycast();
         isGrounded = CheckGrounded();
 
         bool isAlmostIdle = isGrounded && rb.velocity.magnitude < 0.1f;
@@ -205,11 +205,11 @@ public class PlayerController : MonoBehaviour
     //}
 
 
-    void DebugRaycast()
-    {
-        Vector2 raycastOrigin = transform.position;
-        Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistance2, Color.red);
-    }
+    //void DebugRaycast()
+    //{
+    //    Vector2 raycastOrigin = transform.position;
+    //    Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistance2, Color.red);
+    //}
 
 
 }

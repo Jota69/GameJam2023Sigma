@@ -112,14 +112,6 @@ public class Enemigo : MonoBehaviour
     }
     
 
-
-
-
-
-
-
-
-
     private void Girar()
     {
         transform.eulerAngles = new Vector3(0,transform.eulerAngles.y+180,0);
@@ -131,22 +123,14 @@ public class Enemigo : MonoBehaviour
 
         if (vida <= 0)
         {
-            animator.SetTrigger("Dead");
-            StartCoroutine(EsperarAnimacionMuerte());
+            Destroy(gameObject);
+            
         }
         vida -= daño;
 
     }
 
-    private IEnumerator EsperarAnimacionMuerte()
-    {
-        AnimationClip animacionMuerteClip = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
-        float duracionAnimacion = animacionMuerteClip.length;
-
-        yield return new WaitForSeconds(duracionAnimacion);
-
-        Destroy(gameObject);
-    }
+    
 
     void DebugRaycast()
     {

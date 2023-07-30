@@ -17,6 +17,7 @@ public class PlayerSwitch : MonoBehaviour
 
     private void Start()
     {
+        player2.tag = "Untagged";
         Material materialP2 = p2.GetComponent<Renderer>().material;
         Color colorP2 = materialP2.color;
         colorP2.a = 0.5f;
@@ -51,10 +52,11 @@ public class PlayerSwitch : MonoBehaviour
         if (player1Active)
         {
             player1.isActive = false;
-            
+            player1.tag = "Untagged";
+
             player2.isActive = true;
-           
-           
+            player2.tag = "Player";
+
             player2.enabled = true;
             player1Active = false;
             virtualCamera.Follow = Player2; // Cambiar el objetivo de la cámara al personaje 2
@@ -74,10 +76,10 @@ public class PlayerSwitch : MonoBehaviour
         else
         {
             player1.isActive = true;
-
+            player1.tag = "Player";
             
             player2.isActive = false;
-            
+            player2.tag = "Untagged";
             player1.enabled = true;
             
             player1Active = true;

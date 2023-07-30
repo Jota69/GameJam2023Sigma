@@ -430,8 +430,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiempoEntreChar: 0.05
   lineasDialogo:
-  - kgkjgefrjd
-  vineta: {fileID: 0}
+  - aloH
+  vineta: {fileID: 1809548857}
 --- !u!4 &339137565
 Transform:
   m_ObjectHideFlags: 0
@@ -1232,7 +1232,7 @@ MonoBehaviour:
   isActive: 0
   atrackClip: {fileID: 7400000, guid: b00287ff9ee5710489944ed27347dcad, type: 2}
   controladorGolpe: {fileID: 1723904366}
-  radioGolpe: 1
+  radioGolpe: 0.7
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -1275,8 +1275,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.21, y: 0.38}
+  m_Offset: {x: -0.32459736, y: -0.91049075}
+  m_Size: {x: 4.845667, y: 18.622494}
   m_Direction: 0
 --- !u!50 &930974911
 Rigidbody2D:
@@ -1368,12 +1368,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3204480812468917802, guid: 65595bdc410890346b939241e0728bc0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3c0e0eacfeeeaed4986c436b57e9f8d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.21, y: 0.38}
+  m_Size: {x: 14.4, y: 25.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1388,12 +1388,11 @@ Transform:
   m_GameObject: {fileID: 930974907}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.31, y: -2.9, z: 0}
-  m_LocalScale: {x: 5.1386623, y: 5.1386623, z: 5.1386623}
+  m_LocalPosition: {x: -8.241, y: -2.85, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.096, z: 5.1386623}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1723904366}
-  - {fileID: 1862109810}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &937864984
@@ -1848,8 +1847,8 @@ Transform:
   m_GameObject: {fileID: 1692752205}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.35, y: -0.26, z: 0}
+  m_LocalScale: {x: 40.81, y: 41.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 834511582}
@@ -1880,7 +1879,7 @@ Transform:
   m_GameObject: {fileID: 1723904365}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.18, y: 0, z: 0}
+  m_LocalPosition: {x: 5.69, y: -0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2178,8 +2177,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  raycastDistance: 1
-  raycastDistance2: 2
+  raycastDistance: 1.2
+  raycastDistance2: 1.2
   jumpForce: 300
   speed: 5
   "da\xF1oGolpe": 0
@@ -2532,37 +2531,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   ropeProgressionSpeed: 6.7
   isGrappling: 1
---- !u!1 &1862109809
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1862109810}
-  m_Layer: 8
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1862109810
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862109809}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 930974914}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1970710627
 GameObject:
   m_ObjectHideFlags: 0

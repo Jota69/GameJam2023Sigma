@@ -14,6 +14,7 @@ public class Dialogos2 : MonoBehaviour
     private bool activeDialog;
 
 
+
     private void Start()
     {
         
@@ -73,6 +74,22 @@ public class Dialogos2 : MonoBehaviour
         }
     }
 
+    public string InvertirFraseCompleta(string frase)
+    {
+        string[] palabras = frase.Split(' ');
+        for (int i = 0; i < palabras.Length; i++)
+        {
+            palabras[i] = InvertirPalabra(palabras[i]);
+        }
+        return string.Join(" ", palabras);
+    }
+    public string InvertirPalabra(string palabra)
+    {
+        char[] caracteres = palabra.ToCharArray();
+        System.Array.Reverse(caracteres);
+        return new string(caracteres);
+    }
+
     private void OnEnable()
     {
         //Eventos.eve.IniciarDialogo2.AddListener(EmpezarDialogo);
@@ -80,8 +97,12 @@ public class Dialogos2 : MonoBehaviour
 
     private void mostrarLinea()
     {
-        vineta.GetComponentInChildren<TextMeshProUGUI>().text = lineasDialogo[LineIndex];
-        
+        string frase = lineasDialogo[LineIndex];
+        //string fraseInvertida = InvertirFraseCompleta(frase);
+        lineasDialogo[LineIndex] = InvertirFraseCompleta(frase);
+        vineta.GetComponentInChildren<TextMeshProUGUI>().text = lineasDialogo[LineIndex]; //fraseInvertida;
+
+
     }
     private IEnumerator ocultar()
     {

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController2 : MonoBehaviour
 {
-    
+    private int vida;
     private Mapa _myInput;
     public Vector2 moveVector = Vector2.zero;
     private Rigidbody2D rb;
@@ -190,11 +190,34 @@ public class PlayerController2 : MonoBehaviour
     }
 
 
-    private void OnDrawGizmos()
+    public void ResivirDaño(int daño)
     {
-       Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
+
+
+        if (vida <= 0)
+        {
+            //animator.SetTrigger("Dead");
+            //StartCoroutine(EsperarAnimacionMuerte());
+        }
+        vida -= daño;
+
     }
+
+    //private IEnumerator EsperarAnimacionMuerte()
+    //{
+    //    AnimationClip animacionMuerteClip = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
+    //    float duracionAnimacion = animacionMuerteClip.length;
+
+    //    yield return new WaitForSeconds(duracionAnimacion);
+
+    //    Destroy(gameObject);
+    //}
+
+    //private void OnDrawGizmos()
+    //{
+    //   Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
+    //}
 
 
     void DebugRaycast()

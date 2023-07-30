@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Video;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,7 +17,9 @@ public class PlayerController : MonoBehaviour
     public bool isActive;
     private bool pausePlayer;
     private PlayerController2 playerController;
+    private bool muerto;
 
+    [SerializeField] private int vida;
     [SerializeField] private AnimationClip atrackClip;
     [SerializeField] private Transform controladorGolpe;
     [SerializeField] private float radioGolpe;
@@ -37,6 +40,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        muerto = false;
         isActive = true;
         controladorGolpe = transform.GetChild(0).GetComponent<Transform>();
         animator = GetComponent<Animator>();
@@ -185,6 +189,30 @@ public class PlayerController : MonoBehaviour
     {
         pausePlayer = false;
     }
+
+    public void ResivirDaño(int daño)
+    {
+
+
+        if (vida <= 0 && !muerto)
+        {
+            muerto = true;
+            //animator.SetTrigger("Dead");
+            //StartCoroutine(EsperarAnimacionMuerte());
+        }
+        vida -= daño;
+
+    }
+
+    //private IEnumerator EsperarAnimacionMuerte()
+    //{
+    //    AnimationClip animacionMuerteClip = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
+    //    float duracionAnimacion = animacionMuerteClip.length;
+
+    //    yield return new WaitForSeconds(duracionAnimacion);
+
+    //    Destroy(gameObject);
+    //}
 
 
     //private void OnDrawGizmos()

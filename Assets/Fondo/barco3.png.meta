@@ -188,7 +188,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      barco3_0: 1056563018573059876
+      barco3_1: 6525441168137783738
+      barco3_2: -2490463867758098659
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

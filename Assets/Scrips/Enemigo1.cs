@@ -106,7 +106,7 @@ public class Enemigo : MonoBehaviour
         {
             if (colicionador.CompareTag("Player"))
             {
-                colicionador.transform.GetComponent<PlayerController>().ResivirDaño(dañoGolpe);
+                Eventos.eve.perderVida.Invoke();
             }
         }
     }

@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerController2 : MonoBehaviour
 {
-    private int vida;
     private Mapa _myInput;
     public Vector2 moveVector = Vector2.zero;
     private Rigidbody2D rb;
@@ -190,18 +189,7 @@ public class PlayerController2 : MonoBehaviour
     }
 
 
-    public void ResivirDaño(int daño)
-    {
-
-
-        if (vida <= 0)
-        {
-            //animator.SetTrigger("Dead");
-            //StartCoroutine(EsperarAnimacionMuerte());
-        }
-        vida -= daño;
-
-    }
+    
 
     //private IEnumerator EsperarAnimacionMuerte()
     //{

@@ -29,6 +29,7 @@ public class Eventos : MonoBehaviour
     public UnityEvent PausarPlayer2;
     public UnityEvent DespausarPlayer1;
     public UnityEvent DespausarPlayer2;
+    public UnityEvent perderVida;
 
 
 

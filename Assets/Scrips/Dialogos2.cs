@@ -85,6 +85,7 @@ public class Dialogos2 : MonoBehaviour
     }
     private IEnumerator ocultar()
     {
+        leido = true;
         vineta.GetComponent<Animator>().SetBool("abrir", false);
         yield return new WaitForSeconds(0.5f);
         vineta.SetActive(false);

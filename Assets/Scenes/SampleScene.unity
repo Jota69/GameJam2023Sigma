@@ -201,6 +201,9 @@ MonoBehaviour:
   DespausarPlayer2:
     m_PersistentCalls:
       m_Calls: []
+  perderVida:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &103647395
 Transform:
   m_ObjectHideFlags: 0
@@ -2036,6 +2039,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1609450196
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1609450198}
+  - component: {fileID: 1609450197}
+  m_Layer: 0
+  m_Name: SistemaDeVida
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1609450197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609450196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71bc7c814fea0d744b8af7d737e0b8b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vida: 10
+--- !u!4 &1609450198
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609450196}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.8459632, y: -0.57436657, z: -0.05986751}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1692752205
 GameObject:
   m_ObjectHideFlags: 0
@@ -2416,7 +2464,6 @@ MonoBehaviour:
   moveVector: {x: 0, y: 0}
   animator: {fileID: 1779537370}
   isActive: 0
-  vida: 10
   atrackClip: {fileID: 0}
   controladorGolpe: {fileID: 0}
   radioGolpe: 0
@@ -3089,3 +3136,4 @@ SceneRoots:
   - {fileID: 1104303523}
   - {fileID: 339137565}
   - {fileID: 116641516}
+  - {fileID: 1609450198}

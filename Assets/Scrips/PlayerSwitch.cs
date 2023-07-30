@@ -43,13 +43,11 @@ public class PlayerSwitch : MonoBehaviour
         if (player1Active)
         {
 
-            Debug.Log("SwitchPlayer - Player 1 isIdle: " + player1.IsIdle);
             Vector3 targetPosition = Player1.position - Player1.forward * gapDistance;
             Player2.position = targetPosition;
         }
         else
         {
-            Debug.Log("SwitchPlayer - Player 2 isIdle: " + player2.IsIdle);
             Vector3 targetPosition = Player2.position - Player2.forward * gapDistance;
             Player1.position = targetPosition;
         }

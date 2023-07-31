@@ -6,6 +6,19 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: "Assets/Prefavs/Scenes/Men\xFA.unity"
+    guid: 369b29c9155473a4184327c6522312bd
+  - enabled: 1
+    path: Assets/Prefavs/Scenes/Animacion1.unity
+    guid: b13a07837b7098140ae369a0cc171996
+  - enabled: 1
+    path: Assets/Prefavs/Scenes/Mar.unity
+    guid: 61fcc33b1f16f0840b81a695e5028cc5
+  - enabled: 1
+    path: Assets/Prefavs/Scenes/Playa.unity
+    guid: 89bc0ee143754084fbf6ba46b7977976
+  - enabled: 1
+    path: Assets/Prefavs/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

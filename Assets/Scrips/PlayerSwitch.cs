@@ -14,8 +14,11 @@ public class PlayerSwitch : MonoBehaviour
     public GameObject p2;
     public Material skin;
 
-    
 
+    public bool isGrounded;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float raycastDistance = 1f;
+    [SerializeField] private float raycastDistance2 = 1f;
 
     private void Start()
     {
@@ -28,11 +31,11 @@ public class PlayerSwitch : MonoBehaviour
 
     void Update()
     {
-
+        isGrounded = CheckGrounded();
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             // Verificar si el personaje actual está en "modo ocio" antes de permitir el cambio
-            if ((player1Active && player1.IsIdle) || (!player1Active && player2.IsIdle))
+            if ((player1.isGrounded) || (player2.isGrounded))
         {
             SwitchPlayer();
         }
@@ -54,22 +57,29 @@ public class PlayerSwitch : MonoBehaviour
 
     }
 
+    private bool CheckGrounded()
+    {
+        Vector2 raycastOrigin = transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, Vector2.down, raycastDistance, groundLayer);
+        return (hit.collider != null);
+    }
+
     public void SwitchPlayer()
     {
-        //if (player1Active)
-        //{
-        //    Eventos.eve.PausarPlayer1.Invoke();
-        //    Eventos.eve.DespausarPlayer2.Invoke();
-        //    player1Active = false;
-        //    virtualCamera.Follow = Player2; // Cambiar el objetivo de la cámara al personaje 2
-        //}
-        //else
-        //{
-        //    Eventos.eve.DespausarPlayer1.Invoke();
-        //    Eventos.eve.PausarPlayer2.Invoke();
-        //    player1Active = true;
-        //    virtualCamera.Follow = Player1; // Cambiar el objetivo de la cámara al personaje 1
-        //}
+        /*if (player1Active)
+        
+            Eventos.eve.PausarPlayer1.Invoke();
+            Eventos.eve.DespausarPlayer2.Invoke();
+            player1Active = false;
+            virtualCamera.Follow = Player2; // Cambiar el objetivo de la cámara al personaje 2
+         }
+         else
+         {
+            Eventos.eve.DespausarPlayer1.Invoke();
+            Eventos.eve.PausarPlayer2.Invoke();
+            player1Active = true;
+            virtualCamera.Follow = Player1; // Cambiar el objetivo de la cámara al personaje 1
+        */
          
 
         if (player1Active)

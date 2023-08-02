@@ -120,16 +120,25 @@ public class GrapplingGun : MonoBehaviour
     void SetGrapplePoint()
     {
         Vector2 distanceVector = m_camera.ScreenToWorldPoint(Input.mousePosition) - gunPivot.position;
-        if (Physics2D.Raycast(firePoint.position, distanceVector.normalized))
+        RaycastHit2D hit = Physics2D.Raycast(firePoint.position, distanceVector.normalized);
+
+        if (hit)
         {
-            RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector.normalized);
-            if (_hit.transform.gameObject.layer == grappableLayerNumber || grappleToAll)
+           //Visualizar el raycast en la escena
+            Debug.DrawRay(firePoint.position, distanceVector.normalized * hit.distance, Color.green, 0.2f);
+
+            if (hit.transform.gameObject.layer == grappableLayerNumber || grappleToAll)
             {
-                if (Vector2.Distance(_hit.point, firePoint.position) <= maxDistnace || !hasMaxDistance)
+                if (Vector2.Distance(hit.point, firePoint.position) <= maxDistnace || !hasMaxDistance)
                 {
-                    grapplePoint = _hit.point;
+                    grapplePoint = hit.point;
                     grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
                     grappleRope.enabled = true;
+
+                    // Mensaje de depuración para imprimir la información del Raycast
+                    Debug.Log("Raycast hit: " + hit.transform.gameObject.name);
+                    Debug.Log("Distance to hit: " + hit.distance);
+                    Debug.Log("Grapple Point: " + grapplePoint);
                 }
             }
         }

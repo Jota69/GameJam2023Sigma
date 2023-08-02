@@ -1805,6 +1805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveVector: {x: 0, y: 0}
   animator: {fileID: 930974912}
+  isGrounded: 0
   isActive: 0
   atrackClip: {fileID: 7400000, guid: b00287ff9ee5710489944ed27347dcad, type: 2}
   controladorGolpe: {fileID: 1723904366}
@@ -2224,7 +2225,12 @@ MonoBehaviour:
   p1: {fileID: 1779537367}
   p2: {fileID: 930974907}
   skin: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  gapDistance: 5
+  isGrounded: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  raycastDistance: 1
+  raycastDistance2: 1
 --- !u!4 &1299857789
 Transform:
   m_ObjectHideFlags: 0
@@ -2988,6 +2994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveVector: {x: 0, y: 0}
   animator: {fileID: 1779537370}
+  isGrounded: 0
   isActive: 0
   atrackClip: {fileID: 0}
   controladorGolpe: {fileID: 0}

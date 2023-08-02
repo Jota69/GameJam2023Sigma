@@ -32,6 +32,7 @@ public class GrapplingRope : MonoBehaviour
         player = GetComponent<PlayerController>();
     }
 
+
     private void OnEnable()
     {
         moveTime = 0;
@@ -60,11 +61,8 @@ public class GrapplingRope : MonoBehaviour
 
     private void Update()
     {
-        
             moveTime += Time.deltaTime;
-            DrawRope();
-        
-        
+            DrawRope();             
     }
 
     void DrawRope()

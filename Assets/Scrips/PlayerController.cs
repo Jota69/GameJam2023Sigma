@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 moveVector = Vector2.zero;
     private Rigidbody2D rb;
     public Animator animator;
-    private bool isGrounded;
+    public bool isGrounded;
     private float TiempoEntreAtaque;
     private float TiempoSiguienteAtaque;
     public bool isActive;

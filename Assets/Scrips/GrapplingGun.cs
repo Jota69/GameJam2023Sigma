@@ -136,9 +136,6 @@ public class GrapplingGun : MonoBehaviour
                     grappleRope.enabled = true;
 
                     // Mensaje de depuración para imprimir la información del Raycast
-                    Debug.Log("Raycast hit: " + hit.transform.gameObject.name);
-                    Debug.Log("Distance to hit: " + hit.distance);
-                    Debug.Log("Grapple Point: " + grapplePoint);
                 }
             }
         }

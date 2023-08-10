@@ -140,7 +140,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      brujula_0: -5502465461007319794
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

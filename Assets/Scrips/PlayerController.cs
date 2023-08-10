@@ -181,6 +181,7 @@ public class PlayerController : MonoBehaviour
     private void PausarPlayer() 
     { 
         pausePlayer = true;
+        Debug.Log("ss");
     }
     private void DesausarPlayer()
     {

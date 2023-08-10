@@ -112,9 +112,7 @@ public class Dialogos2 : MonoBehaviour
 
     private void mostrarLinea()
     {
-        string frase = lineasDialogo[LineIndex];
-        //string fraseInvertida = InvertirFraseCompleta(frase);
-        lineasDialogo[LineIndex] = InvertirFraseCompleta(frase);
+        
         vineta.GetComponentInChildren<TextMeshProUGUI>().text = lineasDialogo[LineIndex]; //fraseInvertida;
 
 

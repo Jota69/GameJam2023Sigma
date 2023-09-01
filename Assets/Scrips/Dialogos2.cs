@@ -48,7 +48,7 @@ public class Dialogos2 : MonoBehaviour
     {
 
         Eventos.eve.IniciarDialogo2.RemoveListener(EmpezarDialogo);
-        Eventos.eve.PausarPlayer1.Invoke();
+        Eventos.eve.PausarPlayer.Invoke();
         Eventos.eve.PausarPlayer2.Invoke();
         activeDialog = true;
         vineta.SetActive(true);
@@ -67,7 +67,7 @@ public class Dialogos2 : MonoBehaviour
         {
             StartCoroutine(ocultar());
             activeDialog = false;
-            Eventos.eve.DespausarPlayer1.Invoke();
+            Eventos.eve.DespausarPlayer.Invoke();
             Eventos.eve.DespausarPlayer2.Invoke();
             
 

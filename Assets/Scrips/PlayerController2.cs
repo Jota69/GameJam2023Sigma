@@ -14,7 +14,6 @@ public class PlayerController2 : MonoBehaviour
     private float TiempoSiguienteAtaque;
     public bool isActive;
     private bool pausePlayer;
-    private PlayerController2 playerController;
 
     [SerializeField] private AnimationClip atrackClip;
     [SerializeField] private Transform controladorGolpe;
@@ -60,6 +59,13 @@ public class PlayerController2 : MonoBehaviour
         //Eventos
         Eventos.eve.PausarPlayer2.AddListener(PausarPlayer);
         Eventos.eve.DespausarPlayer2.AddListener(DesausarPlayer);
+    }
+    private void OnDisable()
+    {
+        _myInput.Player.Movimiento.performed -= OnMovementPerformed;
+        _myInput.Player.Movimiento.canceled -= OnMovementCancelled;
+        _myInput.Player.Jump.performed -= OnJumpPerformed;
+        _myInput.Player.Atacar.performed -= OnAtackPerformed;
     }
 
     private void FixedUpdate()

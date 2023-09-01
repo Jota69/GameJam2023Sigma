@@ -9,7 +9,7 @@ public class Eventos : MonoBehaviour
     public static Eventos eve;
 
     private void Awake()
-    { 
+    {
         if (eve != null && eve != this)
         {
             Destroy(this.gameObject);
@@ -25,9 +25,11 @@ public class Eventos : MonoBehaviour
     public UnityEvent enemigoMuertoCount;
     public UnityEvent<int> moverPlataforma;
     public UnityEvent IniciarDialogo2;
-    public UnityEvent PausarPlayer1;
+    public UnityEvent PausarPlayer;
+    public UnityEvent pausarP;
     public UnityEvent PausarPlayer2;
-    public UnityEvent DespausarPlayer1;
+    public UnityEvent DespausarPlayer;
+    public UnityEvent DespausarP;
     public UnityEvent DespausarPlayer2;
     public UnityEvent perderVida;
 

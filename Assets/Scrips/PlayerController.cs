@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Video;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,7 +15,6 @@ public class PlayerController : MonoBehaviour
     private float TiempoSiguienteAtaque;
     public bool isActive;
     private bool pausePlayer;
-    private PlayerController2 playerController;
 
     [SerializeField] private AnimationClip atrackClip;
     [SerializeField] private Transform controladorGolpe;
@@ -47,7 +45,6 @@ public class PlayerController : MonoBehaviour
         _myInput = new Mapa();
         _myInput.Enable();
 
-
     }
 
     private void OnEnable()
@@ -61,9 +58,15 @@ public class PlayerController : MonoBehaviour
         _myInput.Player.Jump.performed += OnJumpPerformed;
 
         //Eventos
-        Eventos.eve.PausarPlayer1.AddListener(PausarPlayer);
-        Eventos.eve.DespausarPlayer1.AddListener(DesausarPlayer);
+        Eventos.eve.DespausarPlayer.AddListener(DesausarPlayer);
+        Eventos.eve.PausarPlayer.AddListener(PausarPlayer);
+    }
 
+    private void OnDisable()
+    {
+        _myInput.Player.Movimiento.performed -= OnMovementPerformed;
+        _myInput.Player.Movimiento.canceled -= OnMovementCancelled;
+        _myInput.Player.Jump.performed -= OnJumpPerformed;
     }
 
     private void FixedUpdate()
@@ -181,7 +184,6 @@ public class PlayerController : MonoBehaviour
     private void PausarPlayer() 
     { 
         pausePlayer = true;
-        Debug.Log("ss");
     }
     private void DesausarPlayer()
     {

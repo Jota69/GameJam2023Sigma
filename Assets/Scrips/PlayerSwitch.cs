@@ -36,9 +36,9 @@ public class PlayerSwitch : MonoBehaviour
         {
             // Verificar si el personaje actual está en "modo ocio" antes de permitir el cambio
             if ((player1.isGrounded) || (player2.isGrounded))
-        {
-            SwitchPlayer();
-        }
+            {
+                SwitchPlayer();
+            }
         }
 
 
@@ -66,20 +66,15 @@ public class PlayerSwitch : MonoBehaviour
 
     public void SwitchPlayer()
     {
-        /*if (player1Active)
-        
-            Eventos.eve.PausarPlayer1.Invoke();
-            Eventos.eve.DespausarPlayer2.Invoke();
-            player1Active = false;
+        if (player1Active)
+        {
             virtualCamera.Follow = Player2; // Cambiar el objetivo de la cámara al personaje 2
-         }
-         else
-         {
-            Eventos.eve.DespausarPlayer1.Invoke();
-            Eventos.eve.PausarPlayer2.Invoke();
-            player1Active = true;
+
+        }
+        else
+        {
             virtualCamera.Follow = Player1; // Cambiar el objetivo de la cámara al personaje 1
-        */
+        }
          
 
         if (player1Active)

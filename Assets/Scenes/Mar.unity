@@ -1602,10 +1602,10 @@ MonoBehaviour:
   rotateOverTime: 1
   rotationSpeed: 17.6
   hasMaxDistance: 1
-  maxDistnace: 100
-  launchToPoint: 0
+  maxDistnace: 8
+  launchToPoint: 1
   launchType: 1
-  launchSpeed: 1
+  launchSpeed: 0.4
   autoConfigureDistance: 1
   targetDistance: 3
   targetFrequncy: 1
@@ -1891,7 +1891,7 @@ MonoBehaviour:
   - {fileID: 1953919191}
   - {fileID: 76211538}
   - {fileID: 378729199}
-  smoothing: 10
+  smoothing: 7
   virtualCamera: {fileID: 1765889973}
 --- !u!1 &519420028
 GameObject:
@@ -1919,7 +1919,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

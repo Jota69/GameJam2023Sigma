@@ -1603,11 +1603,11 @@ MonoBehaviour:
   rotationSpeed: 17.6
   hasMaxDistance: 1
   maxDistnace: 8
-  launchToPoint: 1
+  launchToPoint: 0
   launchType: 1
   launchSpeed: 0.4
   autoConfigureDistance: 1
-  targetDistance: 3
+  targetDistance: 8
   targetFrequncy: 1
   grapplePoint: {x: 0, y: 0}
   grappleDistanceVector: {x: 0, y: 0}
@@ -2883,7 +2883,7 @@ MonoBehaviour:
   grapplingGun: {fileID: 378991242}
   m_lineRenderer: {fileID: 875123476}
   percision: 40
-  straightenLineSpeed: 10
+  straightenLineSpeed: 7.8
   ropeAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -2953,7 +2953,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  StartWaveSize: 2
+  StartWaveSize: 0.78
   ropeProgressionCurve:
     serializedVersion: 2
     m_Curve:

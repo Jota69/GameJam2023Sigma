@@ -110,6 +110,7 @@ public class PlayerSwitch : MonoBehaviour
             player2.tag = "Untagged";
             player1.enabled = true;
             
+            
             player1Active = true;
          
 

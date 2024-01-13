@@ -54,6 +54,7 @@ public class Enemigo : MonoBehaviour
     private void Update()
     {
         DebugRaycast();
+        
 
         if (isMobile)
         {
@@ -67,16 +68,24 @@ public class Enemigo : MonoBehaviour
             RaycastHit2D informacionSuelo = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, queEsSuelo);
             RaycastHit2D informacionPlayerCac = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, playerMask);
 
-            foreach (var hit in hits)
-            {
-                Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
-                if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
+            if (!isCac) {
+                foreach (var hit in hits)
                 {
-                    atacar();
-                    Debug.Log("El jugador ha sido detectado");
-                }
+                    Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
+                    Debug.DrawRay(transform.position, directionToPlayer, Color.green);
+                    if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
+                    {
+                        if (hit.CompareTag("Player"))
+                        {
+                            atacar();
+                            atacando = true;
+                        }
+                        
+                    }
 
-                
+
+                }
+                if (hits.Length == 0) { atacando = false; }
             }
             if (informacionPlayerCac && isCac)
 
@@ -117,11 +126,13 @@ public class Enemigo : MonoBehaviour
         {
             golpeEjecutado = true;
             Golpe();
+            Debug.Log("Atacó");
             ; // Marcar el golpe como ejecutado
         }
-       
-        atacando = false;
-        yield return new WaitForSeconds(1f);
+        if(isCac)
+        {atacando = false;}
+
+            yield return new WaitForSeconds(1f);
         golpeEjecutado = false;
     }
 

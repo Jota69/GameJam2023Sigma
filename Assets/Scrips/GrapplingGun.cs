@@ -8,7 +8,7 @@ public class GrapplingGun : MonoBehaviour
 
     [Header("Layers Settings:")]
     [SerializeField] private bool grappleToAll = false;
-    [SerializeField] private int grappableLayerNumber = 9;
+    [SerializeField] private int grappableLayerNumber = 6;
 
     [Header("Main Camera:")]
     public Camera m_camera;
@@ -37,7 +37,7 @@ public class GrapplingGun : MonoBehaviour
     }
 
     [Header("Launching:")]
-    [SerializeField] private bool launchToPoint = true;
+    [SerializeField] private bool launchToPoint = false;
     [SerializeField] private LaunchType launchType = LaunchType.Physics_Launch;
     [SerializeField] private float launchSpeed = 1;
 
@@ -61,11 +61,15 @@ public class GrapplingGun : MonoBehaviour
     {
         if (player.isActive)
         {
+            if (Input.GetKey(KeyCode.Mouse1))
+            {
+                launchToPoint = true;
+            }
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 SetGrapplePoint();
             }
-            else if (Input.GetKey(KeyCode.Mouse0))
+            else if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 if (grappleRope.enabled)
                 {

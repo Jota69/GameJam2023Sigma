@@ -22,6 +22,7 @@ public class PlayerSwitch : MonoBehaviour
 
     private void Start()
     {
+        p1.GetComponent<SpriteRenderer>().sortingOrder = 1;
         player2.tag = "Untagged";
         Material materialP2 = p2.GetComponent<Renderer>().material;
         Color colorP2 = materialP2.color;
@@ -80,7 +81,7 @@ public class PlayerSwitch : MonoBehaviour
         if (player1Active)
         {
             player2.enabled = true;
-            p2.GetComponent<CapsuleCollider2D>().enabled = true;
+            //p2.GetComponent<CapsuleCollider2D>().enabled = true;
             player2.isActive = true;
             player2.tag = "Player";
             p2.GetComponent<SpriteRenderer>().sortingOrder = 1;
@@ -102,12 +103,12 @@ public class PlayerSwitch : MonoBehaviour
             player1.isActive = false;
             player1.tag = "Untagged";
             p1.GetComponent<SpriteRenderer>().sortingOrder = 0;
-            p1.GetComponent<CapsuleCollider2D>().enabled = false;
+            //p1.GetComponent<CapsuleCollider2D>().enabled = false;
         }
         else
         {
             player1.enabled = true;
-            p1.GetComponent<CapsuleCollider2D>().enabled = true;
+            //p1.GetComponent<CapsuleCollider2D>().enabled = true;
             player1Active = true;
             player1.isActive = true;
             player1.tag = "Player";
@@ -135,7 +136,7 @@ public class PlayerSwitch : MonoBehaviour
             player2.isActive = false;
             player2.tag = "Untagged";
             p2.GetComponent<SpriteRenderer>().sortingOrder = 0;
-            p2.GetComponent<CapsuleCollider2D>().enabled = false;
+            //p2.GetComponent<CapsuleCollider2D>().enabled = false;
         }
 
     }

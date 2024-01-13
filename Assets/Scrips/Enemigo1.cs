@@ -7,7 +7,7 @@ using static UnityEngine.InputSystem.Controls.AxisControl;
 
 public class Enemigo : MonoBehaviour
 {
-
+    private LayerMask otrosEnemigos;
     private Rigidbody2D rb;
     private Animator animator;
     private Collider2D col;
@@ -15,6 +15,7 @@ public class Enemigo : MonoBehaviour
     private bool isGrounded;
     private bool atacando;
     private bool detectandoPlayer;
+    private bool playerDetectado;
     bool parado;
     private bool golpeEjecutado = false;
 
@@ -35,12 +36,17 @@ public class Enemigo : MonoBehaviour
 
     [Header("configuraciones de enemigos cuerpo a cuerpo:")]
     [SerializeField] private Transform controladorGolpe;
-    [SerializeField] private int dañoGolpe;
     [SerializeField] private float radioGolpe;
 
     [Header("Tipo de enemigo:")]
     [SerializeField] private bool isMobile;
     [SerializeField] private bool isCac;//cuerpo a cuerpo
+
+    [Header("Configuraciones de ataque:")]
+    [SerializeField] private int dañoGolpe;
+    [SerializeField] private float tEntreAtaques;
+    [SerializeField] private float tEsperaAtaque;
+
 
 
     void Start()
@@ -49,9 +55,11 @@ public class Enemigo : MonoBehaviour
         muerto = false;
         parado = false;
         detectandoPlayer = false;
+        playerDetectado = false;
         col = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        otrosEnemigos = GetComponent<LayerMask>();
     }
 
 
@@ -63,8 +71,11 @@ public class Enemigo : MonoBehaviour
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
             RaycastHit2D informacionSuelo = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, queEsSuelo);
             RaycastHit2D informacionPlayerCac = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, playerMask);
+            RaycastHit2D informacionOtrosEnemigos = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, otrosEnemigos);
 
-            if (!isCac) {
+
+        //ENEMIGOS PATRULLEROS A DISTANCIA
+        if (!isCac) {
                 foreach (var hit in hits)
                 {
                     Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
@@ -72,26 +83,30 @@ public class Enemigo : MonoBehaviour
                     if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
                     {
                         parado = true;
-                        if (hit.CompareTag("Player")&&!atacando)
+                        if (!playerDetectado&&!detectandoPlayer)
                         {
-                            
-                            atacar();   
+                            detectar(directionToPlayer);
                         }
-
+                        if (playerDetectado)
+                        {
+                            if (hit.CompareTag("Player") && !atacando)
+                            {
+                                atacar();
+                            }
+                        }
                     }
                     else
                     {
                         vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
                         rb.velocity = new Vector2(velocidadMovimiento*0.2f * transform.right.x, rb.velocity.y);
+                        playerDetectado = false;
                     }
-                    //aqui puedo poner algo para que los enemigos esten alerta cuando el player este escondido pero fuera de su visión luego de haberlo detectado previamente
-
-                    
-
-
                 }
                 if (hits.Length == 0) { parado = false; }
             }
+            /////////////////////////////////////////
+            
+            //ENEMIGOS PATRULLEROS CUERPO A CUERPO
             if (informacionPlayerCac && isCac && !atacando)
             {
                 parado = true;
@@ -104,7 +119,7 @@ public class Enemigo : MonoBehaviour
                 rb.velocity = new Vector2(velocidadMovimiento * transform.right.x, rb.velocity.y);
             }
 
-            if (informacionSuelo || !isGrounded)
+            if (informacionSuelo || !isGrounded||informacionOtrosEnemigos)
             {
                 Girar();
             }
@@ -118,15 +133,21 @@ public class Enemigo : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, Vector2.down, raycastDistancia2, queEsSuelo);
         return (hit.collider != null);
     }
-    private void detectar()
+    private bool detectar(Vector3 playerDirection)
     {
         detectandoPlayer = true;
-        StartCoroutine(detectado());
+        StartCoroutine(detectado(playerDirection));
+        return playerDetectado;
     }
-    private IEnumerator detectado()
+    private IEnumerator detectado(Vector3 playerDirection)
     {
         yield return new WaitForSeconds(1f);
+        if (Physics2D.Raycast(transform.position, playerDirection, detectionRadius, playerMask))  
+        { 
+            playerDetectado = true;
+        }
         detectandoPlayer = false;
+
     }
 
 
@@ -142,7 +163,7 @@ public class Enemigo : MonoBehaviour
     private IEnumerator ataque()
     {
         //animator.SetBool("ataque",true);
-        yield return new WaitForSeconds(3f /*AnimacionAtaque.length*/);
+        yield return new WaitForSeconds(0.5f /*AnimacionAtaque.length*/);
 
         if (!golpeEjecutado) // Verificar nuevamente antes de ejecutar el golpe
         {
@@ -151,7 +172,11 @@ public class Enemigo : MonoBehaviour
             Debug.Log("Atacó");
             ; // Marcar el golpe como ejecutado
         }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(tEntreAtaques);
+        if (isCac)
+        {
+            parado = false;
+        }
         golpeEjecutado = false;
         atacando = false;
     }

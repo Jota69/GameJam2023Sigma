@@ -14,6 +14,8 @@ public class Enemigo : MonoBehaviour
     private bool muerto;
     private bool isGrounded;
     private bool atacando;
+    private bool detectandoPlayer;
+    bool parado;
     private bool golpeEjecutado = false;
 
     private Vector3 vectorPosicionRaycast;
@@ -45,6 +47,8 @@ public class Enemigo : MonoBehaviour
     {
         atacando = false;
         muerto = false;
+        parado = false;
+        detectandoPlayer = false;
         col = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -55,15 +59,7 @@ public class Enemigo : MonoBehaviour
     {
         DebugRaycast();
         
-
-        if (isMobile)
-        {
             isGrounded = CheckGrounded();
-            if (!atacando)
-            {
-                vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-                rb.velocity = new Vector2(velocidadMovimiento * transform.right.x, rb.velocity.y);
-            }
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
             RaycastHit2D informacionSuelo = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, queEsSuelo);
             RaycastHit2D informacionPlayerCac = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, playerMask);
@@ -75,22 +71,37 @@ public class Enemigo : MonoBehaviour
                     Debug.DrawRay(transform.position, directionToPlayer, Color.green);
                     if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
                     {
-                        if (hit.CompareTag("Player"))
+                        parado = true;
+                        if (hit.CompareTag("Player")&&!atacando)
                         {
-                            atacar();
-                            atacando = true;
+                            
+                            atacar();   
                         }
-                        
+
                     }
+                    else
+                    {
+                        vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                        rb.velocity = new Vector2(velocidadMovimiento*0.2f * transform.right.x, rb.velocity.y);
+                    }
+                    //aqui puedo poner algo para que los enemigos esten alerta cuando el player este escondido pero fuera de su visión luego de haberlo detectado previamente
+
+                    
 
 
                 }
-                if (hits.Length == 0) { atacando = false; }
+                if (hits.Length == 0) { parado = false; }
             }
-            if (informacionPlayerCac && isCac)
-
+            if (informacionPlayerCac && isCac && !atacando)
             {
+                parado = true;
                 atacar();
+            }
+
+            if (!parado&&isMobile)
+            {
+                vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                rb.velocity = new Vector2(velocidadMovimiento * transform.right.x, rb.velocity.y);
             }
 
             if (informacionSuelo || !isGrounded)
@@ -98,7 +109,7 @@ public class Enemigo : MonoBehaviour
                 Girar();
             }
 
-        }
+        
     }
 
     private bool CheckGrounded()
@@ -107,6 +118,17 @@ public class Enemigo : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, Vector2.down, raycastDistancia2, queEsSuelo);
         return (hit.collider != null);
     }
+    private void detectar()
+    {
+        detectandoPlayer = true;
+        StartCoroutine(detectado());
+    }
+    private IEnumerator detectado()
+    {
+        yield return new WaitForSeconds(1f);
+        detectandoPlayer = false;
+    }
+
 
     private void atacar()
     {
@@ -129,11 +151,9 @@ public class Enemigo : MonoBehaviour
             Debug.Log("Atacó");
             ; // Marcar el golpe como ejecutado
         }
-        if(isCac)
-        {atacando = false;}
-
             yield return new WaitForSeconds(1f);
         golpeEjecutado = false;
+        atacando = false;
     }
 
     private void Golpe()

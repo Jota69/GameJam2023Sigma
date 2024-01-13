@@ -61,15 +61,11 @@ public class GrapplingGun : MonoBehaviour
     {
         if (player.isActive)
         {
-            if (Input.GetKey(KeyCode.Mouse1))
-            {
-                launchToPoint = true;
-            }
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 SetGrapplePoint();
             }
-            else if (Input.GetKeyDown(KeyCode.Mouse0))
+            else if (Input.GetKey(KeyCode.Mouse0))
             {
                 if (grappleRope.enabled)
                 {

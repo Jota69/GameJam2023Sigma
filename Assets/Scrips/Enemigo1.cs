@@ -18,16 +18,28 @@ public class Enemigo : MonoBehaviour
 
     private Vector3 vectorPosicionRaycast;
     [SerializeField] private int vida;
+
+    [Header("Configuraciones de movimiento:")]
     [SerializeField] private float velocidadMovimiento;
     [SerializeField] private float distanciaPared;
     [SerializeField] private float raycastDistancia2;
-    [SerializeField] private LayerMask queEsSuelo;
-    [SerializeField] private LayerMask playerMask;
     [SerializeField] private Transform inicioRaycastGround;
+    [SerializeField] private LayerMask queEsSuelo;
+
+    [Header("Configuraciones de detección al jugador:")]
+    [SerializeField] private float detectionRadius;
+    [SerializeField] private LayerMask playerMask;
     [SerializeField] private AnimationClip AnimacionAtaque;
+
+    [Header("configuraciones de enemigos cuerpo a cuerpo:")]
     [SerializeField] private Transform controladorGolpe;
     [SerializeField] private int dañoGolpe;
     [SerializeField] private float radioGolpe;
+
+    [Header("Tipo de enemigo:")]
+    [SerializeField] private bool isMobile;
+    [SerializeField] private bool isCac;//cuerpo a cuerpo
+
 
     void Start()
     {
@@ -41,29 +53,43 @@ public class Enemigo : MonoBehaviour
 
     private void Update()
     {
-        //DebugRaycast();
+        DebugRaycast();
 
-        isGrounded = CheckGrounded();
-        if (!atacando)
+        if (isMobile)
         {
-            vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-            rb.velocity = new Vector2(velocidadMovimiento * transform.right.x, rb.velocity.y);
+            isGrounded = CheckGrounded();
+            if (!atacando)
+            {
+                vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                rb.velocity = new Vector2(velocidadMovimiento * transform.right.x, rb.velocity.y);
+            }
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
+            RaycastHit2D informacionSuelo = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, queEsSuelo);
+            RaycastHit2D informacionPlayerCac = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, playerMask);
+
+            foreach (var hit in hits)
+            {
+                Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
+                if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
+                {
+                    atacar();
+                    Debug.Log("El jugador ha sido detectado");
+                }
+
+                
+            }
+            if (informacionPlayerCac && isCac)
+
+            {
+                atacar();
+            }
+
+            if (informacionSuelo || !isGrounded)
+            {
+                Girar();
+            }
+
         }
-
-        RaycastHit2D informacionSuelo = Physics2D.Raycast(vectorPosicionRaycast,transform.right, distanciaPared, queEsSuelo);
-        RaycastHit2D informacionPlayer = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, playerMask);
-
-        if (informacionPlayer)
-        {
-            atacar();
-        }
-
-        if (informacionSuelo || !isGrounded)    
-        {
-            Girar();
-        }
-
-
     }
 
     private bool CheckGrounded()
@@ -130,24 +156,24 @@ public class Enemigo : MonoBehaviour
 
     }
 
-    
 
-    //void DebugRaycast()
-    //{
-    //    Vector2 raycastOrigin = inicioRaycastGround.transform.position;
-    //    Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistancia2, Color.red);
-    //}
-    //private void OnDrawGizmos()
-    //{
-    //   Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
-    //}
+
+    void DebugRaycast()
+    {
+        Vector2 raycastOrigin = inicioRaycastGround.transform.position;
+        Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistancia2, Color.red);
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
 
     //private void OnDrawGizmos()
     //{
 
     //    Gizmos.color = Color.red;
-    //    Gizmos.DrawLine(vectorPosicionRaycast, vectorPosicionRaycast + transform.right * distancia);
+    //    Gizmos.DrawLine(vectorPosicionRaycast, vectorPosicionRaycast + transform.right * distanciaPared);
     //}
 
 }

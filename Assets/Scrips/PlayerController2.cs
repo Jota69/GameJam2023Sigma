@@ -20,7 +20,6 @@ public class PlayerController2 : MonoBehaviour
     [SerializeField] private float radioGolpe;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float raycastDistance = 1f;
-    [SerializeField] private float raycastDistance2 = 1f;
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
     [SerializeField] private int dañoGolpe;
@@ -76,7 +75,7 @@ public class PlayerController2 : MonoBehaviour
 
     private void Update()
     {
-        //DebugRaycast();
+        DebugRaycast();
         isGrounded = CheckGrounded();
 
         if (pausePlayer)
@@ -195,7 +194,7 @@ public class PlayerController2 : MonoBehaviour
     }
 
 
-    
+
 
     //private IEnumerator EsperarAnimacionMuerte()
     //{
@@ -214,11 +213,11 @@ public class PlayerController2 : MonoBehaviour
     //}
 
 
-    //void DebugRaycast()
-    //{
-    //    Vector2 raycastOrigin = transform.position;
-    //    Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistance2, Color.red);
-    //}
+    void DebugRaycast()
+    {
+        Vector2 raycastOrigin = transform.position;
+        Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistance, Color.red);
+    }
 
 
 }

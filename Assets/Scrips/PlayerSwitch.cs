@@ -1,5 +1,6 @@
 using Cinemachine;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerSwitch : MonoBehaviour
 {
@@ -18,14 +19,13 @@ public class PlayerSwitch : MonoBehaviour
     public bool isGrounded;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float raycastDistance = 1f;
-    [SerializeField] private float raycastDistance2 = 1f;
 
     private void Start()
     {
         player2.tag = "Untagged";
         Material materialP2 = p2.GetComponent<Renderer>().material;
         Color colorP2 = materialP2.color;
-        colorP2.a = 0.5f;
+        colorP2.a = 0.25f;
         materialP2.color = colorP2;
     }
 
@@ -79,14 +79,13 @@ public class PlayerSwitch : MonoBehaviour
 
         if (player1Active)
         {
-            player1.isActive = false;
-            player1.tag = "Untagged";
-
+            player2.enabled = true;
+            p2.GetComponent<CapsuleCollider2D>().enabled = true;
             player2.isActive = true;
             player2.tag = "Player";
+            p2.GetComponent<SpriteRenderer>().sortingOrder = 1;
 
-            player2.enabled = true;
-            player1Active = false;
+
             
 
 
@@ -99,19 +98,23 @@ public class PlayerSwitch : MonoBehaviour
             Color colorP2 = materialP2.color;
             colorP2.a = 1.0f;
             materialP2.color = colorP2;
-
+            player1Active = false;
+            player1.isActive = false;
+            player1.tag = "Untagged";
+            p1.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            p1.GetComponent<CapsuleCollider2D>().enabled = false;
         }
         else
         {
+            player1.enabled = true;
+            p1.GetComponent<CapsuleCollider2D>().enabled = true;
+            player1Active = true;
             player1.isActive = true;
             player1.tag = "Player";
+            p1.GetComponent<SpriteRenderer>().sortingOrder = 1;
+
             
-            player2.isActive = false;
-            player2.tag = "Untagged";
-            player1.enabled = true;
-            
-            
-            player1Active = true;
+
          
 
             Material materialP2 = p2.GetComponent<Renderer>().material;
@@ -129,6 +132,10 @@ public class PlayerSwitch : MonoBehaviour
             Vector3 targetPosition = Player2.position;
             Player1.position = targetPosition;
             Player1.rotation = Player2.rotation;
+            player2.isActive = false;
+            player2.tag = "Untagged";
+            p2.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            p2.GetComponent<CapsuleCollider2D>().enabled = false;
         }
 
     }

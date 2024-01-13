@@ -197,7 +197,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   raycastDistance: 1.2
-  raycastDistance2: 1.2
   jumpForce: 200
   speed: 5
   "da\xF1oGolpe": 0
@@ -256,7 +255,7 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0.06759882, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 10.024072
+  m_Distance: 9.955913
   m_DampingRatio: 1
   m_Frequency: 1
 --- !u!50 &44194723
@@ -369,8 +368,8 @@ Transform:
   m_GameObject: {fileID: 44194719}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.28, y: -3.62, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 5.1386623}
+  m_LocalPosition: {x: -9.222, y: -3.581, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 198105332}
@@ -1112,15 +1111,14 @@ MonoBehaviour:
   moveVector: {x: 0, y: 0}
   animator: {fileID: 304405736}
   isGrounded: 0
-  isActive: 0
+  isActive: 1
   atrackClip: {fileID: 7400000, guid: b00287ff9ee5710489944ed27347dcad, type: 2}
   controladorGolpe: {fileID: 1923911258}
   radioGolpe: 0.7
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  raycastDistance: 1
-  raycastDistance2: 1
+  raycastDistance: 1.2
   jumpForce: 200
   speed: 5
   "da\xF1oGolpe": 5
@@ -1158,8 +1156,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.32459736, y: -0.91049075}
-  m_Size: {x: 4.845667, y: 18.622494}
+  m_Offset: {x: 0.085463524, y: -1.306165}
+  m_Size: {x: 5.53937, y: 17.60035}
   m_Direction: 0
 --- !u!50 &304405735
 Rigidbody2D:
@@ -1271,8 +1269,8 @@ Transform:
   m_GameObject: {fileID: 304405732}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.92, y: -3.65, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.096, z: 5.1386623}
+  m_LocalPosition: {x: -9.222, y: -3.581, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1923911258}
@@ -1700,7 +1698,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2122112517
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
   m_FlipX: 0
@@ -1983,7 +1981,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.650392, y: -2.00537, z: -10}
+  m_LocalPosition: {x: -8.640597, y: -2.00537, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3960,7 +3958,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   raycastDistance: 1
-  raycastDistance2: 1
 --- !u!4 &1299857789
 Transform:
   m_ObjectHideFlags: 0
@@ -4505,7 +4502,7 @@ Transform:
   m_GameObject: {fileID: 1765889972}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.28, y: -2.2895026, z: -10}
+  m_LocalPosition: {x: -9.222, y: -2.2505028, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

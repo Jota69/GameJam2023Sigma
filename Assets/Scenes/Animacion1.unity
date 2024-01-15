@@ -1002,6 +1002,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CambioDeEscena
       objectReference: {fileID: 0}
+    - target: {fileID: 1611498705445597251, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

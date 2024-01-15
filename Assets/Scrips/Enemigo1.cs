@@ -7,7 +7,7 @@ using static UnityEngine.InputSystem.Controls.AxisControl;
 
 public class Enemigo : MonoBehaviour
 {
-    private LayerMask otrosEnemigos;
+    
     private Rigidbody2D rb;
     private Animator animator;
     private Collider2D col;
@@ -23,6 +23,7 @@ public class Enemigo : MonoBehaviour
     [SerializeField] private int vida;
 
     [Header("Configuraciones de movimiento:")]
+    [SerializeField] private LayerMask otrosEnemigos;
     [SerializeField] private float velocidadMovimiento;
     [SerializeField] private float distanciaPared;
     [SerializeField] private float raycastDistancia2;
@@ -46,6 +47,7 @@ public class Enemigo : MonoBehaviour
     [SerializeField] private int dañoGolpe;
     [SerializeField] private float tEntreAtaques;
     [SerializeField] private float tEsperaAtaque;
+    [SerializeField] private float prueba;
 
 
 
@@ -59,70 +61,68 @@ public class Enemigo : MonoBehaviour
         col = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        otrosEnemigos = GetComponent<LayerMask>();
     }
 
 
     private void Update()
     {
-        DebugRaycast();
+        //DebugRaycast();
+        isGrounded = CheckGrounded();
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
+        RaycastHit2D informacionSuelo = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, queEsSuelo);
+        RaycastHit2D informacionPlayerCac = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, playerMask);
         
-            isGrounded = CheckGrounded();
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
-            RaycastHit2D informacionSuelo = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, queEsSuelo);
-            RaycastHit2D informacionPlayerCac = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, playerMask);
-            RaycastHit2D informacionOtrosEnemigos = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, otrosEnemigos);
 
 
         //ENEMIGOS PATRULLEROS A DISTANCIA
         if (!isCac) {
-                foreach (var hit in hits)
+            foreach (var hit in hits)
+            {
+                Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
+                    
+                if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
                 {
-                    Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
-                    Debug.DrawRay(transform.position, directionToPlayer, Color.green);
-                    if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
+                    parado = true;
+                    if (!playerDetectado&&!detectandoPlayer)
                     {
-                        parado = true;
-                        if (!playerDetectado&&!detectandoPlayer)
-                        {
-                            detectar(directionToPlayer);
-                        }
-                        if (playerDetectado)
-                        {
-                            if (hit.CompareTag("Player") && !atacando)
-                            {
-                                atacar();
-                            }
-                        }
+                        detectar(directionToPlayer);
                     }
-                    else
+                    if (playerDetectado)
                     {
-                        vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-                        rb.velocity = new Vector2(velocidadMovimiento*0.2f * transform.right.x, rb.velocity.y);
-                        playerDetectado = false;
+                        if (hit.CompareTag("Player") && !atacando)
+                        {
+                            atacar();
+                        }
                     }
                 }
-                if (hits.Length == 0) { parado = false; }
+                else
+                {
+                    vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                    rb.velocity = new Vector2(velocidadMovimiento*0.2f * transform.right.x, rb.velocity.y);
+                    playerDetectado = false;
+                }
             }
+            if (hits.Length == 0) { parado = false; }
+        }
             /////////////////////////////////////////
             
             //ENEMIGOS PATRULLEROS CUERPO A CUERPO
-            if (informacionPlayerCac && isCac && !atacando)
-            {
-                parado = true;
-                atacar();
-            }
+        if (informacionPlayerCac && isCac && !atacando)
+        {
+            parado = true;
+            atacar();
+        }
 
-            if (!parado&&isMobile)
-            {
-                vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-                rb.velocity = new Vector2(velocidadMovimiento * transform.right.x, rb.velocity.y);
-            }
+        if (!parado&&isMobile)
+        {
+            vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            rb.velocity = new Vector2(velocidadMovimiento * transform.right.x, rb.velocity.y);
+        }
 
-            if (informacionSuelo || !isGrounded||informacionOtrosEnemigos)
-            {
-                Girar();
-            }
+        if (informacionSuelo || !isGrounded)
+        {
+            Girar();
+        }
 
         
     }
@@ -133,6 +133,7 @@ public class Enemigo : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, Vector2.down, raycastDistancia2, queEsSuelo);
         return (hit.collider != null);
     }
+
     private bool detectar(Vector3 playerDirection)
     {
         detectandoPlayer = true;
@@ -153,11 +154,8 @@ public class Enemigo : MonoBehaviour
 
     private void atacar()
     {
-        
         atacando = true;
-
         StartCoroutine(ataque());
-        
     }
 
     private IEnumerator ataque()
@@ -214,16 +212,16 @@ public class Enemigo : MonoBehaviour
 
 
 
-    void DebugRaycast()
-    {
-        Vector2 raycastOrigin = inicioRaycastGround.transform.position;
-        Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistancia2, Color.red);
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
-    }
+    //void DebugRaycast()
+    //{
+    //    Vector2 raycastOrigin = inicioRaycastGround.transform.position;
+    //    Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistancia2, Color.red);
+    //}
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    //}
 
     //private void OnDrawGizmos()
     //{

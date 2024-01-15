@@ -32,6 +32,7 @@ public class Eventos : MonoBehaviour
     public UnityEvent DespausarP;
     public UnityEvent DespausarPlayer2;
     public UnityEvent perderVida;
+    public UnityEvent<int> PasarNivel;
 
 
 

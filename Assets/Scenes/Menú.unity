@@ -428,14 +428,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1920449633}
-        m_TargetAssemblyTypeName: "Men\xFAInicial, Assembly-CSharp"
-        m_MethodName: Jugar
-        m_Mode: 1
+      - m_Target: {fileID: 1845362343}
+        m_TargetAssemblyTypeName: cambiarNivel, Assembly-CSharp
+        m_MethodName: LoadNextScene
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -938,6 +938,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367937679}
   m_CullTransparentMesh: 1
+--- !u!1001 &1845362342
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1611498705445597251, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_Name
+      value: CambioDeEscena
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+--- !u!114 &1845362343 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3855584768543585072, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+  m_PrefabInstance: {fileID: 1845362342}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb7ed86de00a534ba06b55e30b9ed01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1920449627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,9 +1277,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6e2ec133c1832524594f74f6c58d833b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: bbf021e9bf2708841837d59e534fc588, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1319,3 +1387,4 @@ SceneRoots:
   - {fileID: 1212080557}
   - {fileID: 455109103}
   - {fileID: 2062199188}
+  - {fileID: 1845362342}

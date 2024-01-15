@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - interruptor
+  - PasarNivel
   layers:
   - Default
   - TransparentFX

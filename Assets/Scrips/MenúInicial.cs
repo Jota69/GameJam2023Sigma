@@ -13,7 +13,6 @@ public class MenúInicial : MonoBehaviour
 
     public void Salir()
     {
-        Debug.Log("Salir...");
         Application.Quit();
     }
 

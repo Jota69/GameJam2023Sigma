@@ -499,6 +499,9 @@ MonoBehaviour:
   perderVida:
     m_PersistentCalls:
       m_Calls: []
+  PasarNivel:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &103647395
 Transform:
   m_ObjectHideFlags: 0
@@ -579,6 +582,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vida: 10
+  otrosEnemigos:
+    serializedVersion: 2
+    m_Bits: 0
   velocidadMovimiento: 3
   distanciaPared: 1.3
   raycastDistancia2: 2.3
@@ -598,6 +604,7 @@ MonoBehaviour:
   "da\xF1oGolpe": 1
   tEntreAtaques: 1
   tEsperaAtaque: 3
+  prueba: 0
 --- !u!50 &116641513
 Rigidbody2D:
   serializedVersion: 4
@@ -723,7 +730,7 @@ Transform:
   m_GameObject: {fileID: 116641511}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.76, y: -2.18, z: 0}
+  m_LocalPosition: {x: 0.61, y: -1.2, z: 0}
   m_LocalScale: {x: 5.258642, y: 5.258642, z: 5.258642}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2014,7 +2021,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.650392, y: -2.00537, z: -10}
+  m_LocalPosition: {x: -8.640597, y: -2.00537, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3396,6 +3403,63 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
+--- !u!1001 &955248956
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1611498705445597251, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_Name
+      value: CambioDeEscena
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208163402469040215, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
 --- !u!1 &981202734
 GameObject:
   m_ObjectHideFlags: 0
@@ -3724,6 +3788,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vida: 10
+  otrosEnemigos:
+    serializedVersion: 2
+    m_Bits: 0
   velocidadMovimiento: 3
   distanciaPared: 1.3
   raycastDistancia2: 2.3
@@ -3743,6 +3810,7 @@ MonoBehaviour:
   "da\xF1oGolpe": 1
   tEntreAtaques: 2
   tEsperaAtaque: 3
+  prueba: 0
 --- !u!50 &1046264585
 Rigidbody2D:
   serializedVersion: 4
@@ -3868,7 +3936,7 @@ Transform:
   m_GameObject: {fileID: 1046264583}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.18, y: -1.92, z: 0}
+  m_LocalPosition: {x: -4.49, y: -3.71, z: 0}
   m_LocalScale: {x: 5.258642, y: 5.258642, z: 5.258642}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5811,6 +5879,7 @@ SceneRoots:
   - {fileID: 1951783925}
   - {fileID: 518210740}
   - {fileID: 1233925511}
+  - {fileID: 955248956}
   - {fileID: 1599085744}
   - {fileID: 2131398716}
   - {fileID: 1318428654}

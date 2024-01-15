@@ -18,6 +18,8 @@ public class Enemigo : MonoBehaviour
     private bool playerNoDetectado;
     [SerializeField] bool parado;
     private bool golpeEjecutado = false;
+    Collider2D[] hits;
+    private bool modoAtaque;
 
     private Vector3 vectorPosicionRaycast;
     [SerializeField] private int vida;
@@ -61,6 +63,7 @@ public class Enemigo : MonoBehaviour
         playerDetectado = false;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        modoAtaque = false;
     }
 
 
@@ -69,7 +72,7 @@ public class Enemigo : MonoBehaviour
         vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
         //DebugRaycast();
         isGrounded = CheckGrounded();
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
+        hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
         RaycastHit2D informacionSuelo = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, queEsSuelo);
         RaycastHit2D informacionPlayerCac = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, playerMask);
         
@@ -84,15 +87,14 @@ public class Enemigo : MonoBehaviour
                 if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
                 {
                     parado = true;
-                    if (!playerDetectado&&!detectandoPlayer)
+                    if (!playerDetectado&&!detectandoPlayer&&!modoAtaque)
                     {
-                        detectar(directionToPlayer);
+                        detectar();
                     }
                     if (playerDetectado)
                     {
                         if (hit.CompareTag("Player") && !atacando)
                         {
-                            
                             atacar();
                         }
                     }
@@ -101,13 +103,16 @@ public class Enemigo : MonoBehaviour
                 {
                     //Debug.Log("Esperado");
                     rb.velocity = new Vector2(velocidadMovimiento*0.2f * transform.right.x, rb.velocity.y);
-                    playerDetectado = false;
+                    if (!modoAtaque) { playerDetectado = false; }
+                    
+                    
                 }
             }
             if (hits.Length == 0) 
             { 
                 parado = false; 
                 playerNoDetectado = false;
+                modoAtaque = false;
             }
         }
             /////////////////////////////////////////
@@ -139,21 +144,29 @@ public class Enemigo : MonoBehaviour
         return (hit.collider != null);
     }
 
-    private bool detectar(Vector3 playerDirection)
+    private bool detectar()
     {
         detectandoPlayer = true;
-        StartCoroutine(detectado(playerDirection));
+        StartCoroutine(detectado());
         return playerDetectado;
     }
-    private IEnumerator detectado(Vector3 playerDirection)
+    private IEnumerator detectado()
     {
         yield return new WaitForSeconds(tEsperaAtaque);
-        if (Physics2D.Raycast(transform.position, playerDirection, detectionRadius, playerMask))  
-        { 
-            playerDetectado = true;
+        hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
+        foreach (var hit in hits)
+        {
+            Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
+
+            if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
+            { 
+                playerDetectado = true;
+                modoAtaque = true;
+            }
         }
-        detectandoPlayer = false;
+                detectandoPlayer = false;
         playerNoDetectado = true;
+
 
     }
 

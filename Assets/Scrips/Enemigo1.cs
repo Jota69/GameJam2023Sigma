@@ -14,11 +14,11 @@ public class Enemigo : MonoBehaviour
     private bool isGrounded;
     private bool atacando;
     private bool detectandoPlayer;
-    private bool playerDetectado;
+    public bool playerDetectado;
     private bool modoAlerta;
     bool parado;
     private bool golpeEjecutado = false;
-    Collider2D[] hits;
+    public Collider2D[] hits;
     private bool modoAtaque;
 
     private Vector3 vectorPosicionRaycast;
@@ -45,6 +45,7 @@ public class Enemigo : MonoBehaviour
     [Header("Tipo de enemigo:")]
     [SerializeField] private bool isMobile;
     [SerializeField] private bool isCac;//cuerpo a cuerpo
+    [SerializeField] private GameObject arma;
 
     [Header("Configuraciones de ataque:")]
     [SerializeField] private int dañoGolpe;
@@ -76,14 +77,28 @@ public class Enemigo : MonoBehaviour
         RaycastHit2D informacionPlayerCac = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, playerMask);
         //ENEMIGOS PATRULLEROS A DISTANCIA
         if (!isCac) {
+            arma.SetActive(true);
             foreach (var hit in hits)
             {
                 Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
-                    
-                if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
+                if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo)) //No hay nada entre el jugador y el enemigo
                 {
+                    //Girar hacia el player
+                    float angulo=0;
+                    if (directionToPlayer.x > 0)
+                    {
+                        angulo = 0; // Rota hacia la derecha
+                    }
+                    else if (directionToPlayer.x < 0)
+                    {
+                        angulo = 180; // Rota hacia la izquierda
+                    }
+                    transform.rotation = Quaternion.AngleAxis(angulo, Vector3.up);
+                    ////////////////////////////////////////////////////////////////
+
                     if (!detectandoPlayer && modoAtaque) { modoAtaque = false; }
                     parado = true;
+
                     if (!playerDetectado&&!detectandoPlayer&&!modoAtaque)
                     {
                         detectar();
@@ -108,6 +123,10 @@ public class Enemigo : MonoBehaviour
                 modoAtaque = false;
                 playerDetectado = false;
             }
+        }
+        else
+        {
+            arma.SetActive(false);
         }
             /////////////////////////////////////////
             

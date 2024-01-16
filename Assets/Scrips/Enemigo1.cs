@@ -13,10 +13,10 @@ public class Enemigo : MonoBehaviour
     private bool muerto;
     private bool isGrounded;
     private bool atacando;
-    [SerializeField] private bool detectandoPlayer;
+    private bool detectandoPlayer;
     private bool playerDetectado;
-    private bool playerNoDetectado;
-    [SerializeField] bool parado;
+    private bool modoAlerta;
+    bool parado;
     private bool golpeEjecutado = false;
     Collider2D[] hits;
     private bool modoAtaque;
@@ -59,7 +59,7 @@ public class Enemigo : MonoBehaviour
         muerto = false;
         parado = false;
         detectandoPlayer = false;
-        playerNoDetectado = false;
+        modoAlerta = false;
         playerDetectado = false;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -70,14 +70,10 @@ public class Enemigo : MonoBehaviour
     private void Update()
     {
         vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-        //DebugRaycast();
         isGrounded = CheckGrounded();
         hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
         RaycastHit2D informacionSuelo = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, queEsSuelo);
         RaycastHit2D informacionPlayerCac = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, playerMask);
-        
-
-
         //ENEMIGOS PATRULLEROS A DISTANCIA
         if (!isCac) {
             foreach (var hit in hits)
@@ -86,6 +82,7 @@ public class Enemigo : MonoBehaviour
                     
                 if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
                 {
+                    if (!detectandoPlayer && modoAtaque) { modoAtaque = false; }
                     parado = true;
                     if (!playerDetectado&&!detectandoPlayer&&!modoAtaque)
                     {
@@ -99,20 +96,17 @@ public class Enemigo : MonoBehaviour
                         }
                     }
                 }
-                else if(!parado||playerNoDetectado)
+                else if((!parado&&!detectandoPlayer&&modoAlerta||playerDetectado) && isMobile)
                 {
-                    //Debug.Log("Esperado");
                     rb.velocity = new Vector2(velocidadMovimiento*0.2f * transform.right.x, rb.velocity.y);
-                    if (!modoAtaque) { playerDetectado = false; }
-                    
-                    
                 }
             }
             if (hits.Length == 0) 
             { 
-                parado = false; 
-                playerNoDetectado = false;
+                parado = false;
+                modoAlerta = false;
                 modoAtaque = false;
+                playerDetectado = false;
             }
         }
             /////////////////////////////////////////
@@ -123,18 +117,14 @@ public class Enemigo : MonoBehaviour
             parado = true;
             atacar();
         }
-
-        if (!parado&&isMobile&&!detectandoPlayer)
+        if (!parado&&isMobile&&!detectandoPlayer&&!modoAlerta)
         {
             rb.velocity = new Vector2(velocidadMovimiento * transform.right.x, rb.velocity.y);
         }
-
         if (informacionSuelo || !isGrounded)
         {
             Girar();
         }
-
-        
     }
 
     private bool CheckGrounded()
@@ -153,20 +143,27 @@ public class Enemigo : MonoBehaviour
     private IEnumerator detectado()
     {
         yield return new WaitForSeconds(tEsperaAtaque);
-        hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
         foreach (var hit in hits)
         {
             Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
 
             if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
-            { 
-                playerDetectado = true;
-                modoAtaque = true;
+            {
+                if (hit.CompareTag("Player") && !atacando)
+                {
+                    playerDetectado = true;
+                    modoAtaque = true;
+                }
+                //activa el modo ataque tras detectar al jugador (no saldrá del modo ataque hasta que el player salga de su rango de alcance o se esconda)
+            }
+            else 
+            {
+                parado = false;
+                modoAlerta = true;
+                playerDetectado = false;
             }
         }
-                detectandoPlayer = false;
-        playerNoDetectado = true;
-
+        detectandoPlayer = false;
 
     }
 
@@ -187,9 +184,9 @@ public class Enemigo : MonoBehaviour
             golpeEjecutado = true;
             Golpe();
             Debug.Log("Atacó");
-            ; // Marcar el golpe como ejecutado
+            // Marcar el golpe como ejecutado
         }
-            yield return new WaitForSeconds(tEntreAtaques);
+        yield return new WaitForSeconds(tEntreAtaques);
         if (isCac)
         {
             parado = false;
@@ -218,15 +215,11 @@ public class Enemigo : MonoBehaviour
 
     public void ResivirDaño(int daño)
     {
-        
-
         if (vida <= 0)
         {
             Destroy(gameObject);
-            
         }
         vida -= daño;
-
     }
 
 

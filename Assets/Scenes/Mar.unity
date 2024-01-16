@@ -568,7 +568,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &116641512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,8 +581,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14206ab9604669a4fbeeb1d18a555535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectandoPlayer: 0
-  parado: 0
   vida: 10
   otrosEnemigos:
     serializedVersion: 2
@@ -1318,103 +1316,6 @@ Transform:
   - {fileID: 1923911258}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &339137562
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 339137565}
-  - component: {fileID: 339137564}
-  - component: {fileID: 339137563}
-  m_Layer: 0
-  m_Name: SistemaDialogos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!61 &339137563
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 339137562}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!114 &339137564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 339137562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e24f6c3e00132e94ea32f6bf8b301e3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tiempoEntreChar: 0.05
-  lineasDialogo:
-  - Hola
-  - como estas
-  - bien y tu ?
-  vineta: {fileID: 1809548857}
---- !u!4 &339137565
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 339137562}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.97, y: -4.09, z: 0.48882648}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &346253951
 GameObject:
   m_ObjectHideFlags: 0
@@ -2023,7 +1924,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.63168, y: -2.00537, z: -10}
+  m_LocalPosition: {x: -8.640597, y: -2.00537, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2555,7 +2456,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2589,8 +2490,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2618,7 +2519,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -744.5519, y: -81.493256, z: -740.8474, w: -74.08475}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3924,8 +3825,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14206ab9604669a4fbeeb1d18a555535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectandoPlayer: 0
-  parado: 0
   vida: 10
   otrosEnemigos:
     serializedVersion: 2
@@ -3948,7 +3847,7 @@ MonoBehaviour:
   isMobile: 1
   isCac: 0
   "da\xF1oGolpe": 1
-  tEntreAtaques: 2
+  tEntreAtaques: 0.5
   prueba: 0
 --- !u!50 &1046264585
 Rigidbody2D:
@@ -4776,6 +4675,83 @@ Transform:
   - {fileID: 619565504}
   m_Father: {fileID: 1233925511}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1693656654
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 681186332165700010, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_Name
+      value: SistemaDialogos 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.544712
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.486112
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.48882648
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297307077604541546, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: tmp
+      value: 
+      objectReference: {fileID: 738640665}
+    - target: {fileID: 3297307077604541546, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: vineta
+      value: 
+      objectReference: {fileID: 1809548857}
+    - target: {fileID: 3297307077604541546, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: 'lineasDialogo.Array.data[0]'
+      value: QUe haces pe
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297307077604541546, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: 'lineasDialogo.Array.data[1]'
+      value: nada que te iporte
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297307077604541546, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: 'lineasDialogo.Array.data[2]'
+      value: ok
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
 --- !u!1 &1722334552
 GameObject:
   m_ObjectHideFlags: 0
@@ -6002,6 +5978,76 @@ Transform:
   - {fileID: 856619563}
   m_Father: {fileID: 1233925511}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &8367567733943778678
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 681186332165700010, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_Name
+      value: SistemaDialogos
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.48882648
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491983485987029614, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297307077604541546, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: tmp
+      value: 
+      objectReference: {fileID: 738640665}
+    - target: {fileID: 3297307077604541546, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: vineta
+      value: 
+      objectReference: {fileID: 1809548857}
+    - target: {fileID: 3297307077604541546, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
+      propertyPath: 'lineasDialogo.Array.data[1]'
+      value: "como estas pendejo, que se supone que hacer en este maravilloso barco
+        espa\xF1ol sin permiso de ningun tripulante o el mismo capitan"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 772d3cfb590874341b9b422acc1eecb1, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -6012,7 +6058,7 @@ SceneRoots:
   - {fileID: 1299857789}
   - {fileID: 704484535}
   - {fileID: 1104303523}
-  - {fileID: 339137565}
+  - {fileID: 8367567733943778678}
   - {fileID: 116641516}
   - {fileID: 1046264588}
   - {fileID: 1951783925}
@@ -6028,3 +6074,4 @@ SceneRoots:
   - {fileID: 304405738}
   - {fileID: 684442766}
   - {fileID: 949432552}
+  - {fileID: 1693656654}

@@ -1,12 +1,16 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerSwitch : MonoBehaviour
 {
-    public PlayerController player1;
-    public PlayerController2 player2;
-    public bool player1Active = true;
+    [HideInInspector] public PlayerController player1;
+    [HideInInspector] public PlayerController2 player2;
+    [HideInInspector] public bool player1Active = true;
+    [SerializeField] private GameObject grappelGun;
+    private Mapa inputs;
+    
     public Transform Player1;
     public Transform Player2;
     public CinemachineVirtualCamera virtualCamera;
@@ -16,12 +20,16 @@ public class PlayerSwitch : MonoBehaviour
     public Material skin;
 
 
-    public bool isGrounded;
+
+
+    [HideInInspector] public bool isGrounded;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float raycastDistance = 1f;
 
-    private void Start()
+    private void Awake()
     {
+        inputs = new Mapa();
+        inputs.Enable();
         p1.GetComponent<SpriteRenderer>().sortingOrder = 1;
         player2.tag = "Untagged";
         Material materialP2 = p2.GetComponent<Renderer>().material;
@@ -33,15 +41,6 @@ public class PlayerSwitch : MonoBehaviour
     void Update()
     {
         isGrounded = CheckGrounded();
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            // Verificar si el personaje actual está en "modo ocio" antes de permitir el cambio
-            if ((player1.isGrounded) || (player2.isGrounded))
-            {
-                SwitchPlayer();
-            }
-        }
-
 
         // Mantener el desplazamiento constante entre los personajes
         if (player1Active)
@@ -56,6 +55,23 @@ public class PlayerSwitch : MonoBehaviour
             Player1.position = targetPosition;
         }
 
+    }
+
+    private void OnEnable()
+    {
+        inputs.Player.Switch.started += OnSwitchStarted;
+    }
+    private void OnDisable()
+    {
+        inputs.Player.Switch.started -= OnSwitchStarted;
+    }
+
+    private void OnSwitchStarted(InputAction.CallbackContext context)
+    {
+        if ((player1.isGrounded) || (player2.isGrounded))
+        {
+            SwitchPlayer();
+        }
     }
 
     private bool CheckGrounded()
@@ -80,6 +96,7 @@ public class PlayerSwitch : MonoBehaviour
 
         if (player1Active)
         {
+            grappelGun.SetActive(false);
             player2.enabled = true;
             //p2.GetComponent<CapsuleCollider2D>().enabled = true;
             player2.isActive = true;
@@ -107,6 +124,7 @@ public class PlayerSwitch : MonoBehaviour
         }
         else
         {
+            grappelGun.SetActive(true);
             player1.enabled = true;
             //p1.GetComponent<CapsuleCollider2D>().enabled = true;
             player1Active = true;

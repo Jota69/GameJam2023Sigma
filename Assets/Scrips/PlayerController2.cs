@@ -14,6 +14,8 @@ public class PlayerController2 : MonoBehaviour
     private float TiempoSiguienteAtaque;
     public bool isActive;
     private bool pausePlayer;
+    [SerializeField] private bool isJumping;
+    [SerializeField] private bool isFalling;
 
     [SerializeField] private AnimationClip atrackClip;
     [SerializeField] private Transform controladorGolpe;
@@ -24,6 +26,7 @@ public class PlayerController2 : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private int dañoGolpe;
     private bool isIdle = true;
+    private bool isIdleE;
     public bool IsIdle
     {
         get { return isIdle; }
@@ -52,7 +55,7 @@ public class PlayerController2 : MonoBehaviour
         _myInput.Player.Movimiento.canceled += OnMovementCancelled;
 
         //Otras acciones
-        _myInput.Player.Atacar.performed += OnAtackPerformed;
+        _myInput.Player.Atacar.started += OnAtackStarted;
         _myInput.Player.Jump.performed += OnJumpPerformed;
 
         //Eventos
@@ -64,18 +67,17 @@ public class PlayerController2 : MonoBehaviour
         _myInput.Player.Movimiento.performed -= OnMovementPerformed;
         _myInput.Player.Movimiento.canceled -= OnMovementCancelled;
         _myInput.Player.Jump.performed -= OnJumpPerformed;
-        _myInput.Player.Atacar.performed -= OnAtackPerformed;
+        _myInput.Player.Atacar.started -= OnAtackStarted;
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2 (moveVector.x*speed,rb.velocity.y);
-        
+        rb.velocity = new Vector2(moveVector.x * speed, rb.velocity.y);
     }
 
     private void Update()
     {
-        DebugRaycast();
+        //DebugRaycast();
         isGrounded = CheckGrounded();
 
         if (pausePlayer)
@@ -89,12 +91,13 @@ public class PlayerController2 : MonoBehaviour
         isIdle = isAlmostIdle;
 
 
-        bool isJumping = !isGrounded && rb.velocity.y > 0;
-        bool isFalling = !isGrounded && rb.velocity.y < 0;
+        isJumping = !isGrounded && rb.velocity.y > 0;
+        isFalling = !isGrounded && rb.velocity.y < 0;
 
         if (isFalling || isJumping) animator.ResetTrigger("Atacar");
-        
-        if (TiempoSiguienteAtaque > 0) { 
+
+        if (TiempoSiguienteAtaque > 0)
+        {
             TiempoSiguienteAtaque -= Time.deltaTime;
         }
 
@@ -103,8 +106,6 @@ public class PlayerController2 : MonoBehaviour
     
     }
     private void OnJumpPerformed(InputAction.CallbackContext value) {
-
-
         if (!pausePlayer)
         {
             if (isGrounded)
@@ -114,26 +115,24 @@ public class PlayerController2 : MonoBehaviour
 
             isIdle = false;
         }
-
-
-
-
-
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext value)
     {
-
-
         if (!pausePlayer)
         {
             moveVector = value.ReadValue<Vector2>();
             animator.SetBool("Corriendo", true);
-            if ((moveVector.x < 0 && transform.rotation.y >= 0) || (moveVector.x > 0 && transform.rotation.y < 0))
+            if (moveVector.x < 0f)
             {
-                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            }
+            else
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
             }
             isIdle = false;
+
         }
         else
         {
@@ -141,30 +140,23 @@ public class PlayerController2 : MonoBehaviour
             // Entonces, actualiza isIdle a true.
             isIdle = true;
         }
-
-
-
     }
 
     private void OnMovementCancelled(InputAction.CallbackContext value)
     {
         moveVector = Vector2.zero;
         animator.SetBool("Corriendo", false);
-  
     }
 
-    private void OnAtackPerformed(InputAction.CallbackContext value)
+    private void OnAtackStarted(InputAction.CallbackContext value)
     {
-        if (value.performed && TiempoSiguienteAtaque<=0 && isActive)
+        if (TiempoSiguienteAtaque <= 0 && isActive)
         {
             animator.SetTrigger("Atacar");
-            Golpe();
-            TiempoSiguienteAtaque = TiempoEntreAtaque;
+            if (isGrounded) { Golpe(); TiempoSiguienteAtaque = TiempoEntreAtaque; } 
         } 
         
     }
-
-
 
     private void Golpe() 
     {
@@ -172,6 +164,7 @@ public class PlayerController2 : MonoBehaviour
         foreach (Collider2D colicionador in objetos) {
             if (colicionador.CompareTag("Enemy"))
             {
+                Debug.Log("a");
                 colicionador.transform.GetComponent<Enemigo>().ResivirDaño(dañoGolpe);
             }
         }
@@ -206,18 +199,18 @@ public class PlayerController2 : MonoBehaviour
     //    Destroy(gameObject);
     //}
 
-    //private void OnDrawGizmos()
-    //{
-    //   Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
-    //}
-
-
-    void DebugRaycast()
+    private void OnDrawGizmos()
     {
-        Vector2 raycastOrigin = transform.position;
-        Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistance, Color.red);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
     }
+
+
+    //void DebugRaycast()
+    //{
+    //    Vector2 raycastOrigin = transform.position;
+    //    Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistance, Color.red);
+    //}
 
 
 }

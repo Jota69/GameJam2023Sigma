@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using static UnityEngine.InputSystem.Controls.AxisControl;
+using static UnityEngine.UI.Image;
 
 public class Enemigo : MonoBehaviour
 {
@@ -12,15 +13,16 @@ public class Enemigo : MonoBehaviour
     private Animator animator;
     private bool muerto;
     private bool isGrounded;
-    private bool atacando;
-    private bool detectandoPlayer;
-    public bool playerDetectado;
-    private bool modoAlerta;
+    private bool aRango;
+    [SerializeField] private bool atacando;
+    [SerializeField] public bool detectandoPlayer;
+    [SerializeField] public bool playerDetectado;
+    [SerializeField] private bool modoAlerta;
     bool parado;
     private bool golpeEjecutado = false;
-    public Collider2D[] hits;
-    private bool modoAtaque;
-
+    [HideInInspector] public Collider2D[] hits;
+    [SerializeField] private bool modoAtaque;
+    IEnumerator atack;
     private Vector3 vectorPosicionRaycast;
     [SerializeField] private int vida;
 
@@ -37,6 +39,7 @@ public class Enemigo : MonoBehaviour
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private AnimationClip AnimacionAtaque;
     [SerializeField] private float tEsperaAtaque;
+    [SerializeField] private float tEsconderse;
 
     [Header("configuraciones de enemigos cuerpo a cuerpo:")]
     [SerializeField] private Transform controladorGolpe;
@@ -56,6 +59,8 @@ public class Enemigo : MonoBehaviour
 
     void Start()
     {
+        atack = ataque();
+        aRango = false;
         atacando = false;
         muerto = false;
         parado = false;
@@ -81,39 +86,60 @@ public class Enemigo : MonoBehaviour
             foreach (var hit in hits)
             {
                 Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
-                if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo)) //No hay nada entre el jugador y el enemigo
+                //DebugRaycast(directionToPlayer);
+                RaycastHit2D[] raycastHits = Physics2D.RaycastAll(transform.position, directionToPlayer, detectionRadius);
+                foreach (var raycastHit in raycastHits)
                 {
-                    //Girar hacia el player
-                    float angulo=0;
-                    if (directionToPlayer.x > 0)
+                    
+                    if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Player1") || raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Player2"))
                     {
-                        angulo = 0; // Rota hacia la derecha
-                    }
-                    else if (directionToPlayer.x < 0)
-                    {
-                        angulo = 180; // Rota hacia la izquierda
-                    }
-                    transform.rotation = Quaternion.AngleAxis(angulo, Vector3.up);
-                    ////////////////////////////////////////////////////////////////
-
-                    if (!detectandoPlayer && modoAtaque) { modoAtaque = false; }
-                    parado = true;
-
-                    if (!playerDetectado&&!detectandoPlayer&&!modoAtaque)
-                    {
-                        detectar();
-                    }
-                    if (playerDetectado)
-                    {
-                        if (hit.CompareTag("Player") && !atacando)
+                        if (((directionToPlayer.x > 0 && transform.rotation.y == 0) || (directionToPlayer.x < 0 && transform.rotation.y != 0))&&!playerDetectado)
                         {
-                            atacar();
+                            aRango = true;
+                            //if (!detectandoPlayer && modoAtaque) { modoAtaque = false; }
+                            parado = true;
+
+                            if (!playerDetectado && !detectandoPlayer && !modoAtaque)
+                            {
+                                detectar();
+                            }
                         }
+                        if (playerDetectado||modoAlerta)
+                        {
+                            float angulo = 0;
+                            if (directionToPlayer.x > 0)
+                            {
+                                angulo = 0; // Rota hacia la derecha
+                            }
+                            else if (directionToPlayer.x < 0)
+                            {
+                                angulo = 180; // Rota hacia la izquierda
+                            }
+                            transform.rotation = Quaternion.AngleAxis(angulo, Vector3.up);
+                            ////////////////////////////////////////////////////////////////
+                            if (hit.CompareTag("Player") && !atacando)
+                            {
+
+                                atacar();
+                            }
+                        }
+                        break;
                     }
-                }
-                else if((!parado&&!detectandoPlayer&&modoAlerta||playerDetectado) && isMobile)
-                {
-                    rb.velocity = new Vector2(velocidadMovimiento*0.2f * transform.right.x, rb.velocity.y);
+                    else if ((!isMobile && raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))||isMobile&&playerDetectado&&modoAtaque&& raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))
+                    {
+                        StartCoroutine(esconderse());
+                        break;
+                    }
+                    else if (((!parado && !detectandoPlayer && modoAlerta) && isMobile) && raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))
+                    {
+                        rb.velocity = new Vector2(velocidadMovimiento * 0.2f * transform.right.x, rb.velocity.y);
+                        aRango = false;
+                        break;
+                    }
+                    else if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))
+                    {
+                        break;
+                    }
                 }
             }
             if (hits.Length == 0) 
@@ -122,6 +148,7 @@ public class Enemigo : MonoBehaviour
                 modoAlerta = false;
                 modoAtaque = false;
                 playerDetectado = false;
+                aRango = false;
             }
         }
         else
@@ -129,7 +156,6 @@ public class Enemigo : MonoBehaviour
             arma.SetActive(false);
         }
             /////////////////////////////////////////
-            
             //ENEMIGOS PATRULLEROS CUERPO A CUERPO
         if (informacionPlayerCac && isCac && !atacando)
         {
@@ -142,8 +168,20 @@ public class Enemigo : MonoBehaviour
         }
         if (informacionSuelo || !isGrounded)
         {
+            if (!aRango&&!isCac)
+            {
+                Girar();
+            }
             Girar();
         }
+    }
+    IEnumerator esconderse()
+    {
+        yield return new WaitForSeconds(tEsconderse);
+        playerDetectado=false;
+        modoAtaque=false;
+        parado = false;
+        modoAlerta = true;
     }
 
     private bool CheckGrounded()
@@ -156,34 +194,38 @@ public class Enemigo : MonoBehaviour
     private bool detectar()
     {
         detectandoPlayer = true;
-        StartCoroutine(detectado());
+        StartCoroutine(Detectado());
         return playerDetectado;
     }
-    private IEnumerator detectado()
+    private IEnumerator Detectado()
     {
         yield return new WaitForSeconds(tEsperaAtaque);
         foreach (var hit in hits)
         {
             Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
-
-            if (!Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, queEsSuelo))
+            RaycastHit2D[] raycastHits = Physics2D.RaycastAll(transform.position, directionToPlayer, detectionRadius);
+            foreach (var raycastHit in raycastHits)
             {
-                if (hit.CompareTag("Player") && !atacando)
+                if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Player1") || raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Player2"))
                 {
-                    playerDetectado = true;
-                    modoAtaque = true;
+                    if (hit.CompareTag("Player") && !atacando)
+                    {
+                        playerDetectado = true;
+                        modoAtaque = true;
+                        modoAlerta = false;
+                    }
+                    break;
                 }
-                //activa el modo ataque tras detectar al jugador (no saldrá del modo ataque hasta que el player salga de su rango de alcance o se esconda)
-            }
-            else 
-            {
-                parado = false;
-                modoAlerta = true;
-                playerDetectado = false;
+                else if(raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))
+                {
+                    parado = false;
+                    modoAlerta = true;
+                    playerDetectado = false;
+                    break;
+                }
             }
         }
         detectandoPlayer = false;
-
     }
 
 
@@ -201,8 +243,10 @@ public class Enemigo : MonoBehaviour
         if (!golpeEjecutado) // Verificar nuevamente antes de ejecutar el golpe
         {
             golpeEjecutado = true;
-            Golpe();
-            Debug.Log("Atacó");
+            if (isCac) { Golpe();}
+            else { Eventos.eve.disparoEnemigo.Invoke();
+                
+            }
             // Marcar el golpe como ejecutado
         }
         yield return new WaitForSeconds(tEntreAtaques);
@@ -229,7 +273,15 @@ public class Enemigo : MonoBehaviour
 
     private void Girar()
     {
-        transform.eulerAngles = new Vector3(0,transform.eulerAngles.y+180,0);
+        if (transform.eulerAngles.y == 0)
+        {
+            transform.eulerAngles = new Vector3(0, -180, 0);
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        
     }
 
     public void ResivirDaño(int daño)
@@ -239,14 +291,27 @@ public class Enemigo : MonoBehaviour
             Destroy(gameObject);
         }
         vida -= daño;
+        StopAllCoroutines();
+        StartCoroutine(WaitDamage());
     }
-
-
-
-    //void DebugRaycast()
+    IEnumerator WaitDamage()
+    {
+        yield return new WaitForSeconds(tEntreAtaques);
+        detectandoPlayer = false;
+        playerDetectado = true;
+        modoAtaque = true;
+        golpeEjecutado = false;
+        atacando = false;
+        parado = true;
+        if (isCac)
+        {
+            parado = false;
+        }
+    }
+    //void DebugRaycast(Vector3 playerPosition)
     //{
     //    Vector2 raycastOrigin = inicioRaycastGround.transform.position;
-    //    Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistancia2, Color.red);
+    //    Debug.DrawRay(transform.position, playerPosition*10, Color.blue);
     //}
     //private void OnDrawGizmos()
     //{
@@ -254,11 +319,16 @@ public class Enemigo : MonoBehaviour
     //    Gizmos.DrawWireSphere(transform.position, detectionRadius);
     //}
 
-    private void OnDrawGizmos()
-    {
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(vectorPosicionRaycast, vectorPosicionRaycast + transform.right * distanciaPared);
-    }
-
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    //    foreach (var hit in hits) 
+    //    {
+    //        Gizmos.color = Color.red;
+    //        if (hit.CompareTag("Player"))
+    //        {
+    //            Gizmos.DrawLine(transform.position, (hit.transform.position - transform.position)*detectionRadius);
+    //        }
+    //    }
+    //}
 }

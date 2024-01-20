@@ -11,19 +11,20 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     public Animator animator;
     public bool isGrounded;
-    private float TiempoEntreAtaque;
+    //private float TiempoEntreAtaque;
     private float TiempoSiguienteAtaque;
     public bool isActive;
     private bool pausePlayer;
 
     [SerializeField] private AnimationClip atrackClip;
-    [SerializeField] private Transform controladorGolpe;
+    //[SerializeField] private Transform controladorGolpe;
     [SerializeField] private float radioGolpe;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float raycastDistance = 1f;
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
-    [SerializeField] private int dañoGolpe;
+    //[SerializeField] private int dañoGolpe;
+    //[SerializeField] private PlayerInput playerInput;
     private bool isIdle = true;
     public bool IsIdle
     {
@@ -36,14 +37,13 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         isActive = true;
-        controladorGolpe = transform.GetChild(0).GetComponent<Transform>();
+        //controladorGolpe = transform.GetChild(0).GetComponent<Transform>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         //TiempoEntreAtaque = atrackClip.length;
 
         _myInput = new Mapa();
         _myInput.Enable();
-
     }
 
     private void OnEnable()
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        DebugRaycast();
+        //DebugRaycast();
         isGrounded = CheckGrounded();
 
         bool isAlmostIdle = isGrounded && rb.velocity.magnitude < 0.1f;
@@ -125,9 +125,13 @@ public class PlayerController : MonoBehaviour
         {
             moveVector = value.ReadValue<Vector2>();
             animator.SetBool("Corriendo", true);
-            if ((moveVector.x < 0 && transform.rotation.y >= 0) || (moveVector.x > 0 && transform.rotation.y < 0))
+            if (moveVector.x < 0f)
             {
-                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            }
+            else
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
             }
             isIdle = false;
 
@@ -149,29 +153,29 @@ public class PlayerController : MonoBehaviour
   
     }
 
-    private void OnAtackPerformed(InputAction.CallbackContext value)
-    {
-        if (value.performed && TiempoSiguienteAtaque<=0)
-        {
-            animator.SetTrigger("Atacar");
-            Golpe();
-           TiempoSiguienteAtaque = TiempoEntreAtaque;
-        } 
+    //private void OnAtackPerformed(InputAction.CallbackContext value)
+    //{
+    //    if (value.performed && TiempoSiguienteAtaque<=0)
+    //    {
+    //        animator.SetTrigger("Atacar");
+    //        Golpe();
+    //       TiempoSiguienteAtaque = TiempoEntreAtaque;
+    //    } 
         
-    }
+    //}
 
 
 
-    private void Golpe() 
-    {
-        Collider2D[] objetos = Physics2D.OverlapCircleAll(controladorGolpe.position, radioGolpe);
-        foreach (Collider2D colicionador in objetos) {
-            if (colicionador.CompareTag("Enemy"))
-            {
-                colicionador.transform.GetComponent<Enemigo>().ResivirDaño(dañoGolpe);
-            }
-        }
-    }
+    //private void Golpe() 
+    //{
+    //    Collider2D[] objetos = Physics2D.OverlapCircleAll(controladorGolpe.position, radioGolpe);
+    //    foreach (Collider2D colicionador in objetos) {
+    //        if (colicionador.CompareTag("Enemy"))
+    //        {
+    //            colicionador.transform.GetComponent<Enemigo>().ResivirDaño(dañoGolpe);
+    //        }
+    //    }
+    //}
 
 
     private bool CheckGrounded() {
@@ -207,11 +211,11 @@ public class PlayerController : MonoBehaviour
     //}
 
 
-    void DebugRaycast()
-    {
-        Vector2 raycastOrigin = transform.position;
-        Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistance, Color.blue);
-    }
+    //void DebugRaycast()
+    //{
+    //    Vector2 raycastOrigin = transform.position;
+    //    Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistance, Color.blue);
+    //}
 
 
 }

@@ -10,7 +10,8 @@ public class muerte : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+            Eventos.eve.PasarNivel.Invoke(2);
+            
         }
         
     }

@@ -68,7 +68,7 @@ public class PlayerSwitch : MonoBehaviour
 
     private void OnSwitchStarted(InputAction.CallbackContext context)
     {
-        if ((player1.isGrounded) || (player2.isGrounded))
+        if (((player1.isGrounded) || (player2.isGrounded)))
         {
             SwitchPlayer();
         }

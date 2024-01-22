@@ -10,11 +10,12 @@ public class PlayerController : MonoBehaviour
     public Vector2 moveVector = Vector2.zero;
     private Rigidbody2D rb;
     public Animator animator;
+    private CapsuleCollider2D collider;
     public bool isGrounded;
     //private float TiempoEntreAtaque;
     private float TiempoSiguienteAtaque;
     public bool isActive;
-    private bool pausePlayer;
+    public bool pausePlayer;
 
     [SerializeField] private AnimationClip atrackClip;
     //[SerializeField] private Transform controladorGolpe;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
         //controladorGolpe = transform.GetChild(0).GetComponent<Transform>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        collider = GetComponent<CapsuleCollider2D>();
         //TiempoEntreAtaque = atrackClip.length;
 
         _myInput = new Mapa();
@@ -88,8 +90,8 @@ public class PlayerController : MonoBehaviour
         {
             moveVector = Vector2.zero;
         }
-        
 
+        collider.sharedMaterial.friction = isGrounded ? 1 : 0; ;
         bool isJumping = !isGrounded && rb.velocity.y > 0;
         bool isFalling = !isGrounded && rb.velocity.y < 0;
 

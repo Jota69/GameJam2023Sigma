@@ -37,7 +37,6 @@ public class Enemigo : MonoBehaviour
     [Header("Configuraciones de detección al jugador:")]
     [SerializeField] private float detectionRadius;
     [SerializeField] private LayerMask playerMask;
-    [SerializeField] private AnimationClip AnimacionAtaque;
     [SerializeField] private float tEsperaAtaque;
     [SerializeField] private float tEsconderse;
 
@@ -54,6 +53,7 @@ public class Enemigo : MonoBehaviour
     [SerializeField] private int dañoGolpe;
     [SerializeField] private float tEntreAtaques;
     [SerializeField] private float prueba;
+    [SerializeField] private AnimationClip AnimacionAtaque;
 
 
 

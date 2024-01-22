@@ -13,7 +13,7 @@ public class PlayerController2 : MonoBehaviour
     private float TiempoEntreAtaque;
     private float TiempoSiguienteAtaque;
     public bool isActive;
-    private bool pausePlayer;
+    public bool pausePlayer;
     [SerializeField] private bool isJumping;
     [SerializeField] private bool isFalling;
 
@@ -164,8 +164,14 @@ public class PlayerController2 : MonoBehaviour
         foreach (Collider2D colicionador in objetos) {
             if (colicionador.CompareTag("Enemy"))
             {
-                Debug.Log("a");
-                colicionador.transform.GetComponent<Enemigo>().ResivirDaño(dañoGolpe);
+                if (colicionador.GetComponent<Enemigo>() != null)
+                {
+                    colicionador.GetComponent<Enemigo>().ResivirDaño(dañoGolpe);
+                }
+                if (colicionador.GetComponent<Cangrejo>() != null)
+                {
+                    colicionador.GetComponent<Cangrejo>().ResivirDaño(dañoGolpe);
+                }
             }
         }
     }

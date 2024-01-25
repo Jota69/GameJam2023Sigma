@@ -4,40 +4,72 @@ using UnityEngine;
 
 public class Fantasma : MonoBehaviour
 {
-    [SerializeField] private float speed = 5.0f; // Velocidad del enemigo
-    [SerializeField] private float detectionRange = 10.0f; // Rango de detección del jugador
-    [SerializeField] private float chargeDistance = 5.0f; // Distancia que el enemigo cargará
-
-    private Transform player; // Referencia al jugador
-    private Vector3 targetPosition; // Posición objetivo a la que se moverá el enemigo
-    private bool isCharging = false; // Indica si el enemigo está cargando
+    [SerializeField] public int daño;
+    [SerializeField] private int vida=30;
+    [SerializeField] private float speed = 1;
+    [SerializeField] private float detectionRange = 10.0f;
+    [SerializeField] private float chargeDistance = 5.0f;
+    [SerializeField] private float stunTime = 1;
+    private Transform player;
+    private Vector3 targetPosition;
+    private bool isCharging = false;
+    [SerializeField] private bool resibiendoDano;
 
     void Start()
     {
-        // Encuentra al jugador en la escena
+        resibiendoDano = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Update()
     {
-        // Calcula la distancia al jugador
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
-        // Si el jugador está dentro del rango de detección y el enemigo no está cargando
-        if (distanceToPlayer <= detectionRange && !isCharging)
+        if(!resibiendoDano)
         {
-            // Establece la posición objetivo en la dirección del jugador y marca al enemigo como cargando
-            targetPosition = player.position + (player.position - transform.position).normalized * chargeDistance;
-            isCharging = true;
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            // Si el jugador está dentro del rango de detección y el enemigo no está cargando
+            if (distanceToPlayer <= detectionRange && !isCharging)
+            {
+                // Establece la posición objetivo en la dirección del jugador y marca al enemigo como cargando
+                targetPosition = player.position + (player.position - transform.position).normalized * chargeDistance;
+                isCharging = true;
+            }
+
+            // Si el enemigo ha alcanzado la posición objetivo, deja de cargar
+            if (Vector3.Distance(transform.position, targetPosition) <= 0.1f)
+            {
+                isCharging = false;
+            }
+
+            // Mueve al enemigo hacia la posición objetivo
+            transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
+        }
+        else
+        {
+            Vector3 oppositeDirection = transform.position - player.position;
+            
+            if (!isCharging)
+            {
+                targetPosition = transform.position + oppositeDirection.normalized * (chargeDistance);
+                isCharging = true;
+            }
+            if (Vector3.Distance(transform.position, targetPosition) <= 1f)
+            {
+                isCharging = false;
+                resibiendoDano = false;
+            }
+            transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
+        }
+        if (vida <= 0)
+        {
+            Destroy(gameObject);
         }
 
-        // Si el enemigo ha alcanzado la posición objetivo, deja de cargar
-        if (Vector3.Distance(transform.position, targetPosition) <= 0.1f)
-        {
-            isCharging = false;
-        }
+    }
 
-        // Mueve al enemigo hacia la posición objetivo
-        transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
+    public void ResivirDaño(int daño)
+    {
+        vida -= daño;
+        resibiendoDano = true;
+        isCharging = false;
     }
 }

@@ -25,7 +25,7 @@ public class MenúInGame : MonoBehaviour
     {
 
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+        Eventos.eve.PasarNivel?.Invoke(0);
 
     }
 }

@@ -87,6 +87,10 @@ public class Cangrejo : MonoBehaviour
         {
             Girar();
         }
+        if (vida <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
     IEnumerator AddForceDuring()
     {
@@ -116,10 +120,6 @@ public class Cangrejo : MonoBehaviour
 
     public void ResivirDaño(int daño)
     {
-        if (vida <= 0)
-        {
-            Destroy(gameObject);
-        }
         vida -= daño;
         StopAllCoroutines();
         detected = false;

@@ -9,6 +9,7 @@ public class PlayerController2 : MonoBehaviour
     public Vector2 moveVector = Vector2.zero;
     private Rigidbody2D rb;
     public Animator animator;
+    private CapsuleCollider2D[] colliders;
     public bool isGrounded;
     private float TiempoEntreAtaque;
     private float TiempoSiguienteAtaque;
@@ -36,6 +37,7 @@ public class PlayerController2 : MonoBehaviour
 
     private void Awake()
     {
+        colliders = GetComponents<CapsuleCollider2D>();
         isActive = false;
         controladorGolpe = transform.GetChild(0).GetComponent<Transform>();
         animator = GetComponent<Animator>();
@@ -83,6 +85,17 @@ public class PlayerController2 : MonoBehaviour
         if (pausePlayer)
         {
             moveVector = Vector2.zero;
+        }
+        if (!isGrounded)
+        {
+            colliders[1].enabled = true;
+            colliders[0].enabled = false;
+
+        }
+        else
+        {
+            colliders[0].enabled = true;
+            colliders[1].enabled = false;
         }
 
         bool isAlmostIdle = isGrounded && rb.velocity.magnitude < 0.1f;
@@ -205,11 +218,11 @@ public class PlayerController2 : MonoBehaviour
     //    Destroy(gameObject);
     //}
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
+    //}
 
 
     //void DebugRaycast()

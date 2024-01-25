@@ -10,13 +10,14 @@ public class PlayerController : MonoBehaviour
     public Vector2 moveVector = Vector2.zero;
     private Rigidbody2D rb;
     public Animator animator;
-    private CapsuleCollider2D collider;
+    //private CapsuleCollider2D collider;
+    private CapsuleCollider2D[] colliders; 
     public bool isGrounded;
     //private float TiempoEntreAtaque;
     private float TiempoSiguienteAtaque;
     public bool isActive;
     public bool pausePlayer;
-
+    [SerializeField] private int vida=10;
     [SerializeField] private AnimationClip atrackClip;
     //[SerializeField] private Transform controladorGolpe;
     [SerializeField] private float radioGolpe;
@@ -25,7 +26,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
     //[SerializeField] private int dañoGolpe;
-    //[SerializeField] private PlayerInput playerInput;
+    //[SerializeField] private PlayerInput;
     private bool isIdle = true;
     public bool IsIdle
     {
@@ -37,11 +38,16 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        colliders = GetComponents<CapsuleCollider2D>();
+        //colliders[0].sharedMaterial.friction = 1;
+        //colliders[1].sharedMaterial.friction = 0;
         isActive = true;
         //controladorGolpe = transform.GetChild(0).GetComponent<Transform>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        collider = GetComponent<CapsuleCollider2D>();
+        //collider =GetComponent<CapsuleCollider2D>();
+
+
         //TiempoEntreAtaque = atrackClip.length;
 
         _myInput = new Mapa();
@@ -91,7 +97,20 @@ public class PlayerController : MonoBehaviour
             moveVector = Vector2.zero;
         }
 
-        collider.sharedMaterial.friction = isGrounded ? 1 : 0; ;
+        if (!isGrounded)
+        {
+            colliders[1].enabled = true;
+            colliders[0].enabled = false;
+
+        }
+        else
+        {
+            colliders[0].enabled = true;
+            colliders[1].enabled = false;
+        }
+
+        //collider.sharedMaterial.friction = isGrounded ? 1 : 0; ;
+
         bool isJumping = !isGrounded && rb.velocity.y > 0;
         bool isFalling = !isGrounded && rb.velocity.y < 0;
 

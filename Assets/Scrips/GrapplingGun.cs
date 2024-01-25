@@ -54,6 +54,8 @@ public class GrapplingGun : MonoBehaviour
 
     [HideInInspector] public Vector2 grapplePoint;
     [HideInInspector] public Vector2 grappleDistanceVector;
+    private bool objetc = false;
+    private GameObject grappeledObject;
 
 
     private void Awake()
@@ -121,6 +123,13 @@ public class GrapplingGun : MonoBehaviour
             {
                 RotateGun(grapplePoint, false);
             }
+            if (grappeledObject != null&&objetc&& launchToPoint && grappleRope.isGrappling)
+            {
+                // Mover el objeto hacia el personaje
+                grappeledObject.transform.position = Vector2.Lerp(grappeledObject.transform.position, gunHolder.position, Time.deltaTime * launchSpeed);
+                grapplePoint = grappeledObject.transform.position;
+                //grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
+            }
         }
     }
     
@@ -128,7 +137,7 @@ public class GrapplingGun : MonoBehaviour
     {
         if (player.isActive)
         {
-            if (launchToPoint && grappleRope.isGrappling)
+            if (launchToPoint && grappleRope.isGrappling&&!objetc)
             {
                 if (launchType == LaunchType.Transform_Launch)
                 {
@@ -145,6 +154,7 @@ public class GrapplingGun : MonoBehaviour
         if (player.isActive)
         {
             grappleRope.enabled = false;
+            objetc = false;
             m_springJoint2D.enabled = false;
             m_rigidbody.gravityScale = 1;
             StopAllCoroutines();
@@ -180,6 +190,7 @@ public class GrapplingGun : MonoBehaviour
         yield return new WaitForSeconds(timeToGrapplin);
         grappleRope.enabled = false;
         m_springJoint2D.enabled = false;
+        objetc = false;
         m_rigidbody.gravityScale = 1;
     }
     void SetGrapplePoint()
@@ -201,7 +212,7 @@ public class GrapplingGun : MonoBehaviour
         if (hit)
         {
            //Visualizar el raycast en la escena
-            Debug.DrawRay(firePoint.position, distanceVector.normalized * hit.distance, Color.green, 0.2f);
+            //Debug.DrawRay(firePoint.position, distanceVector.normalized * hit.distance, Color.green, 0.2f);
 
             if (hit.transform.gameObject.layer == grappableLayerNumber || grappleToAll)
             {
@@ -213,6 +224,19 @@ public class GrapplingGun : MonoBehaviour
 
                     // Mensaje de depuración para imprimir la información del Raycast
                 }
+            }else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Objetos"))
+            {
+                if (Vector2.Distance(hit.point, firePoint.position) <= maxDistnace || !hasMaxDistance)
+                {
+                    grapplePoint = hit.point;
+                    grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
+                    grappleRope.enabled = true;
+                    //objetc = true;
+                    grappeledObject = hit.transform.gameObject;
+                    objetc = true;
+                    // Mensaje de depuración para imprimir la información del Raycast
+                }
+                
             }
         }
     }

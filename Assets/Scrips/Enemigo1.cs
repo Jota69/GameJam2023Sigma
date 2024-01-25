@@ -11,7 +11,6 @@ public class Enemigo : MonoBehaviour
     
     private Rigidbody2D rb;
     private Animator animator;
-    private bool muerto;
     private bool isGrounded;
     private bool aRango;
     [SerializeField] private bool atacando;
@@ -22,9 +21,9 @@ public class Enemigo : MonoBehaviour
     private bool golpeEjecutado = false;
     [HideInInspector] public Collider2D[] hits;
     [SerializeField] private bool modoAtaque;
-    IEnumerator atack;
     private Vector3 vectorPosicionRaycast;
     [SerializeField] private int vida;
+    [SerializeField] public int daño;
 
     [Header("Configuraciones de movimiento:")]
     [SerializeField] private LayerMask otrosEnemigos;
@@ -45,7 +44,7 @@ public class Enemigo : MonoBehaviour
     [SerializeField] private float radioGolpe;
 
     [Header("Tipo de enemigo:")]
-    [SerializeField] private bool isMobile;
+    [SerializeField] public bool isMobile;
     [SerializeField] private bool isCac;//cuerpo a cuerpo
     [SerializeField] private GameObject arma;
 
@@ -59,10 +58,8 @@ public class Enemigo : MonoBehaviour
 
     void Start()
     {
-        atack = ataque();
         aRango = false;
         atacando = false;
-        muerto = false;
         parado = false;
         detectandoPlayer = false;
         modoAlerta = false;
@@ -173,6 +170,10 @@ public class Enemigo : MonoBehaviour
                 Girar();
             }
             Girar();
+        }
+        if (vida <= 0)
+        {
+            Destroy(gameObject);
         }
     }
     IEnumerator esconderse()
@@ -286,10 +287,6 @@ public class Enemigo : MonoBehaviour
 
     public void ResivirDaño(int daño)
     {
-        if (vida <= 0)
-        {
-            Destroy(gameObject);
-        }
         vida -= daño;
         StopAllCoroutines();
         StartCoroutine(WaitDamage());

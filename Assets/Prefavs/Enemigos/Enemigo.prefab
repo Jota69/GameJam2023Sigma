@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8634791769206303978}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: AtaqueIndicador
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 8408322681606785888}
   - component: {fileID: 6841216864604705906}
   - component: {fileID: 3854293989767519}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Arma
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1157706825428418399}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6843960115125527359}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: GroundedCaida
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 2618935521180043958}
   - component: {fileID: 5302143948134783670}
   - component: {fileID: 6210130562142594014}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Enemigo
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -369,6 +369,7 @@ MonoBehaviour:
   hits: []
   modoAtaque: 0
   vida: 100
+  "da\xF1o": 0
   otrosEnemigos:
     serializedVersion: 2
     m_Bits: 0
@@ -383,7 +384,6 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 384
-  AnimacionAtaque: {fileID: 0}
   tEsperaAtaque: 2
   tEsconderse: 3
   controladorGolpe: {fileID: 8634791769206303978}
@@ -394,3 +394,4 @@ MonoBehaviour:
   "da\xF1oGolpe": 1
   tEntreAtaques: 1
   prueba: 0
+  AnimacionAtaque: {fileID: 0}

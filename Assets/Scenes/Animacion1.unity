@@ -975,6 +975,9 @@ MonoBehaviour:
   PasarNivel:
     m_PersistentCalls:
       m_Calls: []
+  disparoEnemigo:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1604943412
 Transform:
   m_ObjectHideFlags: 0
@@ -1046,6 +1049,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3855584768543585072, guid: 673726be7e51b5941b1a12d3994596bf, type: 3}
+      propertyPath: videoPlayer
+      value: 
+      objectReference: {fileID: 601291327}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

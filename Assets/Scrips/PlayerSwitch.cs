@@ -11,31 +11,40 @@ public class PlayerSwitch : MonoBehaviour
     [SerializeField] private GameObject grappelGun;
     private Mapa inputs;
     
-    public Transform Player1;
-    public Transform Player2;
-    public CinemachineVirtualCamera virtualCamera;
+    [SerializeField] public Transform Player1;
+    [SerializeField] public Transform Player2;
+    [SerializeField] public CinemachineVirtualCamera virtualCamera;
 
     public GameObject p1;
     public GameObject p2;
     public Material skin;
 
-
-
-
     [HideInInspector] public bool isGrounded;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float raycastDistance = 1f;
+
+    [Header("SoundFX")]
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip clipCambioPersonajeHombre;
+    [SerializeField] private AudioClip clipCambioPersonajeMujer;
 
     private void Awake()
     {
         inputs = new Mapa();
         inputs.Enable();
+        
+    }
+    private void Start()
+    {
+        player1 = p1.GetComponent<PlayerController>();
+        player2 = p2.GetComponent<PlayerController2>();
         p1.GetComponent<SpriteRenderer>().sortingOrder = 1;
         player2.tag = "Untagged";
         Material materialP2 = p2.GetComponent<Renderer>().material;
         Color colorP2 = materialP2.color;
         colorP2.a = 0.25f;
         materialP2.color = colorP2;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -102,7 +111,8 @@ public class PlayerSwitch : MonoBehaviour
             player2.isActive = true;
             player2.tag = "Player";
             p2.GetComponent<SpriteRenderer>().sortingOrder = 1;
-
+            audioSource.clip = clipCambioPersonajeHombre;
+            audioSource.Play();
 
             
 
@@ -131,10 +141,11 @@ public class PlayerSwitch : MonoBehaviour
             player1.isActive = true;
             player1.tag = "Player";
             p1.GetComponent<SpriteRenderer>().sortingOrder = 1;
+            audioSource.clip = clipCambioPersonajeMujer;
+            audioSource.Play();
 
-            
 
-         
+
 
             Material materialP2 = p2.GetComponent<Renderer>().material;
             Color colorP2 = materialP2.color;

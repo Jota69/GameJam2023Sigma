@@ -10,6 +10,7 @@ TagManager:
   - Totem
   - Bala
   - ObInteract
+  - Terreno
   layers:
   - Default
   - TransparentFX
@@ -50,6 +51,9 @@ TagManager:
   - name: Fondo
     uniqueID: 1373707261
     locked: 0
+  - name: Barcos
+    uniqueID: 355376999
+    locked: 0
   - name: Terreno
     uniqueID: 2481871089
     locked: 0
@@ -58,9 +62,6 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2172854779
-    locked: 0
-  - name: Barcos
-    uniqueID: 355376999
     locked: 0
   - name: otros
     uniqueID: 3098651107

@@ -12,6 +12,10 @@ public class Proyectil : MonoBehaviour
         direccion = dir;
         velocidadBala = vel;
     }
+    public void Destruir()
+    {
+        Destroy(gameObject);
+    }
 
     void Start()
     {

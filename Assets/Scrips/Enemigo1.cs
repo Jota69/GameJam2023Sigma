@@ -11,7 +11,7 @@ public class Enemigo : MonoBehaviour
     
     private Rigidbody2D rb;
     private Animator animator;
-    private bool isGrounded;
+    [SerializeField] private bool isGrounded;
     private bool aRango;
     [SerializeField] private bool atacando;
     [SerializeField] public bool detectandoPlayer;
@@ -21,7 +21,6 @@ public class Enemigo : MonoBehaviour
     private bool golpeEjecutado = false;
     [HideInInspector] public Collider2D[] hits;
     [SerializeField] private bool modoAtaque;
-    private Vector3 vectorPosicionRaycast;
     [SerializeField] private int vida;
     [SerializeField] public int daño;
 
@@ -31,6 +30,7 @@ public class Enemigo : MonoBehaviour
     [SerializeField] private float distanciaPared;
     [SerializeField] private float raycastDistancia2;
     [SerializeField] private Transform inicioRaycastGround;
+    [SerializeField] private Transform inicioRaycastPared;
     [SerializeField] private LayerMask queEsSuelo;
 
     [Header("Configuraciones de detección al jugador:")]
@@ -72,18 +72,18 @@ public class Enemigo : MonoBehaviour
 
     private void Update()
     {
-        vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+        
         isGrounded = CheckGrounded();
         hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
-        RaycastHit2D informacionSuelo = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, queEsSuelo);
-        RaycastHit2D informacionPlayerCac = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, playerMask);
+        RaycastHit2D informacionSuelo = Physics2D.Raycast(inicioRaycastPared.position, transform.right, distanciaPared, queEsSuelo);
+        RaycastHit2D informacionPlayerCac = Physics2D.Raycast(inicioRaycastPared.position, transform.right, distanciaPared, playerMask);
         //ENEMIGOS PATRULLEROS A DISTANCIA
         if (!isCac) {
             arma.SetActive(true);
             foreach (var hit in hits)
             {
                 Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
-                //DebugRaycast(directionToPlayer);
+                DebugRaycast();
                 RaycastHit2D[] raycastHits = Physics2D.RaycastAll(transform.position, directionToPlayer, detectionRadius);
                 foreach (var raycastHit in raycastHits)
                 {
@@ -165,11 +165,15 @@ public class Enemigo : MonoBehaviour
         }
         if (informacionSuelo || !isGrounded)
         {
-            if (!aRango&&!isCac)
+            if (!aRango && !isCac)
             {
                 Girar();
             }
-            Girar();
+            else if(isCac)
+            {
+                Girar();
+            }
+            
         }
         if (vida <= 0)
         {
@@ -305,11 +309,11 @@ public class Enemigo : MonoBehaviour
             parado = false;
         }
     }
-    //void DebugRaycast(Vector3 playerPosition)
-    //{
-    //    Vector2 raycastOrigin = inicioRaycastGround.transform.position;
-    //    Debug.DrawRay(transform.position, playerPosition*10, Color.blue);
-    //}
+    void DebugRaycast()
+    {
+        Vector2 raycastOrigin = inicioRaycastPared.position;
+        Debug.DrawRay(raycastOrigin, Vector2.right*distanciaPared, Color.blue);
+    }
     //private void OnDrawGizmos()
     //{
     //    Gizmos.color = Color.yellow;

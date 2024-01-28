@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -47,7 +46,6 @@ public class GrapplingGun : MonoBehaviour
     [SerializeField] private bool launchToPoint = false;
     [SerializeField] private LaunchType launchType = LaunchType.Physics_Launch;
     [SerializeField] private float launchSpeed = 1;
-    [SerializeField] private float coolDownTime;
 
     [Header("No Launch To Point")]
     [SerializeField] private bool autoConfigureDistance = false;
@@ -58,12 +56,6 @@ public class GrapplingGun : MonoBehaviour
     [HideInInspector] public Vector2 grappleDistanceVector;
     private bool objetc = false;
     private GameObject grappeledObject;
-    private bool inCoolDown;
-    IEnumerator solt;
-
-    [Header("SoundFX")]
-    private AudioSource audioSource;
-    [SerializeField] private AudioClip ganchoAudio;
 
 
     private void Awake()
@@ -76,9 +68,7 @@ public class GrapplingGun : MonoBehaviour
         grappleRope.enabled = false;
         m_springJoint2D.enabled = false;
         player.GetComponent<PlayerController>();
-        audioSource = GetComponent<AudioSource>();
-
-
+        
     }
 
 
@@ -93,15 +83,12 @@ public class GrapplingGun : MonoBehaviour
         inputs.Player.gancho.performed -= OnEngagePerformed;
         inputs.Player.gancho.canceled -= OnEngageCanceled;
         inputs.Player.gancho.started -= OnEngageStarted;
-        audioSource.Stop();
     }
-    
 
 
 
     private void Update()
     {
-        
         if (player.isActive)
         {
             if (!grappleRope.enabled)
@@ -166,51 +153,20 @@ public class GrapplingGun : MonoBehaviour
     {
         if (player.isActive)
         {
-            //grappleRope.enabled = false;
+            grappleRope.enabled = false;
             objetc = false;
-            
             m_springJoint2D.enabled = false;
-            if (grappleRope.enabled&&grappleRope.strightLine)
-            {
-                inCoolDown = true;
-                grappleRope.EnableReverse();
-                StartCoroutine(CuerdaCoolDown());
-            }
-            else
-            {
-                grappleRope.enabled = false;
-            }
-            //StartCoroutine(cuerdaReturn());
             m_rigidbody.gravityScale = 1;
-            audioSource.Stop();
-            StopCoroutine(solt);
+            StopAllCoroutines();
         }
-    }
-    IEnumerator CuerdaCoolDown()
-    {
-        yield return new WaitForSeconds(coolDownTime);
-        inCoolDown = false;
     }
 
     private void OnEngageStarted(InputAction.CallbackContext value)
     {
         if (player.isActive)
         {
-            if (!inCoolDown)
-            {
-                if (grappleRope.isReturning)
-                {
-                    grappleRope.enabled = false;
-                }
-                SetGrapplePoint();
-                if (ganchoAudio != null && grappleRope.enabled)
-                {
-                    audioSource.PlayOneShot(ganchoAudio);
-                }
-                solt = Soltar();
-                StartCoroutine(solt);
-            }
-
+            SetGrapplePoint();
+            StartCoroutine(Soltar());
         }
     }
 
@@ -231,15 +187,11 @@ public class GrapplingGun : MonoBehaviour
     }
     private IEnumerator Soltar()
     {
-        yield return new WaitForSeconds(ganchoAudio.length);
-        //grappleRope.enabled = false;
+        yield return new WaitForSeconds(timeToGrapplin);
+        grappleRope.enabled = false;
         m_springJoint2D.enabled = false;
-        grappleRope.EnableReverse();
-        inCoolDown = true;
         objetc = false;
         m_rigidbody.gravityScale = 1;
-        audioSource.Stop();
-        StartCoroutine(CuerdaCoolDown());
     }
     void SetGrapplePoint()
     {

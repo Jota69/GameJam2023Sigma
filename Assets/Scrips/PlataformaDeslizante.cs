@@ -7,136 +7,51 @@ using UnityEngine.Events;
 public class PlataformaDeslizante : MonoBehaviour
 {
     // Start is called before the first frame update
-    [Header("Multinterruptores")]
-    [SerializeField] private bool multiInterruptor=false;
-    [SerializeField] private int numeroInterruptores=2;
 
-    [Header("Generales")]
     [SerializeField] private bool iniciaActivado = false;
     [SerializeField] private int idPlataforma;
     [SerializeField] private bool idModificable = false;
     private Animator animator;
-    [Header("SoundFX")]
-    private AudioSource audioSource;
-    [SerializeField] private AudioClip audioAbrirse;
-    private int cont;
-    private bool act;
-    private bool desact;
-
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
-        cont=0;
         if (iniciaActivado)
         {
             animator.SetBool("deslizar", true);
         }
-    }
-    private void Update()
-    {
-        if (multiInterruptor)
-        {
-            if (cont == numeroInterruptores)
-            {
-                if (!act)
-                {
-                    Activar();
-                }
-            }
-            else 
-            {
-                if (!desact)
-                {
-                    Desactivar();
-                }
-            }
-        }
-        
     }
 
     private void ActivarPlataforma(int idResiver)
     {
         if (idResiver == idPlataforma)
         {
-            if (multiInterruptor)
+            if (animator.GetBool("deslizar") == true)
             {
-                if (cont != numeroInterruptores)
+                animator.SetBool("deslizar", false);
+                if (idModificable)
                 {
-                    cont++;
+                    idPlataforma++;
                 }
             }
             else
             {
-                if (animator.GetBool("deslizar"))
+                animator.SetBool("deslizar", true);
+                if (idModificable)
                 {
-                    Activar();
-                }
-                else
-                {
-                    Desactivar();
-                }
-            }
-        }      
-    }
-    private void Activar()
-    {
-        animator.SetBool("deslizar", false);
-        audioSource.clip = audioAbrirse;
-        audioSource.Play();
-        if (idModificable)
-        {
-            idPlataforma++;
-        }
-        act = true;
-        desact = false;
-    }
-    private void Desactivar()
-    {
-        animator.SetBool("deslizar", true);
-        if (!audioSource.isPlaying)
-        {
-            audioSource.clip = audioAbrirse;
-            audioSource.Play();
-        }
-        if (idModificable)
-        {
-            idPlataforma++;
-        }
-        act = false;
-        desact = true;
-    }
-    private void DesactivarPlataforma(int idResiver)
-    {
-        if (idResiver==idPlataforma)
-        {
-            if (multiInterruptor)
-            {
-                cont--;
-            }
-            else
-            {
-                if (animator.GetBool("deslizar"))
-                {
-                    Activar();
-                }
-                else
-                {
-                    Desactivar();
+                    idPlataforma++;
                 }
             }
         }
+        
     }
 
     private void OnEnable()
     {
-        Eventos.eve.ActivarPlataforma.AddListener(ActivarPlataforma);
-        Eventos.eve.DesactivarPlataforma.AddListener(DesactivarPlataforma);
+        Eventos.eve.moverPlataforma.AddListener(ActivarPlataforma);
     }
     private void OnDisable()
     {
-        Eventos.eve.ActivarPlataforma.RemoveListener(ActivarPlataforma);
-        Eventos.eve.DesactivarPlataforma.RemoveListener(DesactivarPlataforma);
+        Eventos.eve.moverPlataforma.RemoveListener(ActivarPlataforma);
     }
 }

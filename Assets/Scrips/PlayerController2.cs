@@ -26,10 +26,6 @@ public class PlayerController2 : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
     [SerializeField] private int dañoGolpe;
-
-    [Header("SoundFX")]
-    [SerializeField] private AudioClip clipDaño;
-
     private bool isIdle = true;
     private bool isIdleE;
     public bool IsIdle
@@ -188,13 +184,6 @@ public class PlayerController2 : MonoBehaviour
                 if (colicionador.GetComponent<Cangrejo>() != null)
                 {
                     colicionador.GetComponent<Cangrejo>().ResivirDaño(dañoGolpe);
-                }
-            }
-            if (colicionador.CompareTag("ObInteract"))
-            {
-                if (colicionador.GetComponent<Cuerda>()!=null)
-                {
-                    colicionador.GetComponent<Cuerda>().Desactivar();
                 }
             }
         }

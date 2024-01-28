@@ -26,10 +26,6 @@ public class controladorVida : MonoBehaviour
     {
         Eventos.eve.perderVida.AddListener(quitarVida);
     }
-    private void OnDisable()
-    {
-        Eventos.eve.perderVida.RemoveListener(quitarVida);
-    }
     private void quitarVida() 
     {
         slider.value--;

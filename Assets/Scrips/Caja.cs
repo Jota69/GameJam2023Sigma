@@ -8,34 +8,23 @@ public class Caja : MonoBehaviour
     [SerializeField] private int dañoCaida=10;
     [SerializeField] private float speedToDoDamage=7;
     float cont;
-
-    [Header("SoundFX")]
-    private AudioSource audioSource;
-    [SerializeField] private AudioClip audioRuedo;
-    [SerializeField] private AudioClip audioCaida;
-    private Vector3 lastPosition;
-    private bool sonando;
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
-        lastPosition = transform.position;
     }
     private void Update()
     {
-        lastPosition = transform.position;
-        if (rb.velocity.y <= 0)
+        if (rb.velocityY <= 0)
         {
-            cont = rb.velocity.y;
+            cont = rb.velocityY;
         }
         else
         {
-            StartCoroutine(ReiniciarCont());
+            StartCoroutine(reiniciarCont());
         }
-        
     }
-    IEnumerator ReiniciarCont()
+    IEnumerator reiniciarCont()
     {
         yield return new WaitForSeconds(0.3f);
         cont = 0;
@@ -43,19 +32,6 @@ public class Caja : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Terreno"))
-        {
-            if (cont < 1 || cont > 1)
-            {
-                if (audioSource.isPlaying)
-                {
-                    audioSource.Stop();
-                }
-                audioSource.clip = audioCaida;
-                audioSource.Play();
-
-            }
-        }
         if (collision.gameObject.CompareTag("Enemy"))
         {
             if (collision.gameObject.GetComponent<Enemigo>())
@@ -64,21 +40,6 @@ public class Caja : MonoBehaviour
                 {
                     collision.gameObject.GetComponent<Enemigo>().ResivirDaño(dañoCaida);
                 }
-            }
-        }
-    }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Terreno"))
-        {
-            if (transform.position != lastPosition || rb.velocity.x != 0)
-            {
-                if (!audioSource.isPlaying)
-                {
-                    audioSource.clip = audioRuedo;
-                    audioSource.Play();
-                }
-                //audioSource.PlayOneShot(audioRuedo);
             }
         }
     }

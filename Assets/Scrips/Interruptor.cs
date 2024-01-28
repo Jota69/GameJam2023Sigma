@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Interruptor : MonoBehaviour
@@ -11,6 +13,10 @@ public class Interruptor : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] private AudioClip audioActivar;
     [SerializeField] private AudioClip audioDesactivar;
+    private bool primerTriggerYaEntró = false;
+    private Collider2D primerObjeto;
+    private String tagPO;
+   
 
     private void Start()
     {
@@ -18,23 +24,45 @@ public class Interruptor : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")|| collision.CompareTag("ObInteract"))
+        if (collision.CompareTag("Player") || collision.CompareTag("ObInteract"))
         {
-            Eventos.eve.ActivarPlataforma?.Invoke(id);
-            Eventos.eve.activarCuerda?.Invoke(id);
-            audioSource.clip = audioActivar;
-            audioSource.Play();
-
+            if (!primerTriggerYaEntró)
+            {
+                primerTriggerYaEntró = true;
+                primerObjeto = collision;
+                tagPO = collision.tag;
+                Eventos.eve.ActivarPlataforma?.Invoke(id);
+                Eventos.eve.activarCuerda?.Invoke(id);
+                audioSource.clip = audioActivar;
+                audioSource.Play();
+                // Aquí va tu código para cuando el primer trigger entra al collider
+            }
         }
+        
+        
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if ((collision.CompareTag("Player")|| collision.CompareTag("ObInteract")) &&presionMantenida)
+        if ((collision.CompareTag("Player") || collision.CompareTag("ObInteract")) && presionMantenida)
         {
-            Eventos.eve.DesactivarPlataforma.Invoke(id);
-            audioSource.clip = audioDesactivar;
-            audioSource.Play();
+            if (primerObjeto == collision)
+            {
+                primerTriggerYaEntró = false;
+                Eventos.eve.DesactivarPlataforma.Invoke(id);
+                audioSource.clip = audioDesactivar;
+                audioSource.Play();
+
+            }
+            else if (tagPO==("Player") && collision.CompareTag("Player"))
+            {
+                primerTriggerYaEntró = false;
+                Eventos.eve.DesactivarPlataforma.Invoke(id);
+                audioSource.clip = audioDesactivar;
+                audioSource.Play();
+            }
         }
+        
+        
     }
 
 }

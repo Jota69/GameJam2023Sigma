@@ -14,7 +14,7 @@ public class Proyectil : MonoBehaviour
     }
     public void Destruir()
     {
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 
     void Start()

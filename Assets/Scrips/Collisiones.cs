@@ -23,6 +23,7 @@ public class Collisiones : MonoBehaviour
             if (collision.GetComponent<Proyectil>())
             {
                 Eventos.eve.perderVida.Invoke();
+                collision.GetComponent<Proyectil>().Destruir();
             }
         }
     }

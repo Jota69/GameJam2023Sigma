@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+//[System.Serializable]
+//public class MiEventoDosFloats : UnityEvent<float, float> { }
 public class Eventos : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -26,6 +28,7 @@ public class Eventos : MonoBehaviour
     public UnityEvent<int> ActivarPlataforma;
     public UnityEvent<int> DesactivarPlataforma;
     public UnityEvent<int> activarCuerda;
+    public UnityEvent<float> cambiarBarraCoolDown;
     public UnityEvent IniciarDialogo2;
     public UnityEvent PausarPlayer;
     public UnityEvent pausarP;

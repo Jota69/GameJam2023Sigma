@@ -152,7 +152,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "G\xFAas papeles_0": 7153302740735832640
+      "G\xFAas papeles_1": -9063392616576512389
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

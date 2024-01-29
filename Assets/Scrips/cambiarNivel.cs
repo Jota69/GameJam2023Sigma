@@ -80,6 +80,13 @@ public class cambiarNivel : MonoBehaviour
         SceneManager.LoadScene(Scene);
 
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            LoadNextScene(SceneSig);
+        }
+    }
 
     private void ActivarCanva()
     {

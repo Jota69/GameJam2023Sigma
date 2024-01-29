@@ -159,6 +159,7 @@ public class GrapplingGun : MonoBehaviour
                     gunHolder.position = Vector2.Lerp(gunHolder.position, targetPos, Time.deltaTime * launchSpeed);
                 }
             }
+            
         }
     }
 
@@ -215,13 +216,14 @@ public class GrapplingGun : MonoBehaviour
                 {
                     grappleRope.enabled = false;
                 }
+                solt = Soltar();
+                StartCoroutine(solt);
                 SetGrapplePoint();
                 if (ganchoAudio != null && grappleRope.enabled)
                 {
                     audioSource.PlayOneShot(ganchoAudio);
                 }
-                solt = Soltar();
-                StartCoroutine(solt);
+                
             }
 
         }
@@ -280,8 +282,8 @@ public class GrapplingGun : MonoBehaviour
 
         if (hit)
         {
-           //Visualizar el raycast en la escena
-            //Debug.DrawRay(firePoint.position, distanceVector.normalized * hit.distance, Color.green, 0.2f);
+            //Visualizar el raycast en la escena
+            Debug.DrawRay(firePoint.position, distanceVector.normalized * hit.distance, Color.green, 0.2f);
 
             if (hit.transform.gameObject.layer == grappableLayerNumber || grappleToAll)
             {
@@ -293,7 +295,12 @@ public class GrapplingGun : MonoBehaviour
 
                     // Mensaje de depuración para imprimir la información del Raycast
                 }
-            }else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Objetos"))
+                else
+                {
+                    StopCoroutine(solt);
+                }
+            }
+            else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Objetos"))
             {
                 if (Vector2.Distance(hit.point, firePoint.position) <= maxDistnace || !hasMaxDistance)
                 {
@@ -305,9 +312,21 @@ public class GrapplingGun : MonoBehaviour
                     objetc = true;
                     // Mensaje de depuración para imprimir la información del Raycast
                 }
-                
+                else
+                {
+                    StopCoroutine(solt);
+                }
             }
+
+
         }
+        else
+        {
+            StopCoroutine(solt);
+        }
+
+
+
     }
 
     public void Grapple()

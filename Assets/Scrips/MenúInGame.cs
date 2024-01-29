@@ -23,9 +23,8 @@ public class MenúInGame : MonoBehaviour
      
     public void SalirAlMenu()
     {
-
         Time.timeScale = 1;
-        Eventos.eve.PasarNivel?.Invoke(0);
+        Eventos.eve.PasarNivel?.Invoke(1);
 
     }
 }

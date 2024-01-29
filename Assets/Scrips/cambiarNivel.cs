@@ -67,17 +67,14 @@ public class cambiarNivel : MonoBehaviour
 
     public IEnumerator SceneLoad(int Scene)
     {
-        if (Scene==0)
-        {
-            //Eventos.eve.Recuperarvida.Invoke();
-        }
+        SceneData.sceneToLoad = Scene;
         hijo.SetActive(true);
         //Time.timeScale = 0;
         transitionAnimator.SetTrigger("StartTransition");
         bajarVol = true;
         yield return new WaitForSeconds(transitionTime);
         //Time.timeScale = 1;
-        SceneManager.LoadScene(Scene);
+        SceneManager.LoadScene(0);
 
     }
     private void OnTriggerEnter2D(Collider2D collision)

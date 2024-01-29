@@ -47,7 +47,7 @@ public class GrapplingGun : MonoBehaviour
     [SerializeField] private bool launchToPoint = false;
     [SerializeField] private LaunchType launchType = LaunchType.Physics_Launch;
     [SerializeField] private float launchSpeed = 1;
-    [SerializeField] private float coolDownTime;
+    [SerializeField] public float coolDownTime;
 
     [Header("No Launch To Point")]
     [SerializeField] private bool autoConfigureDistance = false;
@@ -58,7 +58,7 @@ public class GrapplingGun : MonoBehaviour
     [HideInInspector] public Vector2 grappleDistanceVector;
     private bool objetc = false;
     private GameObject grappeledObject;
-    private bool inCoolDown;
+    [HideInInspector] public bool inCoolDown;
     IEnumerator solt;
 
     [Header("SoundFX")]
@@ -101,7 +101,7 @@ public class GrapplingGun : MonoBehaviour
 
     private void Update()
     {
-        
+        //Debug.Log(ScreenToWorldPoint(Mouse.current.position.ReadValue()));
         if (player.isActive)
         {
             if (!grappleRope.enabled)
@@ -159,20 +159,25 @@ public class GrapplingGun : MonoBehaviour
                     gunHolder.position = Vector2.Lerp(gunHolder.position, targetPos, Time.deltaTime * launchSpeed);
                 }
             }
+            
         }
     }
 
     private void OnEngageCanceled(InputAction.CallbackContext value)
     {
+        Canceled();
+        StopCoroutine(solt);
+    }
+    public void Canceled()
+    {
         if (player.isActive)
         {
             //grappleRope.enabled = false;
             objetc = false;
-            
+
             m_springJoint2D.enabled = false;
-            if (grappleRope.enabled&&grappleRope.strightLine)
+            if (grappleRope.enabled && grappleRope.strightLine)
             {
-                inCoolDown = true;
                 grappleRope.EnableReverse();
                 StartCoroutine(CuerdaCoolDown());
             }
@@ -183,12 +188,21 @@ public class GrapplingGun : MonoBehaviour
             //StartCoroutine(cuerdaReturn());
             m_rigidbody.gravityScale = 1;
             audioSource.Stop();
-            StopCoroutine(solt);
+            Eventos.eve.cambiarBarraCoolDown.Invoke(1);
         }
     }
     IEnumerator CuerdaCoolDown()
     {
-        yield return new WaitForSeconds(coolDownTime);
+        inCoolDown = true;
+        float tiempoPasado = 0;
+
+        while (tiempoPasado < coolDownTime)
+        {
+            tiempoPasado += Time.deltaTime;
+            Eventos.eve.cambiarBarraCoolDown.Invoke(tiempoPasado / coolDownTime);
+            yield return null;
+        }
+
         inCoolDown = false;
     }
 
@@ -202,13 +216,14 @@ public class GrapplingGun : MonoBehaviour
                 {
                     grappleRope.enabled = false;
                 }
+                solt = Soltar();
+                StartCoroutine(solt);
                 SetGrapplePoint();
                 if (ganchoAudio != null && grappleRope.enabled)
                 {
                     audioSource.PlayOneShot(ganchoAudio);
                 }
-                solt = Soltar();
-                StartCoroutine(solt);
+                
             }
 
         }
@@ -231,7 +246,15 @@ public class GrapplingGun : MonoBehaviour
     }
     private IEnumerator Soltar()
     {
-        yield return new WaitForSeconds(ganchoAudio.length);
+        float tiempoPasado = 0;
+
+        while (tiempoPasado < ganchoAudio.length)
+        {
+            tiempoPasado += Time.deltaTime;
+            Eventos.eve.cambiarBarraCoolDown.Invoke(1-tiempoPasado/ganchoAudio.length);
+            yield return null;
+        }
+        //yield return new WaitForSeconds(ganchoAudio.length);
         //grappleRope.enabled = false;
         m_springJoint2D.enabled = false;
         grappleRope.EnableReverse();
@@ -259,8 +282,8 @@ public class GrapplingGun : MonoBehaviour
 
         if (hit)
         {
-           //Visualizar el raycast en la escena
-            //Debug.DrawRay(firePoint.position, distanceVector.normalized * hit.distance, Color.green, 0.2f);
+            //Visualizar el raycast en la escena
+            Debug.DrawRay(firePoint.position, distanceVector.normalized * hit.distance, Color.green, 0.2f);
 
             if (hit.transform.gameObject.layer == grappableLayerNumber || grappleToAll)
             {
@@ -272,7 +295,12 @@ public class GrapplingGun : MonoBehaviour
 
                     // Mensaje de depuración para imprimir la información del Raycast
                 }
-            }else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Objetos"))
+                else
+                {
+                    StopCoroutine(solt);
+                }
+            }
+            else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Objetos"))
             {
                 if (Vector2.Distance(hit.point, firePoint.position) <= maxDistnace || !hasMaxDistance)
                 {
@@ -284,9 +312,21 @@ public class GrapplingGun : MonoBehaviour
                     objetc = true;
                     // Mensaje de depuración para imprimir la información del Raycast
                 }
-                
+                else
+                {
+                    StopCoroutine(solt);
+                }
             }
+
+
         }
+        else
+        {
+            StopCoroutine(solt);
+        }
+
+
+
     }
 
     public void Grapple()
@@ -329,13 +369,13 @@ public class GrapplingGun : MonoBehaviour
         }
     }
 
-    //private void OnDrawGizmosSelected()
-    //{
-    //    if (firePoint != null && hasMaxDistance)
-    //    {
-    //        Gizmos.color = Color.green;
-    //        Gizmos.DrawWireSphere(firePoint.position, maxDistnace);
-    //    }
-    //}
+    private void OnDrawGizmosSelected()
+    {
+        if (firePoint != null && hasMaxDistance)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(firePoint.position, maxDistnace);
+        }
+    }
 
 }

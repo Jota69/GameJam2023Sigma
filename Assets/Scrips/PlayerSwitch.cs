@@ -105,6 +105,10 @@ public class PlayerSwitch : MonoBehaviour
 
         if (player1Active)
         {
+            //grappelGun.GetComponent<GrapplingGun>().grappleRope.EnableReverse();
+            
+            grappelGun.GetComponent<GrapplingGun>().Canceled();
+            grappelGun.GetComponent<GrapplingGun>().inCoolDown = false;
             grappelGun.SetActive(false);
             player2.enabled = true;
             //p2.GetComponent<CapsuleCollider2D>().enabled = true;

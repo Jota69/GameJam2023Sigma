@@ -5,15 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class muerte : MonoBehaviour
 {
-    [SerializeField] private int lvl;
+    int sceneIndex;
     // Start is called before the first frame update
+    private void Start()
+    {
+        sceneIndex = SceneManager.GetActiveScene().buildIndex;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            Eventos.eve.PasarNivel.Invoke(lvl);
+            Eventos.eve.PasarNivel.Invoke(sceneIndex);
             
         }
         
     }
+
 }

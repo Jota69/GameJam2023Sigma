@@ -23,7 +23,13 @@ public class Collisiones : MonoBehaviour
             if (collision.GetComponent<Proyectil>())
             {
                 Eventos.eve.perderVida.Invoke();
+                collision.GetComponent<Proyectil>().Destruir();
             }
+        }
+        if (collision.CompareTag("Detener"))
+        {
+            Eventos.eve.PausarPlayer.Invoke();
+            Eventos.eve.PausarPlayer2.Invoke();
         }
     }
 

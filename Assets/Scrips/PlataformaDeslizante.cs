@@ -14,7 +14,9 @@ public class PlataformaDeslizante : MonoBehaviour
     [Header("Generales")]
     [SerializeField] private bool iniciaActivado = false;
     [SerializeField] private int idPlataforma;
+    [Header("Id Modificable")]
     [SerializeField] private bool idModificable = false;
+    [SerializeField] private int maxId=2;
     private Animator animator;
     [Header("SoundFX")]
     private AudioSource audioSource;
@@ -26,12 +28,16 @@ public class PlataformaDeslizante : MonoBehaviour
 
     private void Start()
     {
+        act = false;
+        desact = true;
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         cont=0;
         if (iniciaActivado)
         {
             animator.SetBool("deslizar", true);
+            act = true;
+            desact = false;
         }
     }
     private void Update()
@@ -87,7 +93,10 @@ public class PlataformaDeslizante : MonoBehaviour
         audioSource.Play();
         if (idModificable)
         {
-            idPlataforma++;
+            if (idPlataforma<maxId)
+            {
+                idPlataforma++;
+            }
         }
         act = true;
         desact = false;
@@ -102,7 +111,10 @@ public class PlataformaDeslizante : MonoBehaviour
         }
         if (idModificable)
         {
-            idPlataforma++;
+            if (idPlataforma < maxId)
+            {
+                idPlataforma++;
+            }
         }
         act = false;
         desact = true;

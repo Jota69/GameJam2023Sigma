@@ -253,7 +253,8 @@ MonoBehaviour:
   targetFrequncy: 1
   grapplePoint: {x: 0, y: 0}
   grappleDistanceVector: {x: 0, y: 0}
-  ganchoAudio: {fileID: 8300000, guid: 2c7b504affd93a54697e11a60c15981c, type: 3}
+  inCoolDown: 0
+  ganchoAudio: {fileID: 8300000, guid: 68628ad772e5ff4488df77ddf300065a, type: 3}
 --- !u!212 &6371772416241890493
 SpriteRenderer:
   m_ObjectHideFlags: 0

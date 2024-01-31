@@ -6,7 +6,7 @@ public class ZonaTrigger : MonoBehaviour
     public CinemachineVirtualCamera camaraVirtual;
     public CinemachineVirtualCamera[] otrasCamaras;
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {

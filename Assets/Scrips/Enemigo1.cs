@@ -249,8 +249,9 @@ public class Enemigo : MonoBehaviour
         {
             golpeEjecutado = true;
             if (isCac) { Golpe();}
-            else { Eventos.eve.disparoEnemigo.Invoke();
-                
+            else 
+            {
+                Eventos.eve.disparoEnemigo.Invoke();
             }
             // Marcar el golpe como ejecutado
         }

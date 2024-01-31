@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Proyectil : MonoBehaviour
 {
     private Vector3 direccion;
     private float velocidadBala;
+    
 
+    
     public void SetDireccion(Vector3 dir,float vel)
     {
         direccion = dir;

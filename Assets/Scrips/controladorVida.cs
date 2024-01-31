@@ -22,6 +22,7 @@ public class controladorVida : MonoBehaviour
     {
         if (slider.value <= 0) 
         {
+            
             StartCoroutine(animacionMuerteTime());
         }
     }
@@ -31,7 +32,10 @@ public class controladorVida : MonoBehaviour
         Eventos.eve.PausarPlayer.Invoke();
         Eventos.eve.PausarPlayer2.Invoke();
         yield return new WaitForSeconds(tiempoAnimMuerte);
-        Eventos.eve.PasarNivel.Invoke(sceneIndex);
+        slider.value = vida;
+        Eventos.eve.DespausarPlayer.Invoke();
+        Eventos.eve.DespausarPlayer2.Invoke();
+        Eventos.eve.MuertePlayer.Invoke();
     }
 
     private void OnEnable()

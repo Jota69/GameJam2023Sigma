@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Caja : MonoBehaviour
@@ -25,7 +26,7 @@ public class Caja : MonoBehaviour
     private void Update()
     {
         lastPosition = transform.position;
-        if (rb.velocity.y <= 0)
+        if (rb.velocity.y != 0)
         {
             cont = rb.velocity.y;
         }
@@ -37,7 +38,7 @@ public class Caja : MonoBehaviour
     }
     IEnumerator ReiniciarCont()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForNextFrameUnit();
         cont = 0;
     }
 
@@ -45,16 +46,15 @@ public class Caja : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Terreno"))
         {
-            if (cont < 1 || cont > 1)
-            {
-                if (audioSource.isPlaying)
-                {
-                    audioSource.Stop();
-                }
-                audioSource.clip = audioCaida;
-                audioSource.Play();
 
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
             }
+            audioSource.clip = audioCaida;
+            audioSource.Play();
+
+
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -71,7 +71,7 @@ public class Caja : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Terreno"))
         {
-            if (transform.position != lastPosition || rb.velocity.x != 0)
+            if (transform.position.x != lastPosition.x || rb.velocity.x != 0)
             {
                 if (!audioSource.isPlaying)
                 {

@@ -75,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1813096207
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.7075472, g: 0.59073514, b: 0.59073514, a: 1}
@@ -175,8 +175,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   "da\xF1oCaida": 10
   speedToDoDamage: 7
-  audioRuedo: {fileID: 8300000, guid: e2f265c164cc69048b61e6735f3ed9f8, type: 3}
-  audioCaida: {fileID: 8300000, guid: 091a0cc1df983064d99cd0e4d876aebc, type: 3}
+  audioRuedo: {fileID: 8300000, guid: ed30669f253d1b34fa061e5bd7c7ae8b, type: 3}
+  audioCaida: {fileID: 8300000, guid: 3eeb9106f92fc0543a53b46447f1aa40, type: 3}
 --- !u!82 &1335018371876156437
 AudioSource:
   m_ObjectHideFlags: 0

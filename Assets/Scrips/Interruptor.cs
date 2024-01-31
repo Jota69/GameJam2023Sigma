@@ -11,6 +11,7 @@ public class Interruptor : MonoBehaviour
     [SerializeField] private bool presionMantenida;
     [Header("SoundFX")]
     private AudioSource audioSource;
+    [SerializeField] private AudioSource otherAudioSource;
     [SerializeField] private AudioClip audioActivar;
     [SerializeField] private AudioClip audioDesactivar;
     private bool primerTriggerYaEntró = false;
@@ -28,6 +29,10 @@ public class Interruptor : MonoBehaviour
         {
             if (!primerTriggerYaEntró)
             {
+                if (otherAudioSource != null)
+                {
+                    otherAudioSource.Play();
+                }
                 primerTriggerYaEntró = true;
                 primerObjeto = collision;
                 tagPO = collision.tag;

@@ -45,6 +45,6 @@ public class ArmaEnemigo : MonoBehaviour
     }
     private void OnDisable()
     {
-        Eventos.eve.disparoEnemigo.RemoveAllListeners();
+        Eventos.eve.disparoEnemigo.RemoveListener(Shoot);
     }
 }

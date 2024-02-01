@@ -203,6 +203,7 @@ MonoBehaviour:
   detectandoPlayer: 0
   playerDetectado: 0
   modoAlerta: 0
+  parado: 0
   hits: []
   modoAtaque: 0
   vida: 20
@@ -222,7 +223,7 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 384
-  tEsperaAtaque: 2
+  tEsperaAtaque: 1
   tEsconderse: 3
   controladorGolpe: {fileID: 4486383167092003745}
   radioGolpe: 0.8
@@ -230,7 +231,7 @@ MonoBehaviour:
   isCac: 0
   arma: {fileID: 8871842690697157736}
   "da\xF1oGolpe": 1
-  tEntreAtaques: 1
+  tEntreAtaques: 0.5
   prueba: 0
   AnimacionAtaque: {fileID: 0}
 --- !u!1 &5970766064350499906

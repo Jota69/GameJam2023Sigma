@@ -23,12 +23,15 @@ public class PlayerController2 : MonoBehaviour
     [SerializeField] private float radioGolpe;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float raycastDistance = 1f;
+    [SerializeField] private float raycastDistanceInTheAir = 0.5f;
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
     [SerializeField] private int dañoGolpe;
 
     [Header("SoundFX")]
-    [SerializeField] private AudioClip clipDaño;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip clipAtaque;
+    [SerializeField] private AudioClip clipResivirDano;
 
     private bool isIdle = true;
     private bool isIdleE;
@@ -46,6 +49,7 @@ public class PlayerController2 : MonoBehaviour
         controladorGolpe = transform.GetChild(0).GetComponent<Transform>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
         TiempoEntreAtaque = atrackClip.length;
 
         _myInput = new Mapa();
@@ -67,6 +71,7 @@ public class PlayerController2 : MonoBehaviour
         //Eventos
         Eventos.eve.PausarPlayer2.AddListener(PausarPlayer);
         Eventos.eve.DespausarPlayer2.AddListener(DesausarPlayer);
+        Eventos.eve.perderVida.AddListener(Herido);
     }
     private void OnDisable()
     {
@@ -74,6 +79,9 @@ public class PlayerController2 : MonoBehaviour
         _myInput.Player.Movimiento.canceled -= OnMovementCancelled;
         _myInput.Player.Jump.performed -= OnJumpPerformed;
         _myInput.Player.Atacar.started -= OnAtackStarted;
+        Eventos.eve.PausarPlayer2.RemoveListener(PausarPlayer);
+        Eventos.eve.DespausarPlayer2.RemoveListener(DesausarPlayer);
+        //Eventos.eve.perderVida.RemoveListener(Herido);
     }
 
     private void FixedUpdate()
@@ -93,11 +101,19 @@ public class PlayerController2 : MonoBehaviour
         if (!isGrounded)
         {
             colliders[1].enabled = true;
+            if (colliders[0].enabled)
+            {
+                raycastDistance -= raycastDistanceInTheAir;
+            }
             colliders[0].enabled = false;
 
         }
         else
         {
+            if (!colliders[0].enabled)
+            {
+                raycastDistance += raycastDistanceInTheAir;
+            }
             colliders[0].enabled = true;
             colliders[1].enabled = false;
         }
@@ -207,6 +223,14 @@ public class PlayerController2 : MonoBehaviour
         return (hit.collider != null);
     }
 
+    private void Herido()
+    {
+        if (isActive)
+        {
+            audioSource.clip = clipResivirDano;
+            audioSource.Play();
+        }
+    }
     private void PausarPlayer()
     {
         pausePlayer = true;
@@ -229,11 +253,11 @@ public class PlayerController2 : MonoBehaviour
     //    Destroy(gameObject);
     //}
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
+    }
 
 
     //void DebugRaycast()

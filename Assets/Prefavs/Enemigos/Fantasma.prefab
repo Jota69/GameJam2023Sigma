@@ -112,6 +112,7 @@ MonoBehaviour:
   isReturning: 0
   objetoDelCollider: {fileID: 0}
   clipAtaque: {fileID: 8300000, guid: 49e05feb4714f914a9e58ea0fee3a672, type: 3}
+  clipResivirDano: {fileID: 8300000, guid: 5734f56cd5284be42b359c7c0f2e9954, type: 3}
   clipMuerte: {fileID: 8300000, guid: 6ee548599ecbdcc42b8cd19ec0722cb6, type: 3}
 --- !u!70 &2791694468594531059
 CapsuleCollider2D:

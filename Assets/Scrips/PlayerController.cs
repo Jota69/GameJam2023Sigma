@@ -23,8 +23,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float radioGolpe;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float raycastDistance = 1f;
+    [SerializeField] private float raycastDistanceInTheAir = 0.5f;
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
+    [Header("SoundFX")]
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip clipAtaque;
+    [SerializeField] private AudioClip clipResivirDano;
     //[SerializeField] private int dañoGolpe;
     //[SerializeField] private PlayerInput;
     private bool isIdle = true;
@@ -41,6 +46,7 @@ public class PlayerController : MonoBehaviour
         colliders = GetComponents<CapsuleCollider2D>();
         //colliders[0].sharedMaterial.friction = 1;
         //colliders[1].sharedMaterial.friction = 0;
+        audioSource = GetComponent<AudioSource>();
         isActive = true;
         //controladorGolpe = transform.GetChild(0).GetComponent<Transform>();
         animator = GetComponent<Animator>();
@@ -67,6 +73,7 @@ public class PlayerController : MonoBehaviour
         //Eventos
         Eventos.eve.DespausarPlayer.AddListener(DesausarPlayer);
         Eventos.eve.PausarPlayer.AddListener(PausarPlayer);
+        Eventos.eve.perderVida.AddListener(Herido);
     }
 
     private void OnDisable()
@@ -74,6 +81,10 @@ public class PlayerController : MonoBehaviour
         _myInput.Player.Movimiento.performed -= OnMovementPerformed;
         _myInput.Player.Movimiento.canceled -= OnMovementCancelled;
         _myInput.Player.Jump.performed -= OnJumpPerformed;
+
+        Eventos.eve.DespausarPlayer.RemoveListener(DesausarPlayer);
+        Eventos.eve.PausarPlayer.RemoveListener(PausarPlayer);
+        Eventos.eve.perderVida.RemoveListener(Herido);
     }
 
     private void FixedUpdate()
@@ -84,13 +95,27 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //DebugRaycast();
+        DebugRaycast();
         isGrounded = CheckGrounded();
 
         bool isAlmostIdle = isGrounded && rb.velocity.magnitude < 0.1f;
 
         // Actualizar isIdle a true si el personaje está en reposo, de lo contrario, actualizar a false
         isIdle = isAlmostIdle;
+
+        if (!IsIdle)
+        {
+            if ((moveVector.x < 0f && transform.eulerAngles.y != 0) || (moveVector.x > 0f && transform.eulerAngles.y == 0))
+            {
+                animator.SetBool("Corriendo", true);
+                animator.SetBool("CorriendoEspalda", false);
+            }
+            else if ((moveVector.x < 0f && transform.eulerAngles.y == 0) || (moveVector.x > 0f && transform.eulerAngles.y != 0))
+            {
+                animator.SetBool("Corriendo", false);
+                animator.SetBool("CorriendoEspalda", true);
+            }
+        }
 
         if (pausePlayer) 
         {
@@ -100,11 +125,19 @@ public class PlayerController : MonoBehaviour
         if (!isGrounded)
         {
             colliders[1].enabled = true;
+            if (colliders[0].enabled)
+            {
+                raycastDistance -= raycastDistanceInTheAir;
+            }
             colliders[0].enabled = false;
 
         }
         else
         {
+            if (!colliders[0].enabled)
+            {
+                raycastDistance += raycastDistanceInTheAir;
+            }
             colliders[0].enabled = true;
             colliders[1].enabled = false;
         }
@@ -145,15 +178,6 @@ public class PlayerController : MonoBehaviour
         if (!pausePlayer)
         {
             moveVector = value.ReadValue<Vector2>();
-            animator.SetBool("Corriendo", true);
-            if (moveVector.x < 0f)
-            {
-                transform.eulerAngles = new Vector3(0, 180, 0);
-            }
-            else
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-            }
             isIdle = false;
 
         }
@@ -171,7 +195,8 @@ public class PlayerController : MonoBehaviour
     {
         moveVector = Vector2.zero;
         animator.SetBool("Corriendo", false);
-  
+        animator.SetBool("CorriendoEspalda", false);
+
     }
 
     //private void OnAtackPerformed(InputAction.CallbackContext value)
@@ -204,6 +229,14 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, Vector2.down, raycastDistance, groundLayer);
         return (hit.collider != null);
     }
+    private void Herido()
+    {
+        if (isActive)
+        {
+            audioSource.clip = clipResivirDano;
+            audioSource.Play();
+        }
+    }
 
     private void PausarPlayer() 
     { 
@@ -232,11 +265,11 @@ public class PlayerController : MonoBehaviour
     //}
 
 
-    //void DebugRaycast()
-    //{
-    //    Vector2 raycastOrigin = transform.position;
-    //    Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistance, Color.blue);
-    //}
+    void DebugRaycast()
+    {
+        Vector2 raycastOrigin = transform.position;
+        Debug.DrawRay(raycastOrigin, Vector2.down * raycastDistance, Color.blue);
+    }
 
 
 }

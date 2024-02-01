@@ -53,6 +53,22 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2285845310712568981, guid: 9b311a1e2b43ed44595ca697a97ef5cf, type: 3}
+      propertyPath: isMobile
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2285845310712568981, guid: 9b311a1e2b43ed44595ca697a97ef5cf, type: 3}
+      propertyPath: tEsconderse
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2285845310712568981, guid: 9b311a1e2b43ed44595ca697a97ef5cf, type: 3}
+      propertyPath: tEntreAtaques
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2285845310712568981, guid: 9b311a1e2b43ed44595ca697a97ef5cf, type: 3}
+      propertyPath: tEsperaAtaque
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2285845310712568981, guid: 9b311a1e2b43ed44595ca697a97ef5cf, type: 3}
       propertyPath: detectionRadius
       value: 8
       objectReference: {fileID: 0}

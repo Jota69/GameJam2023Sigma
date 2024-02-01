@@ -9,6 +9,7 @@ public class PlayerSwitch : MonoBehaviour
     [HideInInspector] public PlayerController2 player2;
     [HideInInspector] public bool player1Active = true;
     [SerializeField] private GameObject grappelGun;
+    [SerializeField] private SpriteRenderer grappelGunSprite;
     private Mapa inputs;
     
     [SerializeField] public Transform Player1;
@@ -125,6 +126,7 @@ public class PlayerSwitch : MonoBehaviour
             Color colorP1 = materialP1.color;
             colorP1.a = 0.25f;
             materialP1.color = colorP1;
+            grappelGunSprite.material = materialP1;
 
             Material materialP2 = p2.GetComponent<Renderer>().material;
             Color colorP2 = materialP2.color;

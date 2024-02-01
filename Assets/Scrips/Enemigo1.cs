@@ -17,7 +17,7 @@ public class Enemigo : MonoBehaviour
     [SerializeField] public bool detectandoPlayer;
     [SerializeField] public bool playerDetectado;
     [SerializeField] private bool modoAlerta;
-    bool parado;
+    public bool parado;
     private bool golpeEjecutado = false;
     [HideInInspector] public Collider2D[] hits;
     [SerializeField] private bool modoAtaque;
@@ -38,6 +38,7 @@ public class Enemigo : MonoBehaviour
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private float tEsperaAtaque;
     [SerializeField] private float tEsconderse;
+    private Transform p;
 
     [Header("configuraciones de enemigos cuerpo a cuerpo:")]
     [SerializeField] private Transform controladorGolpe;
@@ -58,6 +59,7 @@ public class Enemigo : MonoBehaviour
 
     void Start()
     {
+        p = GameObject.FindGameObjectWithTag("Player").transform;
         aRango = false;
         atacando = false;
         parado = false;
@@ -150,6 +152,20 @@ public class Enemigo : MonoBehaviour
         }
         else
         {
+            if (playerDetectado)
+            {
+                Vector3 directionToPlayer = (p.transform.position - transform.position).normalized;
+                float angulo = 0;
+                if (directionToPlayer.x > 0)
+                {
+                    angulo = 0; // Rota hacia la derecha
+                }
+                else if (directionToPlayer.x < 0)
+                {
+                    angulo = 180; // Rota hacia la izquierda
+                }
+                transform.rotation = Quaternion.AngleAxis(angulo, Vector3.up);
+            }
             arma.SetActive(false);
         }
             /////////////////////////////////////////
@@ -158,6 +174,10 @@ public class Enemigo : MonoBehaviour
         {
             parado = true;
             atacar();
+        }
+        else if(isCac)
+        {
+            playerDetectado = false;
         }
         if (!parado&&isMobile&&!detectandoPlayer&&!modoAlerta)
         {

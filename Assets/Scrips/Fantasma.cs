@@ -22,10 +22,12 @@ public class Fantasma : MonoBehaviour
     [SerializeField] private GameObject objetoDelCollider;
     private Collider2D collider;
     private bool muerto;
+    private bool resibDano;
 
     [Header("SoundFX")]
     private AudioSource audioSource;
     [SerializeField] private AudioClip clipAtaque;
+    [SerializeField] private AudioClip clipResivirDano;
     [SerializeField] private AudioClip clipMuerte;
 
     void Start()
@@ -109,6 +111,12 @@ public class Fantasma : MonoBehaviour
             }
             else
             {
+                if (!resibDano)
+                {
+                    audioSource.clip = clipResivirDano;
+                    audioSource.Play();
+                    resibDano = true;
+                }
                 Vector3 oppositeDirection = transform.position - player.position;
 
                 if (!isCharging && !isReturning)
@@ -120,6 +128,7 @@ public class Fantasma : MonoBehaviour
                 {
                     isCharging = false;
                     resibiendoDano = false;
+                    resibDano = false;
                     isReturning = false;
                 }
                 if (isCharging)

@@ -56,9 +56,13 @@ public class GrapplingGun : MonoBehaviour
 
     [HideInInspector] public Vector2 grapplePoint;
     [HideInInspector] public Vector2 grappleDistanceVector;
+    [SerializeField] private SpriteRenderer gunSprite;
     private bool objetc = false;
     private GameObject grappeledObject;
+    private bool girado;
     [HideInInspector] public bool inCoolDown;
+    private bool ground;
+    [SerializeField] private float groundSubida=2.3f;
     IEnumerator solt;
 
     [Header("SoundFX")]
@@ -77,6 +81,7 @@ public class GrapplingGun : MonoBehaviour
         m_springJoint2D.enabled = false;
         player.GetComponent<PlayerController>();
         audioSource = GetComponent<AudioSource>();
+        ground = false;
 
 
     }
@@ -104,6 +109,23 @@ public class GrapplingGun : MonoBehaviour
         //Debug.Log(ScreenToWorldPoint(Mouse.current.position.ReadValue()));
         if (player.isActive)
         {
+            if (!player.isGrounded)
+            {
+                if (!ground)
+                {
+                    gunPivot.transform.localPosition = new Vector3(0.18f,groundSubida, 0);
+                    ground = true;
+                }
+                
+            }
+            else
+            {
+                if (ground)
+                {
+                    gunPivot.transform.localPosition = new Vector3(0.18f, 1.82f, 0);
+                    ground = false;
+                }
+            }
             if (!grappleRope.enabled)
             {
                 if (Gamepad.current!=null) 
@@ -143,6 +165,7 @@ public class GrapplingGun : MonoBehaviour
                 grapplePoint = grappeledObject.transform.position;
                 //grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
             }
+           
         }
     }
     
@@ -235,6 +258,20 @@ public class GrapplingGun : MonoBehaviour
         Vector3 distanceVector = lookPoint - gunPivot.position;
 
         float angle = Mathf.Atan2(distanceVector.y, distanceVector.x) * Mathf.Rad2Deg;
+        if (angle>90||angle<-90)
+        {
+            firePoint.transform.localPosition = new Vector3(0.0349f, -0.0074f, 0);
+            gunSprite.flipY = true;
+            gunSprite.transform.localRotation = Quaternion.Euler(0, 0, 8);
+            player.gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+        else
+        {
+            firePoint.transform.localPosition = new Vector3(0.0349f, 0.0074f, 0);
+            gunSprite.flipY = false;
+            gunSprite.transform.localRotation = Quaternion.Euler(0, 0, -8);
+            player.gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
         if (rotateOverTime && allowRotationOverTime)
         {
             gunPivot.rotation = Quaternion.Lerp(gunPivot.rotation, Quaternion.AngleAxis(angle, Vector3.forward), Time.deltaTime * rotationSpeed);

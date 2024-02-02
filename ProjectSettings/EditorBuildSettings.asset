@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/BarcoInterior.unity
     guid: 909ec0a20fa672e43b33a250b7c41bb9
   - enabled: 1
+    path: Assets/Scenes/Mar 2.unity
+    guid: 261c37c32abec8c46ae5356abdd87f72
+  - enabled: 1
     path: Assets/Scenes/Playa.unity
     guid: 89bc0ee143754084fbf6ba46b7977976
   - enabled: 0

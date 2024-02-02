@@ -9,38 +9,93 @@ public class Cuerda : MonoBehaviour
     [SerializeField] private bool aparecer;
     [SerializeField] private int id;
     [SerializeField] private GameObject child;
+    [Header("Multinterruptores")]
+    [SerializeField] private bool multiInterruptor = false;
+    [SerializeField] private int numeroInterruptores = 2;
+    private int cont;
+    private bool act;
+    private bool desact;
     private void Start()
     {
+        act = true;
+        desact = false;
         if (aparecer)
         {
             child.SetActive(false);
+            act = false;
+            desact = true;
         }
+        cont = 0;
+    }
+    private void Update()
+    {
+        if (multiInterruptor)
+        {
+            if (cont == numeroInterruptores)
+            {
+                if (!act)
+                {
+                    Activar();
+                }
+            }
+            else
+            {
+                if (!desact)
+                {
+                    Desactivar();
+                }
+            }
+        }
+
     }
     public void Desactivar()
     {
+        act = false;
+        desact = true;
         StartCoroutine(Espera());
     }
     public void Activar()
     {
-        
+        act = true;
+        desact = false;
         StartCoroutine(EsperaAct());
     }
     IEnumerator Espera()
     {
         yield return new WaitForSeconds(tiempoEspera);
-        this.gameObject.SetActive(false);
+        if (child != null)
+        {
+            child.SetActive(false);
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
+        }
     }
     IEnumerator EsperaAct()
     {
         yield return new WaitForSeconds(tiempoEspera);
-        child.SetActive(true);
+        if (child!=null)
+        {
+            child.SetActive(true);
+        }
     }
-
     private void ActivarPlataforma(int idResiver)
     {
         if (idResiver == id)
         {
-            Activar();
+            if (multiInterruptor)
+            {
+                if (cont != numeroInterruptores)
+                {
+                    cont++;
+                }
+            }
+            else
+            {
+                Activar();
+            }
+            
         }
 
     }
@@ -48,7 +103,15 @@ public class Cuerda : MonoBehaviour
     {
         if (idResiver == id)
         {
-            Desactivar();
+            if (multiInterruptor)
+            {
+                cont--;
+            }
+            else
+            {
+                Desactivar();
+            }
+            
         }
 
     }

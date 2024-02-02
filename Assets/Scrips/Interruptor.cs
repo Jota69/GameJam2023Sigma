@@ -54,6 +54,7 @@ public class Interruptor : MonoBehaviour
             {
                 primerTriggerYaEntró = false;
                 Eventos.eve.DesactivarPlataforma.Invoke(id);
+                Eventos.eve.DesactivarCuerda.Invoke(id);
                 audioSource.clip = audioDesactivar;
                 audioSource.Play();
 
@@ -62,6 +63,7 @@ public class Interruptor : MonoBehaviour
             {
                 primerTriggerYaEntró = false;
                 Eventos.eve.DesactivarPlataforma.Invoke(id);
+                Eventos.eve.DesactivarCuerda.Invoke(id);
                 audioSource.clip = audioDesactivar;
                 audioSource.Play();
             }

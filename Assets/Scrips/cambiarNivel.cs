@@ -81,6 +81,8 @@ public class cambiarNivel : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Eventos.eve.PausarPlayer.Invoke();
+            Eventos.eve.PausarPlayer2.Invoke();
             LoadNextScene(SceneSig);
         }
     }

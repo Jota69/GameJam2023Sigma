@@ -15,6 +15,7 @@ public class PlayerController2 : MonoBehaviour
     private float TiempoSiguienteAtaque;
     public bool isActive;
     public bool pausePlayer;
+    [HideInInspector] public bool muerto;
     [SerializeField] private bool isJumping;
     [SerializeField] private bool isFalling;
 
@@ -72,6 +73,8 @@ public class PlayerController2 : MonoBehaviour
         Eventos.eve.PausarPlayer2.AddListener(PausarPlayer);
         Eventos.eve.DespausarPlayer2.AddListener(DesausarPlayer);
         Eventos.eve.perderVida.AddListener(Herido);
+        Eventos.eve.MuertePlayer.AddListener(Muerto);
+        Eventos.eve.RevivirPlayer.AddListener(Vivo);
     }
     private void OnDisable()
     {
@@ -81,6 +84,8 @@ public class PlayerController2 : MonoBehaviour
         _myInput.Player.Atacar.started -= OnAtackStarted;
         Eventos.eve.PausarPlayer2.RemoveListener(PausarPlayer);
         Eventos.eve.DespausarPlayer2.RemoveListener(DesausarPlayer);
+        Eventos.eve.MuertePlayer.RemoveListener(Muerto);
+        Eventos.eve.RevivirPlayer.RemoveListener(Vivo);
         //Eventos.eve.perderVida.RemoveListener(Herido);
     }
 
@@ -183,7 +188,7 @@ public class PlayerController2 : MonoBehaviour
 
     private void OnAtackStarted(InputAction.CallbackContext value)
     {
-        if (TiempoSiguienteAtaque <= 0 && isActive)
+        if (TiempoSiguienteAtaque <= 0 && isActive&&!muerto&&!pausePlayer)
         {
             animator.SetTrigger("Atacar");
             if (isGrounded) { Golpe(); TiempoSiguienteAtaque = TiempoEntreAtaque; } 
@@ -231,13 +236,23 @@ public class PlayerController2 : MonoBehaviour
             audioSource.Play();
         }
     }
-    private void PausarPlayer()
+    public void PausarPlayer()
     {
         pausePlayer = true;
     }
-    private void DesausarPlayer()
+    public void DesausarPlayer()
     {
         pausePlayer = false;
+    }
+    public void Muerto()
+    {
+        muerto = true;
+        PausarPlayer();
+    }
+    public void Vivo()
+    {
+        muerto = false;
+        DesausarPlayer();
     }
 
 

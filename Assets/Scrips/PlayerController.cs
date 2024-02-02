@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private float TiempoSiguienteAtaque;
     public bool isActive;
     public bool pausePlayer;
+    [HideInInspector] public bool muerto;
     [SerializeField] private int vida=10;
     [SerializeField] private AnimationClip atrackClip;
     //[SerializeField] private Transform controladorGolpe;
@@ -74,6 +75,8 @@ public class PlayerController : MonoBehaviour
         Eventos.eve.DespausarPlayer.AddListener(DesausarPlayer);
         Eventos.eve.PausarPlayer.AddListener(PausarPlayer);
         Eventos.eve.perderVida.AddListener(Herido);
+        Eventos.eve.MuertePlayer.AddListener(Muerto);
+        Eventos.eve.RevivirPlayer.AddListener(Vivo);
     }
 
     private void OnDisable()
@@ -85,6 +88,8 @@ public class PlayerController : MonoBehaviour
         Eventos.eve.DespausarPlayer.RemoveListener(DesausarPlayer);
         Eventos.eve.PausarPlayer.RemoveListener(PausarPlayer);
         Eventos.eve.perderVida.RemoveListener(Herido);
+        Eventos.eve.MuertePlayer.RemoveListener(Muerto);
+        Eventos.eve.RevivirPlayer.RemoveListener(Vivo);
     }
 
     private void FixedUpdate()
@@ -238,13 +243,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void PausarPlayer() 
+    public void PausarPlayer() 
     { 
         pausePlayer = true;
     }
-    private void DesausarPlayer()
+    public void DesausarPlayer()
     {
         pausePlayer = false;
+    }
+    public void Muerto()
+    {
+        muerto = true;
+        PausarPlayer();
+    }
+    public void Vivo()
+    {
+        muerto = false;
+        DesausarPlayer();
     }
 
     //private IEnumerator EsperarAnimacionMuerte()

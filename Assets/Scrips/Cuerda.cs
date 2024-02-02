@@ -11,6 +11,10 @@ public class Cuerda : MonoBehaviour
     [SerializeField] private GameObject child;
     private void Start()
     {
+        if (aparecer)
+        {
+            child.SetActive(false);
+        }
     }
     public void Desactivar()
     {
@@ -40,13 +44,23 @@ public class Cuerda : MonoBehaviour
         }
 
     }
+    private void DesactivarPlataforma(int idResiver)
+    {
+        if (idResiver == id)
+        {
+            Desactivar();
+        }
+
+    }
 
     private void OnEnable()
     {
         Eventos.eve.activarCuerda.AddListener(ActivarPlataforma);
+        Eventos.eve.DesactivarCuerda.AddListener(DesactivarPlataforma);
     }
     private void OnDisable()
     {
         Eventos.eve.activarCuerda.RemoveListener(ActivarPlataforma);
+        Eventos.eve.DesactivarCuerda.RemoveListener(DesactivarPlataforma);
     }
 }

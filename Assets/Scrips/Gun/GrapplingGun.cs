@@ -171,7 +171,7 @@ public class GrapplingGun : MonoBehaviour
     
     private void OnEngagePerformed(InputAction.CallbackContext value)
     {
-        if (player.isActive)
+        if (player.isActive&&!player.muerto&&!player.pausePlayer)
         {
             if (launchToPoint && grappleRope.isGrappling&&!objetc)
             {
@@ -188,31 +188,32 @@ public class GrapplingGun : MonoBehaviour
 
     private void OnEngageCanceled(InputAction.CallbackContext value)
     {
-        Canceled();
-        StopCoroutine(solt);
+        if(player.isActive && !player.muerto && !player.pausePlayer)
+        {
+            Canceled();
+            StopCoroutine(solt);
+        }
+        
     }
     public void Canceled()
     {
-        if (player.isActive)
-        {
-            //grappleRope.enabled = false;
-            objetc = false;
+        //grappleRope.enabled = false;
+        objetc = false;
 
-            m_springJoint2D.enabled = false;
-            if (grappleRope.enabled && grappleRope.strightLine)
-            {
-                grappleRope.EnableReverse();
-                StartCoroutine(CuerdaCoolDown());
-            }
-            else
-            {
-                grappleRope.enabled = false;
-            }
-            //StartCoroutine(cuerdaReturn());
-            m_rigidbody.gravityScale = 1;
-            audioSource.Stop();
-            Eventos.eve.cambiarBarraCoolDown.Invoke(1);
+        m_springJoint2D.enabled = false;
+        if (grappleRope.enabled && grappleRope.strightLine)
+        {
+            grappleRope.EnableReverse();
+            StartCoroutine(CuerdaCoolDown());
         }
+        else
+        {
+            grappleRope.enabled = false;
+        }
+        //StartCoroutine(cuerdaReturn());
+        m_rigidbody.gravityScale = 1;
+        audioSource.Stop();
+        Eventos.eve.cambiarBarraCoolDown.Invoke(1);
     }
     IEnumerator CuerdaCoolDown()
     {
@@ -231,7 +232,7 @@ public class GrapplingGun : MonoBehaviour
 
     private void OnEngageStarted(InputAction.CallbackContext value)
     {
-        if (player.isActive)
+        if (player.isActive && !player.muerto && !player.pausePlayer)
         {
             if (!inCoolDown)
             {

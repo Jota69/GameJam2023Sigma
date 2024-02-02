@@ -82,6 +82,8 @@ public class Cangrejo : MonoBehaviour
         if (!atacando&&alerted)
         {
             rb.velocity = new Vector2(movementVelocity * transform.right.x, rb.velocity.y);
+            animator.SetBool("caminando", true);
+            
         }
         if (informacionSuelo || !isGrounded)
         {

@@ -2,19 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Playables;
 
 public class Dialogos2 : MonoBehaviour
 {
 
     public float tiempoEntreChar;
     [SerializeField, TextArea(4, 5)] private string[] lineasDialogo;
-    [SerializeField] private GameObject[] imagenesDialogo;
-    [SerializeField] private Enemigo[] enemigosADetener;
-    private Vector3[] posicionesEnemigos;
+    
     [SerializeField] private GameObject vineta;
     private int LineIndex;
     private bool leido;
     private bool activeDialog;
+    [Header("Otros")]
+    [SerializeField] private GameObject[] imagenesDialogo;
+    [SerializeField] private Enemigo[] enemigosADetener;
+    [SerializeField] private PlayableDirector director;
+    [SerializeField] private GameObject otroDialogo;
+    private Vector3[] posicionesEnemigos;
     private void Start()
     {
         leido = false;
@@ -31,7 +36,12 @@ public class Dialogos2 : MonoBehaviour
     {
         if (collision.CompareTag("Player")&&!leido)
         {
+
             leido = true;
+            if (director!=null) 
+            {
+                director.Pause();
+            }
             EmpezarDialogo();
         }
     }
@@ -78,18 +88,21 @@ public class Dialogos2 : MonoBehaviour
     }
     private void NextDialogLine()
     {
-        GameObject e=imagenesDialogo[0];
         LineIndex++;
-        for (int i = 0; i < imagenesDialogo.Length; i++)
+        if (imagenesDialogo != null)
         {
-            if (i == LineIndex)
+            GameObject e = imagenesDialogo[0];
+            for (int i = 0; i < imagenesDialogo.Length; i++)
             {
-                imagenesDialogo[i].SetActive(true);
-                e = imagenesDialogo[i];
-            }
-            else if (imagenesDialogo[i] != e)
-            {
-                imagenesDialogo[i].SetActive(false);
+                if (i == LineIndex)
+                {
+                    imagenesDialogo[i].SetActive(true);
+                    e = imagenesDialogo[i];
+                }
+                else if (imagenesDialogo[i] != e)
+                {
+                    imagenesDialogo[i].SetActive(false);
+                }
             }
         }
         if (LineIndex < lineasDialogo.Length)
@@ -139,6 +152,15 @@ public class Dialogos2 : MonoBehaviour
         vineta.GetComponent<Animator>().SetBool("abrir", false);
         yield return new WaitForSeconds(0.5f);
         vineta.SetActive(false);
+        if (otroDialogo != null)
+        {
+           otroDialogo.SetActive(true);
+        }
+        if (director != null)
+        {
+            director.Play();
+        }
+        
 
     }
 

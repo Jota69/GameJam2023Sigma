@@ -57,7 +57,8 @@ public class Cangrejo : MonoBehaviour
             {     
                 if (!alerted)
                 {
-                    //Animator.setBool("Alerta",true);
+                    animator.SetBool("Acostado", true);
+                    
                     StartCoroutine(Detect());
                 }
                 if (detected&&!atacando)

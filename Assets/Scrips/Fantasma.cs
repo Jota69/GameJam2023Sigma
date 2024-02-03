@@ -164,7 +164,9 @@ public class Fantasma : MonoBehaviour
             {
                 audioSource.Stop();
                 audioSource.PlayOneShot(clipMuerte);
+                
             }
+            animator.SetBool("Muerto", true);
             muerto = true;
             collider.enabled = false;
             Invoke("Destruir",clipMuerte.length);
@@ -178,7 +180,7 @@ public class Fantasma : MonoBehaviour
     IEnumerator espera()
     {
         detener = true;
-        yield return new WaitForSeconds(clipAtaque.length);
+        yield return new WaitForSeconds(1);
         detener = false;
         isCharging = false;
         

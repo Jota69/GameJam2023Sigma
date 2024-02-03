@@ -8,13 +8,19 @@ public class Totem : MonoBehaviour
     [SerializeField] private bool reusable = true;
     [Header("Si no es reusable:")]
     [SerializeField] private int usos = 1;
+    Animator animator;
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     private void Update()
     {
         if (!reusable)
         {
             if (usos <= 0)
             {
-                Destroy(gameObject);
+                animator.SetBool("usado", true);
+                Destroy(gameObject,0.5f);
             }
         }
     }

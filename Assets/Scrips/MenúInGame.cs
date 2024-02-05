@@ -38,6 +38,7 @@ public class MenúInGame : MonoBehaviour
     {
         elementosMenu[0].SetActive(true);
         elementosMenu[1].SetActive(false);
+        elementosMenu[2].SetActive(false);
         for (int i = 0; i < elementosInMenu.Length; i++)
         {
             if(i == 3)
@@ -55,6 +56,7 @@ public class MenúInGame : MonoBehaviour
     {
         elementosMenu[0].SetActive(false);
         elementosMenu[1].SetActive(true);
+        elementosMenu[2].SetActive(false);
         for (int i = 0; i < elementosInMenu.Length; i++)
         {
             if (i == 1)
@@ -67,7 +69,23 @@ public class MenúInGame : MonoBehaviour
             }
         }
     }
-
+    public void SoundSettings()
+    {
+        for (int i = 0; i < elementosInMenu.Length; i++)
+        {
+            if (i == 2)
+            {
+                elementosInMenu[i].SetActive(true);
+            }
+            else
+            {
+                elementosInMenu[i].SetActive(false);
+            }
+        }
+        elementosMenu[0].SetActive(false);
+        elementosMenu[1].SetActive(false);
+        elementosMenu[2].SetActive(true);
+    }
     public void Return()
     {
         Time.timeScale = 1;
@@ -91,6 +109,17 @@ public class MenúInGame : MonoBehaviour
      
     public void SalirAlMenu()
     {
+        for (int i = 0; i < elementosInMenu.Length; i++)
+        {
+            if (i == 4)
+            {
+                elementosInMenu[i].SetActive(true);
+            }
+            else
+            {
+                elementosInMenu[i].SetActive(false);
+            }
+        }
         Time.timeScale = 1;
         Eventos.eve.PasarNivel?.Invoke(1);
 

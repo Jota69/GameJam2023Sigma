@@ -1683,17 +1683,6 @@ Transform:
   - {fileID: 1508141827}
   m_Father: {fileID: 528903399}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &399680408 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5983595984456390193, guid: 7715642b1e9cdc341b5f37c229b288d5, type: 3}
-  m_PrefabInstance: {fileID: 3404990663335270906}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 404d04cbeb36c954c9c78295480074bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &416974361
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3101,6 +3090,34 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4034703289167200239, guid: e61e96b01e98d6946b01d15cda0ce2a5, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034703289167200239, guid: e61e96b01e98d6946b01d15cda0ce2a5, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034703289167200239, guid: e61e96b01e98d6946b01d15cda0ce2a5, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1066203255}
+    - target: {fileID: 4034703289167200239, guid: e61e96b01e98d6946b01d15cda0ce2a5, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034703289167200239, guid: e61e96b01e98d6946b01d15cda0ce2a5, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetResolution
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034703289167200239, guid: e61e96b01e98d6946b01d15cda0ce2a5, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ResolutionChanger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034703289167200239, guid: e61e96b01e98d6946b01d15cda0ce2a5, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4336338991279883330, guid: e61e96b01e98d6946b01d15cda0ce2a5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -3188,7 +3205,7 @@ PrefabInstance:
     - target: {fileID: 6279653609695681696, guid: e61e96b01e98d6946b01d15cda0ce2a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 399680408}
+      objectReference: {fileID: 0}
     - target: {fileID: 6621509496340255590, guid: e61e96b01e98d6946b01d15cda0ce2a5, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -5434,6 +5451,17 @@ Transform:
   - {fileID: 1003496268}
   m_Father: {fileID: 528903399}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1066203255 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8221389207144391869, guid: 7715642b1e9cdc341b5f37c229b288d5, type: 3}
+  m_PrefabInstance: {fileID: 3404990663335270906}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6769bbf44b155f84c97ec56270b2a8f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1079488881 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 236284429204012458, guid: e4bcb5120cf8c074c818aea8afdd7cfb, type: 3}
@@ -11140,7 +11168,8 @@ PrefabInstance:
       propertyPath: dropdown
       value: 
       objectReference: {fileID: 1907095361}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5983595984456390193, guid: 7715642b1e9cdc341b5f37c229b288d5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

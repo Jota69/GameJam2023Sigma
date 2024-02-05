@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Playables;
-using UnityEngine.InputSystem;
 
 public class Dialogos2 : MonoBehaviour
 {
@@ -48,37 +47,20 @@ public class Dialogos2 : MonoBehaviour
     }
     private void Update()
     {
-        //if (activeDialog && Input.GetKeyDown(KeyCode.Return))
-        //{
-        //    if (vineta.GetComponentInChildren<TextMeshProUGUI>().text == lineasDialogo[LineIndex])
-        //    {
-        //        NextDialogLine();
-        //    }
-        //    else
-        //    {
-        //        StopAllCoroutines();
-        //        vineta.GetComponentInChildren<TextMeshProUGUI>().text = lineasDialogo[LineIndex];
-        //    }
-
-        //}
-    }
+       
 
 
-    public void OnPressDialogo(InputAction.CallbackContext context)
-    {
-        if (context.started)
+        if (activeDialog && Input.GetKeyDown(KeyCode.Return))
         {
-            if (activeDialog)
+
+            if (vineta.GetComponentInChildren<TextMeshProUGUI>().text == lineasDialogo[LineIndex])
             {
-                if (vineta.GetComponentInChildren<TextMeshProUGUI>().text == lineasDialogo[LineIndex])
-                {
-                    NextDialogLine();
-                }
-                else
-                {
-                    StopAllCoroutines();
-                    vineta.GetComponentInChildren<TextMeshProUGUI>().text = lineasDialogo[LineIndex];
-                }
+                NextDialogLine();
+            }
+            else
+            {
+                StopAllCoroutines();
+                vineta.GetComponentInChildren<TextMeshProUGUI>().text = lineasDialogo[LineIndex];
             }
         }
     }

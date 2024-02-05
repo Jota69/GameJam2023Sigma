@@ -11,7 +11,6 @@ public class Enemigo : MonoBehaviour
     
     private Rigidbody2D rb;
     private Animator animator;
-    private bool muerto;
     [SerializeField] private bool isGrounded;
     private bool aRango;
     [SerializeField] private bool atacando;
@@ -19,7 +18,6 @@ public class Enemigo : MonoBehaviour
     [SerializeField] public bool playerDetectado;
     [SerializeField] private bool modoAlerta;
     public bool parado;
-    private bool escondiendose;
     private bool golpeEjecutado = false;
     [HideInInspector] public Collider2D[] hits;
     [SerializeField] private bool modoAtaque;
@@ -59,12 +57,10 @@ public class Enemigo : MonoBehaviour
 
 
 
-
     void Start()
     {
         p = GameObject.FindGameObjectWithTag("Player").transform;
         aRango = false;
-        muerto = false;
         atacando = false;
         parado = false;
         detectandoPlayer = false;
@@ -79,172 +75,138 @@ public class Enemigo : MonoBehaviour
     private void Update()
     {
         
-        if (!muerto) 
-        {
-            
-            DebugRaycast();
-            isGrounded = CheckGrounded();
-            hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
-            RaycastHit2D informacionSuelo = Physics2D.Raycast(inicioRaycastPared.position, transform.right, distanciaPared, queEsSuelo);
-            RaycastHit2D informacionPlayerCac = Physics2D.Raycast(inicioRaycastPared.position, transform.right, distanciaPared, playerMask);
-            //ENEMIGOS PATRULLEROS A DISTANCIA
-            if (!isCac)
+        isGrounded = CheckGrounded();
+        hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, playerMask);
+        RaycastHit2D informacionSuelo = Physics2D.Raycast(inicioRaycastPared.position, transform.right, distanciaPared, queEsSuelo);
+        RaycastHit2D informacionPlayerCac = Physics2D.Raycast(inicioRaycastPared.position, transform.right, distanciaPared, playerMask);
+        //ENEMIGOS PATRULLEROS A DISTANCIA
+        if (!isCac) {
+            arma.SetActive(true);
+            foreach (var hit in hits)
             {
-                arma.SetActive(true);
-                foreach (var hit in hits)
+                Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
+                DebugRaycast();
+                RaycastHit2D[] raycastHits = Physics2D.RaycastAll(transform.position, directionToPlayer, detectionRadius);
+                foreach (var raycastHit in raycastHits)
                 {
                     
-                    Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
-                    DebugRaycast();
-                    RaycastHit2D[] raycastHits = Physics2D.RaycastAll(transform.position, directionToPlayer, detectionRadius);
-                    foreach (var raycastHit in raycastHits)
+                    if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Player1") || raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Player2"))
                     {
-
-                        if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Player1") || raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Player2"))
+                        if (((directionToPlayer.x > 0 && transform.rotation.y == 0) || (directionToPlayer.x < 0 && transform.rotation.y != 0))&&!playerDetectado)
                         {
-                            if (((directionToPlayer.x > 0 && transform.rotation.y == 0) || (directionToPlayer.x < 0 && transform.rotation.y != 0)) && !playerDetectado)
+                            aRango = true;
+                            //if (!detectandoPlayer && modoAtaque) { modoAtaque = false; }
+                            parado = true;
+
+                            if (!playerDetectado && !detectandoPlayer && !modoAtaque)
                             {
-                                aRango = true;
-                                //if (!detectandoPlayer && modoAtaque) { modoAtaque = false; }
-                                parado = true;
-
-                                if (!playerDetectado && !detectandoPlayer && !modoAtaque)
-                                {
-                                    animator.SetBool("Alerta",true);
-                                    detectar();
-                                }
+                                detectar();
                             }
-                            if (playerDetectado || modoAlerta)
+                        }
+                        if (playerDetectado||modoAlerta)
+                        {
+                            float angulo = 0;
+                            if (directionToPlayer.x > 0)
                             {
-                                float angulo = 0;
-                                if (directionToPlayer.x > 0)
-                                {
-                                    angulo = 0;
-                                    // Rota hacia la derecha
-                                }
-                                else if (directionToPlayer.x < 0)
-                                {
-                                    angulo = 180; // Rota hacia la izquierda
-                                }           
-                                transform.rotation = Quaternion.AngleAxis(angulo, Vector3.up);
-                                ////////////////////////////////////////////////////////////////
-                                if (hit.CompareTag("Player") && !atacando)
-                                {
-
-                                    atacar();
-                                }
+                                angulo = 0; // Rota hacia la derecha
                             }
-                            break;
+                            else if (directionToPlayer.x < 0)
+                            {
+                                angulo = 180; // Rota hacia la izquierda
+                            }
+                            transform.rotation = Quaternion.AngleAxis(angulo, Vector3.up);
+                            ////////////////////////////////////////////////////////////////
+                            if (hit.CompareTag("Player") && !atacando)
+                            {
+
+                                atacar();
+                            }
                         }
-                        else if ((!isMobile && raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno")&&!escondiendose) || isMobile && playerDetectado && modoAtaque && raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno")&&!escondiendose)
-                        {
-                            
-                            StartCoroutine(esconderse());
-                            break;
-                        }
-                        else if (((!parado && !detectandoPlayer && modoAlerta) && isMobile) && raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))
-                        {
-                            animator.SetBool("Alerta",false);
-                            animator.SetBool("Atacando", false);
-                            rb.velocity = new Vector2(velocidadMovimiento * 0.2f * transform.right.x, rb.velocity.y);
-                            aRango = false;
-                            break;
-                        }
-                        else if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))
-                        {
-                            break;
-                        }
+                        break;
+                    }
+                    else if ((!isMobile && raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))||isMobile&&playerDetectado&&modoAtaque&& raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))
+                    {
+                        StartCoroutine(esconderse());
+                        break;
+                    }
+                    else if (((!parado && !detectandoPlayer && modoAlerta) && isMobile) && raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))
+                    {
+                        rb.velocity = new Vector2(velocidadMovimiento * 0.2f * transform.right.x, rb.velocity.y);
+                        aRango = false;
+                        break;
+                    }
+                    else if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))
+                    {
+                        break;
                     }
                 }
-                if (hits.Length == 0)
-                {
-                    parado = false;
-                    modoAlerta = false;
-                    modoAtaque = false;
-                    playerDetectado = false;
-                    aRango = false;
-                }
             }
-            else
+            if (hits.Length == 0) 
+            { 
+                parado = false;
+                modoAlerta = false;
+                modoAtaque = false;
+                playerDetectado = false;
+                aRango = false;
+            }
+        }
+        else
+        {
+            if (playerDetectado)
             {
-                if (playerDetectado)
+                Vector3 directionToPlayer = (p.transform.position - transform.position).normalized;
+                float angulo = 0;
+                if (directionToPlayer.x > 0)
                 {
-                    Vector3 directionToPlayer = (p.transform.position - transform.position).normalized;
-                    float angulo = 0;
-                    if (directionToPlayer.x > 0)
-                    {
-                        angulo = 0; // Rota hacia la derecha
-                    }
-                    else if (directionToPlayer.x < 0)
-                    {
-                        angulo = 180; // Rota hacia la izquierda
-                    }
-                    transform.rotation = Quaternion.AngleAxis(angulo, Vector3.up);
+                    angulo = 0; // Rota hacia la derecha
                 }
-                arma.SetActive(false);
+                else if (directionToPlayer.x < 0)
+                {
+                    angulo = 180; // Rota hacia la izquierda
+                }
+                transform.rotation = Quaternion.AngleAxis(angulo, Vector3.up);
             }
+            arma.SetActive(false);
+        }
             /////////////////////////////////////////
             //ENEMIGOS PATRULLEROS CUERPO A CUERPO
-            if (informacionPlayerCac && isCac && !atacando)
+        if (informacionPlayerCac && isCac && !atacando)
+        {
+            parado = true;
+            atacar();
+        }
+        else if(isCac)
+        {
+            playerDetectado = false;
+        }
+        if (!parado&&isMobile&&!detectandoPlayer&&!modoAlerta)
+        {
+            rb.velocity = new Vector2(velocidadMovimiento * transform.right.x, rb.velocity.y);
+        }
+        if (informacionSuelo || !isGrounded)
+        {
+            if (!aRango && !isCac)
             {
-                parado = true;
-                atacar();
+                Girar();
             }
-            else if (isCac)
+            else if(isCac)
             {
-                playerDetectado = false;
-            }
-            if (!parado && isMobile && !detectandoPlayer && !modoAlerta)
-            {
-                if (!isCac) 
-                {
-                    animator.SetBool("Alerta", false);
-                    animator.SetBool("Atacando", false);
-                }
-                rb.velocity = new Vector2(velocidadMovimiento * transform.right.x, rb.velocity.y);
-            }
-            if (informacionSuelo || !isGrounded)
-            {
-                if (!aRango && !isCac)
-                {
-                    Girar();
-                }
-                else if (isCac)
-                {
-                    Girar();
-                }
-
+                Girar();
             }
             
         }
-        if (!isCac && !isMobile)
-        {
-            animator.SetBool("Alerta", true);
-        }
-        if (isCac && !isMobile)
-        {
-            animator.SetBool("Atacando", false);
-            animator.SetBool("Muerto", false);
-            animator.SetBool("idle", true);
-        }
-
         if (vida <= 0)
         {
-            StopAllCoroutines();
-            muerto= true;
-            animator.SetBool("Muerto",true);
-            Destroy(gameObject,0.5f);
+            Destroy(gameObject);
         }
     }
     IEnumerator esconderse()
     {
-        escondiendose = true;
         yield return new WaitForSeconds(tEsconderse);
-        playerDetectado = false;
-        modoAtaque =false;
+        playerDetectado=false;
+        modoAtaque=false;
         parado = false;
         modoAlerta = true;
-        escondiendose=false;
     }
 
     private bool CheckGrounded()
@@ -271,7 +233,7 @@ public class Enemigo : MonoBehaviour
             {
                 if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Player1") || raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Player2"))
                 {
-                    if (hit.CompareTag("Player") /*&& !atacando*/)
+                    if (hit.CompareTag("Player") && !atacando)
                     {
                         playerDetectado = true;
                         modoAtaque = true;
@@ -281,7 +243,6 @@ public class Enemigo : MonoBehaviour
                 }
                 else if(raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))
                 {
-                    
                     parado = false;
                     modoAlerta = true;
                     playerDetectado = false;
@@ -301,9 +262,8 @@ public class Enemigo : MonoBehaviour
 
     private IEnumerator ataque()
     {
-
-        animator.SetBool("Atacando", true);
-        yield return new WaitForSeconds(AnimacionAtaque.length*0.5f);
+        //animator.SetBool("ataque",true);
+        yield return new WaitForSeconds(0.5f /*AnimacionAtaque.length*/);
 
         if (!golpeEjecutado) // Verificar nuevamente antes de ejecutar el golpe
         {
@@ -321,7 +281,6 @@ public class Enemigo : MonoBehaviour
             parado = false;
         }
         golpeEjecutado = false;
-        animator.SetBool("Atacando", false);
         atacando = false;
     }
 
@@ -382,16 +341,16 @@ public class Enemigo : MonoBehaviour
     //    Gizmos.DrawWireSphere(transform.position, detectionRadius);
     //}
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
-        //foreach (var hit in hits)
-        //{
-        //    Gizmos.color = Color.red;
-        //    if (hit.CompareTag("Player"))
-        //    {
-        //        Gizmos.DrawLine(transform.position, (hit.transform.position - transform.position) * detectionRadius);
-        //    }
-        //}
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    //    foreach (var hit in hits) 
+    //    {
+    //        Gizmos.color = Color.red;
+    //        if (hit.CompareTag("Player"))
+    //        {
+    //            Gizmos.DrawLine(transform.position, (hit.transform.position - transform.position)*detectionRadius);
+    //        }
+    //    }
+    //}
 }

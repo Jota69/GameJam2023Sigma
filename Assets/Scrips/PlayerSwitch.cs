@@ -33,7 +33,7 @@ public class PlayerSwitch : MonoBehaviour
     {
         inputs = new Mapa();
         inputs.Enable();
-
+        
     }
     private void Start()
     {
@@ -43,7 +43,7 @@ public class PlayerSwitch : MonoBehaviour
         player2.tag = "Untagged";
         Material materialP2 = p2.GetComponent<Renderer>().material;
         Color colorP2 = materialP2.color;
-        colorP2.a = 0f;
+        colorP2.a = 0.25f;
         materialP2.color = colorP2;
         audioSource = GetComponent<AudioSource>();
     }
@@ -69,23 +69,19 @@ public class PlayerSwitch : MonoBehaviour
 
     private void OnEnable()
     {
-        //inputs.Player.Switch.started += OnSwitchStarted;
+        inputs.Player.Switch.started += OnSwitchStarted;
     }
     private void OnDisable()
     {
-        //inputs.Player.Switch.started -= OnSwitchStarted;
+        inputs.Player.Switch.started -= OnSwitchStarted;
     }
 
-    public void OnSwitchStarted(InputAction.CallbackContext context)
+    private void OnSwitchStarted(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (((player1.isGrounded) || (player2.isGrounded)))
         {
-            if (((player1.isGrounded) || (player2.isGrounded)))
-            {
-                SwitchPlayer();
-            }
+            SwitchPlayer();
         }
-        
     }
 
     private bool CheckGrounded()
@@ -128,7 +124,7 @@ public class PlayerSwitch : MonoBehaviour
 
             Material materialP1 = p1.GetComponent<Renderer>().material;
             Color colorP1 = materialP1.color;
-            colorP1.a = 0f;
+            colorP1.a = 0.25f;
             materialP1.color = colorP1;
             grappelGunSprite.material = materialP1;
 
@@ -159,7 +155,7 @@ public class PlayerSwitch : MonoBehaviour
 
             Material materialP2 = p2.GetComponent<Renderer>().material;
             Color colorP2 = materialP2.color;
-            colorP2.a = 0f;
+            colorP2.a = 0.25f;
             materialP2.color = colorP2;
 
             Material materialP1 = p1.GetComponent<Renderer>().material;

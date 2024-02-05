@@ -10,9 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3763053532263568180}
   - component: {fileID: 4627511752761565572}
-  - component: {fileID: 3156009908878434364}
-  - component: {fileID: 5983595984456390193}
-  - component: {fileID: 8221389207144391869}
+  - component: {fileID: 1577142643650728859}
   m_Layer: 0
   m_Name: GM
   m_TagString: Untagged
@@ -50,19 +48,7 @@ MonoBehaviour:
   enemigoMuertoCount:
     m_PersistentCalls:
       m_Calls: []
-  ActivarPlataforma:
-    m_PersistentCalls:
-      m_Calls: []
-  DesactivarPlataforma:
-    m_PersistentCalls:
-      m_Calls: []
-  activarCuerda:
-    m_PersistentCalls:
-      m_Calls: []
-  DesactivarCuerda:
-    m_PersistentCalls:
-      m_Calls: []
-  cambiarBarraCoolDown:
+  moverPlataforma:
     m_PersistentCalls:
       m_Calls: []
   IniciarDialogo2:
@@ -89,19 +75,13 @@ MonoBehaviour:
   perderVida:
     m_PersistentCalls:
       m_Calls: []
-  MuertePlayer:
-    m_PersistentCalls:
-      m_Calls: []
-  RevivirPlayer:
-    m_PersistentCalls:
-      m_Calls: []
   PasarNivel:
     m_PersistentCalls:
       m_Calls: []
   disparoEnemigo:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3156009908878434364
+--- !u!114 &1577142643650728859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,33 +90,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 5319207157088298341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 404d04cbeb36c954c9c78295480074bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionAsset: {fileID: -944628639613478452, guid: a686984651222fd48a23e3b4539c3fff, type: 3}
---- !u!114 &5983595984456390193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5319207157088298341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 404d04cbeb36c954c9c78295480074bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionAsset: {fileID: -944628639613478452, guid: a686984651222fd48a23e3b4539c3fff, type: 3}
---- !u!114 &8221389207144391869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5319207157088298341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6769bbf44b155f84c97ec56270b2a8f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropdown: {fileID: 0}
+  m_Actions: {fileID: -944628639613478452, guid: 14b27d942f2ba4246b38f866d8e0963f, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}

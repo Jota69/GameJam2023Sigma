@@ -58,19 +58,18 @@ public class PlayerController : MonoBehaviour
         //TiempoEntreAtaque = atrackClip.length;
 
         _myInput = new Mapa();
-
         _myInput.Enable();
     }
 
     private void OnEnable()
     {
-        ////Movimiento
-        //_myInput.Player.Movimiento.performed += OnMovementPerformed;
-        //_myInput.Player.Movimiento.canceled += OnMovementCancelled;
+        //Movimiento
+        _myInput.Player.Movimiento.performed += OnMovementPerformed;
+        _myInput.Player.Movimiento.canceled += OnMovementCancelled;
 
-        ////Otras acciones
-        ////_myInput.Player.Atacar.performed += OnAtackPerformed;
-        //_myInput.Player.Jump.performed += OnJumpPerformed;
+        //Otras acciones
+        //_myInput.Player.Atacar.performed += OnAtackPerformed;
+        _myInput.Player.Jump.performed += OnJumpPerformed;
 
         //Eventos
         Eventos.eve.DespausarPlayer.AddListener(DesausarPlayer);
@@ -82,9 +81,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        //_myInput.Player.Movimiento.performed -= OnMovementPerformed;
-        //_myInput.Player.Movimiento.canceled -= OnMovementCancelled;
-        //_myInput.Player.Jump.performed -= OnJumpPerformed;
+        _myInput.Player.Movimiento.performed -= OnMovementPerformed;
+        _myInput.Player.Movimiento.canceled -= OnMovementCancelled;
+        _myInput.Player.Jump.performed -= OnJumpPerformed;
 
         Eventos.eve.DespausarPlayer.RemoveListener(DesausarPlayer);
         Eventos.eve.PausarPlayer.RemoveListener(PausarPlayer);
@@ -163,56 +162,45 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Saltando", isJumping);
     
     }
-    public void OnJumpStarted(InputAction.CallbackContext value)
-    {
+    private void OnJumpPerformed(InputAction.CallbackContext value) {
 
-        if (value.started)
+        if (!pausePlayer)
         {
-            if (!pausePlayer && isActive)
+            if (isGrounded)
             {
-                if (isGrounded)
-                {
-                    rb.AddForce(Vector2.up * jumpForce);
-                }
-
-                isIdle = false;
+                rb.AddForce(Vector2.up * jumpForce);
             }
-        }
-
-    }
-
-    public void OnMovementPerformed(InputAction.CallbackContext value)
-    {
-
-        if (value.performed)
-        {
-            if (!pausePlayer)
-            {
-                moveVector = value.ReadValue<Vector2>();
-                isIdle = false;
-
-            }
-            else
-            {
-                // Si el player está en pausa (modo ocio), no está realizando ninguna acción activa.
-                // Entonces, actualiza isIdle a true.
-                isIdle = true;
-            }
+            isIdle = false;
         }
         
+        
+    }
+
+    private void OnMovementPerformed(InputAction.CallbackContext value)
+    {
+
+        
+        if (!pausePlayer)
+        {
+            moveVector = value.ReadValue<Vector2>();
+            isIdle = false;
+
+        }
+        else
+        {
+            // Si el player está en pausa (modo ocio), no está realizando ninguna acción activa.
+            // Entonces, actualiza isIdle a true.
+            isIdle = true;
+        }
 
 
     }
 
-    public void OnMovementCancelled(InputAction.CallbackContext value)
+    private void OnMovementCancelled(InputAction.CallbackContext value)
     {
-        if (value.canceled)
-        {
-            moveVector = Vector2.zero;
-            animator.SetBool("Corriendo", false);
-            animator.SetBool("CorriendoEspalda", false);
-        }
-        
+        moveVector = Vector2.zero;
+        animator.SetBool("Corriendo", false);
+        animator.SetBool("CorriendoEspalda", false);
 
     }
 

@@ -89,15 +89,15 @@ public class GrapplingGun : MonoBehaviour
 
     private void OnEnable()
     {
-        //inputs.Player.gancho.performed += OnEngagePerformed;
-        //inputs.Player.gancho.canceled += OnEngageCanceled;
-        //inputs.Player.gancho.started += OnEngageStarted;
+        inputs.Player.gancho.performed += OnEngagePerformed;
+        inputs.Player.gancho.canceled += OnEngageCanceled;
+        inputs.Player.gancho.started += OnEngageStarted;
     }
     private void OnDisable()
     {
-        //inputs.Player.gancho.performed -= OnEngagePerformed;
-        //inputs.Player.gancho.canceled -= OnEngageCanceled;
-        //inputs.Player.gancho.started -= OnEngageStarted;
+        inputs.Player.gancho.performed -= OnEngagePerformed;
+        inputs.Player.gancho.canceled -= OnEngageCanceled;
+        inputs.Player.gancho.started -= OnEngageStarted;
         audioSource.Stop();
     }
     
@@ -169,42 +169,30 @@ public class GrapplingGun : MonoBehaviour
         }
     }
     
-    public void OnEngagePerformed(InputAction.CallbackContext value)
+    private void OnEngagePerformed(InputAction.CallbackContext value)
     {
-        if (value.performed) 
+        if (player.isActive&&!player.muerto&&!player.pausePlayer)
         {
-            if (player.isActive && !player.muerto && !player.pausePlayer)
+            if (launchToPoint && grappleRope.isGrappling&&!objetc)
             {
-                if (launchToPoint && grappleRope.isGrappling && !objetc)
+                if (launchType == LaunchType.Transform_Launch)
                 {
-                    if (launchType == LaunchType.Transform_Launch)
-                    {
-                        Vector2 firePointDistnace = firePoint.position - gunHolder.localPosition;
-                        Vector2 targetPos = grapplePoint - firePointDistnace;
-                        gunHolder.position = Vector2.Lerp(gunHolder.position, targetPos, Time.deltaTime * launchSpeed);
-                    }
+                    Vector2 firePointDistnace = firePoint.position - gunHolder.localPosition;
+                    Vector2 targetPos = grapplePoint - firePointDistnace;
+                    gunHolder.position = Vector2.Lerp(gunHolder.position, targetPos, Time.deltaTime * launchSpeed);
                 }
-
             }
+            
         }
-        
     }
 
-    public void OnEngageCanceled(InputAction.CallbackContext value)
+    private void OnEngageCanceled(InputAction.CallbackContext value)
     {
-        if (value.canceled)
+        if(player.isActive && !player.muerto && !player.pausePlayer)
         {
-            if (player.isActive && !player.muerto && !player.pausePlayer)
-            {
-                Canceled();
-                if (solt!=null)
-                {
-                    StopCoroutine(solt);
-                }
-                
-            }
+            Canceled();
+            StopCoroutine(solt);
         }
-        
         
     }
     public void Canceled()
@@ -242,31 +230,27 @@ public class GrapplingGun : MonoBehaviour
         inCoolDown = false;
     }
 
-    public void OnEngageStarted(InputAction.CallbackContext value)
+    private void OnEngageStarted(InputAction.CallbackContext value)
     {
-        if (value.started)
+        if (player.isActive && !player.muerto && !player.pausePlayer)
         {
-            if (player.isActive && !player.muerto && !player.pausePlayer)
+            if (!inCoolDown)
             {
-                if (!inCoolDown)
+                if (grappleRope.isReturning)
                 {
-                    if (grappleRope.isReturning)
-                    {
-                        grappleRope.enabled = false;
-                    }
-                    solt = Soltar();
-                    StartCoroutine(solt);
-                    SetGrapplePoint();
-                    if (ganchoAudio != null && grappleRope.enabled)
-                    {
-                        audioSource.PlayOneShot(ganchoAudio);
-                    }
-
+                    grappleRope.enabled = false;
                 }
-
+                solt = Soltar();
+                StartCoroutine(solt);
+                SetGrapplePoint();
+                if (ganchoAudio != null && grappleRope.enabled)
+                {
+                    audioSource.PlayOneShot(ganchoAudio);
+                }
+                
             }
+
         }
-        
     }
 
 

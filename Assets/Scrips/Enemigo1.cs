@@ -57,11 +57,17 @@ public class Enemigo : MonoBehaviour
     [SerializeField] private float prueba;
     [SerializeField] private AnimationClip AnimacionAtaque;
 
+    [Header("SoundFX")]
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip clipAtaque;
+    [SerializeField] private AudioClip clipResivirDano;
+
 
 
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         p = GameObject.FindGameObjectWithTag("Player").transform;
         aRango = false;
         muerto = false;
@@ -308,9 +314,20 @@ public class Enemigo : MonoBehaviour
         if (!golpeEjecutado) // Verificar nuevamente antes de ejecutar el golpe
         {
             golpeEjecutado = true;
-            if (isCac) { Golpe();}
+            if (isCac) {
+                if (clipAtaque != null)
+                {
+                    audioSource.clip = clipAtaque;
+                    audioSource.Play();
+                }
+                Golpe();}
             else 
             {
+                if (clipAtaque!=null)
+                {
+                    audioSource.clip = clipAtaque;
+                    audioSource.Play();
+                }
                 Eventos.eve.disparoEnemigo.Invoke();
             }
             // Marcar el golpe como ejecutado

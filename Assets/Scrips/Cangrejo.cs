@@ -32,6 +32,11 @@ public class Cangrejo : MonoBehaviour
     [SerializeField] private float atackVelocity;
     [SerializeField] private float atackTime;
 
+    [Header("SoundFX")]
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip clipCaminata;
+    [SerializeField] private AudioClip clipAtaque;
+
     IEnumerator timer;
     private bool alerted = false;
     private bool isGrounded;
@@ -39,6 +44,7 @@ public class Cangrejo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -82,6 +88,15 @@ public class Cangrejo : MonoBehaviour
         }
         if (!atacando&&alerted)
         {
+            if (clipCaminata!=null)
+            {
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.clip = clipCaminata;
+                    audioSource.Play();
+                }
+                
+            }
             rb.velocity = new Vector2(movementVelocity * transform.right.x, rb.velocity.y);
             animator.SetBool("caminando", true);
             

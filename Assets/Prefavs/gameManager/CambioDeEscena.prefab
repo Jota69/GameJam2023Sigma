@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clipTransition: {fileID: 7400000, guid: 6dcd3b51214802341b68f1da1ac0ec0b, type: 2}
+  audioSource: {fileID: 0}
+  videoPlayer: {fileID: 0}
   hijo: {fileID: 7043945285255105041}
   SceneSig: 1
 --- !u!61 &7721617533407873750
@@ -231,7 +233,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &1027980587249662424
 MonoBehaviour:

@@ -76,6 +76,7 @@ public class controladorVida : MonoBehaviour
         Eventos.eve.PausarPlayer2.Invoke();
         Eventos.eve.MuertePlayer.Invoke();
         yield return new WaitForSeconds(4);
+        Eventos.eve.resetCoinsInlvlDied.Invoke();
         Eventos.eve.PasarNivel.Invoke(SceneManager.GetActiveScene().buildIndex);
     }
 

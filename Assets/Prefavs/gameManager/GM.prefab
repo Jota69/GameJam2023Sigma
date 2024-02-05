@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3156009908878434364}
   - component: {fileID: 8221389207144391869}
   - component: {fileID: 2516582119998768007}
+  - component: {fileID: 4816504426947651188}
   m_Layer: 0
   m_Name: GM
   m_TagString: Untagged
@@ -48,6 +49,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemigoMuertoCount:
+    m_PersistentCalls:
+      m_Calls: []
+  coinsCount:
+    m_PersistentCalls:
+      m_Calls: []
+  changeCoinCount:
     m_PersistentCalls:
       m_Calls: []
   ActivarPlataforma:
@@ -140,3 +147,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggle: {fileID: 0}
+--- !u!114 &4816504426947651188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5319207157088298341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef64f83c4d9e85745b546493b057ba92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinText: {fileID: 0}

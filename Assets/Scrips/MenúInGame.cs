@@ -10,6 +10,20 @@ public class MenúInGame : MonoBehaviour
     public GameObject[] elementosInMenu;
     public GameObject[] elementosMenu;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(!MenuPausa.activeSelf)
+            {
+                menuPausa();
+            }
+            else
+            {
+                Return();
+            }
+        }
+    }
     public void menuPausa()
     {
         Time.timeScale = 0;

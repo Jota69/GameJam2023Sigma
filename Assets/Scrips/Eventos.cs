@@ -25,6 +25,9 @@ public class Eventos : MonoBehaviour
     }
 
     public UnityEvent enemigoMuertoCount;
+    public UnityEvent<int> coinsCount;
+    public UnityEvent<int> changeCoinCount;
+    public UnityEvent resetCoinsInlvlDied;
     public UnityEvent<int> ActivarPlataforma;
     public UnityEvent<int> DesactivarPlataforma;
     public UnityEvent<int> activarCuerda;

@@ -49,6 +49,7 @@ MonoBehaviour:
   player2: {fileID: 0}
   player1Active: 1
   grappelGun: {fileID: 0}
+  grappelGunSprite: {fileID: 0}
   Player1: {fileID: 0}
   Player2: {fileID: 0}
   virtualCamera: {fileID: 0}

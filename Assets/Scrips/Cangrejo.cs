@@ -92,7 +92,8 @@ public class Cangrejo : MonoBehaviour
         }
         if (vida <= 0)
         {
-            Destroy(gameObject);
+            animator.SetBool("Muerte",true);
+            Destroy(gameObject,0.5f);
         }
     }
     IEnumerator AddForceDuring()

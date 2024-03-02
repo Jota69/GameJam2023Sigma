@@ -24,6 +24,8 @@ public class PlayerSwitch : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float raycastDistance = 1f;
 
+    [SerializeField] private GameObject caraLiam;
+    [SerializeField] private GameObject caraLizzy;
     [Header("SoundFX")]
     private AudioSource audioSource;
     [SerializeField] private AudioClip clipCambioPersonajeHombre;
@@ -118,6 +120,7 @@ public class PlayerSwitch : MonoBehaviour
             player2.enabled = true;
             //p2.GetComponent<CapsuleCollider2D>().enabled = true;
             player2.isActive = true;
+            caraLiam.SetActive(true);
             player2.tag = "Player";
             p2.GetComponent<SpriteRenderer>().sortingOrder = 1;
             audioSource.clip = clipCambioPersonajeHombre;
@@ -149,6 +152,7 @@ public class PlayerSwitch : MonoBehaviour
             //p1.GetComponent<CapsuleCollider2D>().enabled = true;
             player1Active = true;
             player1.isActive = true;
+            caraLiam.SetActive(false);
             player1.tag = "Player";
             p1.GetComponent<SpriteRenderer>().sortingOrder = 1;
             audioSource.clip = clipCambioPersonajeMujer;

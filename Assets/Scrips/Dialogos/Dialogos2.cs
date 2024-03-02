@@ -5,12 +5,13 @@ using TMPro;
 using UnityEngine.Playables;
 using UnityEngine.InputSystem;
 
+
 public class Dialogos2 : MonoBehaviour
 {
 
     public float tiempoEntreChar;
     [SerializeField, TextArea(4, 5)] private string[] lineasDialogo;
-    
+    [SerializeField] bool desactivarDirectorAlFinal=false;
     [SerializeField] private GameObject vineta;
     private int LineIndex;
     private bool leido;
@@ -42,25 +43,18 @@ public class Dialogos2 : MonoBehaviour
             if (director!=null) 
             {
                 director.Pause();
+                if (director.gameObject.GetComponent<Collider2D>()!=null) 
+                {
+                    director.gameObject.GetComponent<Collider2D>().enabled = false;
+                }
+                
             }
             EmpezarDialogo();
         }
     }
     private void Update()
     {
-        //if (activeDialog && Input.GetKeyDown(KeyCode.Return))
-        //{
-        //    if (vineta.GetComponentInChildren<TextMeshProUGUI>().text == lineasDialogo[LineIndex])
-        //    {
-        //        NextDialogLine();
-        //    }
-        //    else
-        //    {
-        //        StopAllCoroutines();
-        //        vineta.GetComponentInChildren<TextMeshProUGUI>().text = lineasDialogo[LineIndex];
-        //    }
-
-        //}
+        
     }
 
 
@@ -177,6 +171,10 @@ public class Dialogos2 : MonoBehaviour
         if (director != null)
         {
             director.Play();
+            if (desactivarDirectorAlFinal)
+            {
+                director.gameObject.SetActive(false);
+            }
         }
         
 

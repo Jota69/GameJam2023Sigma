@@ -8,6 +8,7 @@ public class GuiaController : MonoBehaviour
 {
     Vector2 globalScale;
     public TextMeshPro textMeshPro;
+    [SerializeField] private GameObject pergamino;
     [TextArea]
     public string textoIn;
     void Start()
@@ -24,8 +25,8 @@ public class GuiaController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            GetComponentInParent<Animator>().SetBool("abrir",true);
-            GetComponentInParent<BoxCollider2D>().transform.transform.localScale = globalScale;
+            pergamino.GetComponent<Animator>().SetBool("abrir",true);
+            //GetComponentInParent<BoxCollider2D>().transform.transform.localScale = globalScale;
             
         }
     }
@@ -34,7 +35,7 @@ public class GuiaController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            GetComponentInParent<Animator>().SetBool("abrir", false);
+            pergamino.GetComponent<Animator>().SetBool("abrir", false);
         }
     }
     private void questions() {

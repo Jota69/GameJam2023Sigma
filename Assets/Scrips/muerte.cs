@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class muerte : MonoBehaviour
 {
     int sceneIndex;
+    [SerializeField] controladorVida vidas;
     // Start is called before the first frame update
     private void Start()
     {

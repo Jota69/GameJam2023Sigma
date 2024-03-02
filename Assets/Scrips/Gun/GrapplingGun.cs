@@ -246,7 +246,7 @@ public class GrapplingGun : MonoBehaviour
     {
         if (value.started)
         {
-            if (player.isActive && !player.muerto && !player.pausePlayer)
+            if (player.isActive && !player.muerto && !player.pausePlayer&&Time.timeScale!=0)
             {
                 if (!inCoolDown)
                 {

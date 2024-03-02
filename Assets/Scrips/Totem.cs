@@ -8,10 +8,16 @@ public class Totem : MonoBehaviour
     [SerializeField] private bool reusable = true;
     [Header("Si no es reusable:")]
     [SerializeField] private int usos = 1;
+    private Collider2D collider;
     Animator animator;
+    [Header("Sounds fx")]
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip clipUso;
     private void Start()
     {
+        collider= GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -20,7 +26,7 @@ public class Totem : MonoBehaviour
             if (usos <= 0)
             {
                 animator.SetBool("usado", true);
-                Destroy(gameObject,0.5f);
+                Destroy(gameObject,clipUso.length-2f);
             }
         }
     }
@@ -31,10 +37,16 @@ public class Totem : MonoBehaviour
 
             if (collision.GetComponent<Fantasma>() != null)
             {
+                collider.enabled = false;
                 collision.GetComponent<Fantasma>().ResivirDaño(daño);
                 if (!reusable)
                 {
                     usos -= 1;
+                    if (clipUso != null)
+                    {
+                        audioSource.clip = clipUso;
+                        audioSource.Play();
+                    }
                 }
             }
         }

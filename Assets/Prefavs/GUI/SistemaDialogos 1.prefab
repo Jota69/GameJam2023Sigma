@@ -45,12 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24f6c3e00132e94ea32f6bf8b301e3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiempoEntreChar: 0.05
-  lineasDialogo:
-  - QUe haces
-  - nada que te iporte
-  - ok
+  tiempoEntreChar: 0
+  lineasDialogo: []
   vineta: {fileID: 0}
+  imagenesDialogo: []
+  enemigosADetener: []
+  director: {fileID: 0}
+  otroDialogo: {fileID: 0}
 --- !u!61 &4392008371548262234
 BoxCollider2D:
   m_ObjectHideFlags: 0

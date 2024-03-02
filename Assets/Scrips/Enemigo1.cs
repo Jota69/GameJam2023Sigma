@@ -372,6 +372,7 @@ public class Enemigo : MonoBehaviour
     {
         vida -= daño;
         StopAllCoroutines();
+        animator.SetBool("daño",true);
         StartCoroutine(WaitDamage());
     }
     IEnumerator WaitDamage()
@@ -383,6 +384,12 @@ public class Enemigo : MonoBehaviour
         golpeEjecutado = false;
         atacando = false;
         parado = true;
+        animator.SetBool("daño", false);
+        if (clipResivirDano != null)
+        {
+            audioSource.clip=clipResivirDano;
+            audioSource.Play();
+        }
         if (isCac)
         {
             parado = false;

@@ -20,11 +20,16 @@ public class ActivarTimelineDeDialogos : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            DesactivarAnimacionMapa();
+            //DesactivarAnimacionMapa();
             activado = true;
             director.Play();
         }
         
+    }
+
+    public void QuitarTimeLine()
+    {
+        this.gameObject.SetActive(false);
     }
     public void DesactivarAnimacionMapa()
     {

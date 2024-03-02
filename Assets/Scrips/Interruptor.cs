@@ -9,6 +9,7 @@ public class Interruptor : MonoBehaviour
 
     [SerializeField] private int id;
     [SerializeField] private bool presionMantenida;
+    private Animator animator;
     [Header("SoundFX")]
     private AudioSource audioSource;
     [SerializeField] private AudioSource otherAudioSource;
@@ -21,6 +22,7 @@ public class Interruptor : MonoBehaviour
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -34,6 +36,7 @@ public class Interruptor : MonoBehaviour
                     otherAudioSource.Play();
                 }
                 primerTriggerYaEntró = true;
+                animator.SetBool("activado",true);
                 primerObjeto = collision;
                 tagPO = collision.tag;
                 Eventos.eve.ActivarPlataforma?.Invoke(id);
@@ -56,6 +59,7 @@ public class Interruptor : MonoBehaviour
                 Eventos.eve.DesactivarPlataforma.Invoke(id);
                 Eventos.eve.DesactivarCuerda.Invoke(id);
                 audioSource.clip = audioDesactivar;
+                animator.SetBool("activado", false);
                 audioSource.Play();
 
             }
@@ -65,6 +69,7 @@ public class Interruptor : MonoBehaviour
                 Eventos.eve.DesactivarPlataforma.Invoke(id);
                 Eventos.eve.DesactivarCuerda.Invoke(id);
                 audioSource.clip = audioDesactivar;
+                animator.SetBool("activado", false);
                 audioSource.Play();
             }
         }

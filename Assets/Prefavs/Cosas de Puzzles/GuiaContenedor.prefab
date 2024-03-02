@@ -212,11 +212,11 @@ Transform:
   m_GameObject: {fileID: 6202510357114000257}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.233107, y: 3.233107, z: 3.233107}
+  m_LocalPosition: {x: -0.23999977, y: 0.059999943, z: 0}
+  m_LocalScale: {x: 0.47955242, y: 0.47955242, z: 0.47955242}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5765446010261398942}
+  m_Father: {fileID: 340216284679910097}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &7133269124384792842
 BoxCollider2D:
@@ -277,6 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 6055713989208973421}
+  pergamino: {fileID: 7689343214455058199}
   textoIn: 
 --- !u!1 &7677066257561543293
 GameObject:
@@ -307,6 +308,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7078822043956078292}
   - {fileID: 5765446010261398942}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -342,7 +344,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7245266553839967749}
-  - {fileID: 7078822043956078292}
   m_Father: {fileID: 340216284679910097}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &688148335487529497

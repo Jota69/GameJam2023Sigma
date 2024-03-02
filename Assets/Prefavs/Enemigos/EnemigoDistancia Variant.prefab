@@ -468,7 +468,7 @@ MonoBehaviour:
   prueba: 0
   AnimacionAtaque: {fileID: 7400000, guid: 2042ed6f1325ed84191d34d02acc4a59, type: 2}
   clipAtaque: {fileID: 8300000, guid: 75004feb76ac3494bbe54d5cf9f9b4fa, type: 3}
-  clipResivirDano: {fileID: 0}
+  clipResivirDano: {fileID: 8300000, guid: d24137d59959fef4599445741427b3c9, type: 3}
 --- !u!95 &1268867045456854015
 Animator:
   serializedVersion: 7

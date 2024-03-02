@@ -64,6 +64,7 @@ public class controladorVida : MonoBehaviour
             slider.value = vida;
         }
     }
+
     IEnumerator MuerteDefinitiva()
     {
         if (audioSource!=null&&clipMuerte!=null)

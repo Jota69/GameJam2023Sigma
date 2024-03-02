@@ -9,6 +9,7 @@ public class Cangrejo : MonoBehaviour
     private Vector2 vectorPosicionRaycast;
     private bool atacando;
     private bool detected;
+    private bool muerto;
 
     [SerializeField] private int vida;
     [SerializeField] private float stunTime;
@@ -36,6 +37,7 @@ public class Cangrejo : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] private AudioClip clipCaminata;
     [SerializeField] private AudioClip clipAtaque;
+    [SerializeField] private AudioClip clipDano;
 
     IEnumerator timer;
     private bool alerted = false;
@@ -47,68 +49,74 @@ public class Cangrejo : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        muerto = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //DebugRaycast();
-        isGrounded = CheckGrounded();
-        RaycastHit2D informacionSuelo = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, queEsSuelo);
-        vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        RaycastHit2D[] raycastHits = Physics2D.RaycastAll(vectorPosicionRaycast, transform.right, detectionRadiusFirst);
-        foreach (var hit in raycastHits)
+        if (!muerto) 
         {
-            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Player1") || hit.collider.gameObject.layer == LayerMask.NameToLayer("Player2"))
-            {     
-                if (!alerted)
-                {
-                    animator.SetBool("Acostado", true);
-                    
-                    StartCoroutine(Detect());
-                }
-                if (detected&&!atacando)
-                {
-                    atacando = true;
-                    alerted = true;
-                    detectionRadiusFirst = detectionRadiusSecond;
-                }
-                break;
-            }
-            else if( hit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno") )
+            //DebugRaycast();
+            isGrounded = CheckGrounded();
+            RaycastHit2D informacionSuelo = Physics2D.Raycast(vectorPosicionRaycast, transform.right, distanciaPared, queEsSuelo);
+            vectorPosicionRaycast = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            RaycastHit2D[] raycastHits = Physics2D.RaycastAll(vectorPosicionRaycast, transform.right, detectionRadiusFirst);
+            foreach (var hit in raycastHits)
             {
-                break;
-            }
-        }
-        if (atacando)
-        {
-            rb.AddForce(transform.right * atackVelocity, ForceMode2D.Force);
-            timer = AddForceDuring();
-            StartCoroutine(timer);
-        }
-        if (!atacando&&alerted)
-        {
-            if (clipCaminata!=null)
-            {
-                if (!audioSource.isPlaying)
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player1") || hit.collider.gameObject.layer == LayerMask.NameToLayer("Player2"))
                 {
-                    audioSource.clip = clipCaminata;
-                    audioSource.Play();
+                    if (!alerted)
+                    {
+                        animator.SetBool("Acostado", true);
+
+                        StartCoroutine(Detect());
+                    }
+                    if (detected && !atacando)
+                    {
+                        atacando = true;
+                        alerted = true;
+                        detectionRadiusFirst = detectionRadiusSecond;
+                    }
+                    break;
                 }
-                
+                else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Terreno"))
+                {
+                    break;
+                }
             }
-            rb.velocity = new Vector2(movementVelocity * transform.right.x, rb.velocity.y);
-            animator.SetBool("caminando", true);
-            
+            if (atacando&&Time.timeScale!=0)
+            {
+                rb.AddForce(transform.right * atackVelocity, ForceMode2D.Force);
+                timer = AddForceDuring();
+                StartCoroutine(timer);
+            }
+            if (!atacando && alerted)
+            {
+                if (clipCaminata != null)
+                {
+                    if (!audioSource.isPlaying)
+                    {
+                        audioSource.clip = clipCaminata;
+                        audioSource.Play();
+                    }
+
+                }
+                rb.velocity = new Vector2(movementVelocity * transform.right.x, rb.velocity.y);
+                animator.SetBool("caminando", true);
+
+            }
+            if (informacionSuelo || !isGrounded)
+            {
+                Girar();
+            }
         }
-        if (informacionSuelo || !isGrounded)
+        
+        if (vida <= 0&&!muerto)
         {
-            Girar();
-        }
-        if (vida <= 0)
-        {
+            muerto = true;
             animator.SetBool("Muerte",true);
-            Destroy(gameObject,0.5f);
+            Destroy(gameObject,1.5f);
         }
     }
     IEnumerator AddForceDuring()
@@ -143,6 +151,12 @@ public class Cangrejo : MonoBehaviour
         StopAllCoroutines();
         detected = false;
         alerted = false;
+        animator.SetTrigger("Dañado");
+        if (clipDano !=null)
+        {
+            audioSource.clip= clipDano;
+            audioSource.Play();
+        }
         StartCoroutine(WaitDamage());
     }
     IEnumerator WaitDamage()
@@ -150,6 +164,7 @@ public class Cangrejo : MonoBehaviour
         yield return new WaitForSeconds(stunTime);
         detected = true;
         alerted= true;
+        
     }
 
     private bool CheckGrounded()

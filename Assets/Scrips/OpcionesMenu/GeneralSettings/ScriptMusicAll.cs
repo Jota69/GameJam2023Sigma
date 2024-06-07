@@ -8,7 +8,7 @@ public class VolumeSliderAll : MonoBehaviour
     void Start()
     {
         // Carga la configuración del volumen
-        float volume = PlayerPrefs.GetFloat("volume", 1f);
+        float volume = PlayerPrefs.GetFloat("volumeAll");
 
         // Establece el volumen inicial
         SetVolumeAll(volume);
@@ -26,7 +26,7 @@ public class VolumeSliderAll : MonoBehaviour
         AudioListener.volume = value;
 
         // Guarda la configuración del volumen
-        PlayerPrefs.SetFloat("volume", value);
+        PlayerPrefs.SetFloat("volumeAll", value);
     }
 }
 

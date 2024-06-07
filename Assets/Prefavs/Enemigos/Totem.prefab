@@ -149,7 +149,6 @@ MonoBehaviour:
   "da\xF1o": 5
   reusable: 0
   usos: 1
-  clipUso: {fileID: 8300000, guid: a6b3063844cb50b4ba131ca5e9caf994, type: 3}
 --- !u!95 &6980684201673384687
 Animator:
   serializedVersion: 7
@@ -182,8 +181,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: a6b3063844cb50b4ba131ca5e9caf994, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

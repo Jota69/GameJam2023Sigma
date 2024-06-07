@@ -12,7 +12,6 @@ public class Totem : MonoBehaviour
     Animator animator;
     [Header("Sounds fx")]
     private AudioSource audioSource;
-    [SerializeField] private AudioClip clipUso;
     private void Start()
     {
         collider= GetComponent<Collider2D>();
@@ -26,7 +25,7 @@ public class Totem : MonoBehaviour
             if (usos <= 0)
             {
                 animator.SetBool("usado", true);
-                Destroy(gameObject,clipUso.length-2f);
+                Destroy(gameObject,audioSource.clip.length-2f);
             }
         }
     }
@@ -42,9 +41,8 @@ public class Totem : MonoBehaviour
                 if (!reusable)
                 {
                     usos -= 1;
-                    if (clipUso != null)
+                    if (audioSource != null)
                     {
-                        audioSource.clip = clipUso;
                         audioSource.Play();
                     }
                 }

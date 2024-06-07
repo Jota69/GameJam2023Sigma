@@ -234,12 +234,15 @@ public class Enemigo : MonoBehaviour
             animator.SetBool("idle", true);
         }
 
-        if (vida <= 0)
+        if (vida <= 0&&!muerto)
         {
             StopAllCoroutines();
             muerto= true;
             animator.SetBool("Muerto",true);
-            Destroy(gameObject,0.5f);
+            animator.SetBool("Alerta", false);
+            animator.SetBool("Atacando", false);
+            animator.SetBool("daño", false);
+            Destroy(gameObject,1.5f);
         }
     }
     IEnumerator esconderse()
@@ -370,10 +373,14 @@ public class Enemigo : MonoBehaviour
 
     public void ResivirDaño(int daño)
     {
-        vida -= daño;
-        StopAllCoroutines();
-        animator.SetBool("daño",true);
-        StartCoroutine(WaitDamage());
+        if (!muerto)
+        {
+            vida -= daño;
+            StopAllCoroutines();
+            animator.SetBool("daño", true);
+            StartCoroutine(WaitDamage());
+        }
+        
     }
     IEnumerator WaitDamage()
     {

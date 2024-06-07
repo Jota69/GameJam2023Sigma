@@ -236,6 +236,14 @@ public class PlayerController2 : MonoBehaviour
                 {
                     colicionador.GetComponent<Cuerda>().Desactivar();
                 }
+                if(colicionador.GetComponent <ProducirSonido>() != null)
+                {
+                    colicionador.GetComponent<ProducirSonido>().Sonar();
+                }
+                if(colicionador.GetComponent<SoundGame>() != null)
+                {
+                    StartCoroutine(colicionador.GetComponent<SoundGame>().PlaySequence());
+                }
             }
         }
     }

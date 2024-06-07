@@ -6,6 +6,7 @@ public class MenúInGame : MonoBehaviour
 {
     public GameObject MenuPausa;
     public GameObject controlsMenu;
+    public GameObject LogrosMenu;
     public GameObject[] elementosInGame;
     public GameObject[] elementosInMenu;
     public GameObject[] elementosMenu;
@@ -14,9 +15,20 @@ public class MenúInGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(!MenuPausa.activeSelf)
+            if (!MenuPausa.activeSelf)
             {
                 menuPausa();
+            }
+            else
+            {
+                Return();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            if(!LogrosMenu.activeSelf)
+            {
+                AbrirLogros();
             }
             else
             {
@@ -34,6 +46,7 @@ public class MenúInGame : MonoBehaviour
                 elemento.SetActive(false);
             }
         }
+        LogrosMenu.SetActive(false);
         MenuPausa.SetActive(true);
         for (int i = 0; i < elementosInMenu.Length; i++)
         {
@@ -48,6 +61,28 @@ public class MenúInGame : MonoBehaviour
         }
 
     }
+    public void AbrirLogros()
+    {
+        Time.timeScale = 0;
+        foreach (GameObject elemento in elementosInGame)
+        {
+            if (elemento != null)
+            {
+                elemento.SetActive(false);
+            }
+        }
+        foreach (GameObject elemento in elementosMenu)
+        {
+            if (elemento != null)
+            {
+                elemento.SetActive(false);
+            }
+        }
+        LogrosMenu.SetActive(true);
+        MenuPausa.SetActive(false);
+    }
+
+
     public void controlsSettings()
     {
         elementosMenu[0].SetActive(true);
@@ -104,6 +139,7 @@ public class MenúInGame : MonoBehaviour
     {
         Time.timeScale = 1;
         MenuPausa.SetActive(false);
+        LogrosMenu.SetActive(false);
         foreach (GameObject elemento in elementosInGame)
         {
             if (elemento != null)

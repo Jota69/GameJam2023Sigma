@@ -137,7 +137,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clipRecolect: {fileID: 7400000, guid: 11159d4bc07594b4d90478cb3db6700d, type: 2}
-  clipAudio: {fileID: 8300000, guid: ae3ca4f4e54a2ec4bb59ba013a544cf0, type: 3}
 --- !u!95 &6860293967334293194
 Animator:
   serializedVersion: 7
@@ -170,8 +169,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: ae3ca4f4e54a2ec4bb59ba013a544cf0, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

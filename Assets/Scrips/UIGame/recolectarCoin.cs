@@ -5,10 +5,10 @@ using UnityEngine;
 public class recolectarCoin : MonoBehaviour
 {
     [SerializeField] private AnimationClip clipRecolect;
+    [SerializeField] private int logro=0;
     private Animator animator;
     private Collider2D collider;
     AudioSource audioSource;
-    [SerializeField] private AudioClip clipAudio;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,10 +28,10 @@ public class recolectarCoin : MonoBehaviour
         {
             collider.enabled = false;
             Eventos.eve.coinsCount.Invoke(1);
+            CambiarLogrosDesbloqueados.CambiarLogrosBloqueados(logro);
             animator.SetBool("Recolectado", true);
-            if (clipAudio != null)
+            if (audioSource != null)
             {
-                audioSource.clip = clipAudio;
                 audioSource.Play();
             }
             Destroy(gameObject,clipRecolect.length);

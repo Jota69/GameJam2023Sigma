@@ -184,10 +184,8 @@ public class GrapplingGun : MonoBehaviour
                         gunHolder.position = Vector2.Lerp(gunHolder.position, targetPos, Time.deltaTime * launchSpeed);
                     }
                 }
-
             }
         }
-        
     }
 
     public void OnEngageCanceled(InputAction.CallbackContext value)
@@ -201,11 +199,8 @@ public class GrapplingGun : MonoBehaviour
                 {
                     StopCoroutine(solt);
                 }
-                
             }
         }
-        
-        
     }
     public void Canceled()
     {
@@ -261,12 +256,9 @@ public class GrapplingGun : MonoBehaviour
                     {
                         audioSource.PlayOneShot(ganchoAudio);
                     }
-
                 }
-
             }
         }
-        
     }
 
 

@@ -20,7 +20,6 @@ public class PlataformaDeslizante : MonoBehaviour
     private Animator animator;
     [Header("SoundFX")]
     private AudioSource audioSource;
-    [SerializeField] private AudioClip audioAbrirse;
     private int cont;
     private bool act;
     private bool desact;
@@ -89,7 +88,6 @@ public class PlataformaDeslizante : MonoBehaviour
     private void Activar()
     {
         animator.SetBool("deslizar", false);
-        audioSource.clip = audioAbrirse;
         audioSource.Play();
         if (idModificable)
         {
@@ -106,7 +104,6 @@ public class PlataformaDeslizante : MonoBehaviour
         animator.SetBool("deslizar", true);
         if (!audioSource.isPlaying)
         {
-            audioSource.clip = audioAbrirse;
             audioSource.Play();
         }
         if (idModificable)

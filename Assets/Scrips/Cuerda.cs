@@ -12,6 +12,8 @@ public class Cuerda : MonoBehaviour
     [Header("Multinterruptores")]
     [SerializeField] private bool multiInterruptor = false;
     [SerializeField] private int numeroInterruptores = 2;
+    [Header("SoundEfects")]
+    [SerializeField] private AudioSource AudioSource;
     private int cont;
     private bool act;
     private bool desact;
@@ -19,6 +21,10 @@ public class Cuerda : MonoBehaviour
     {
         act = true;
         desact = false;
+        if(AudioSource != null)
+        {
+            AudioSource = GetComponent<AudioSource>();
+        }
         if (aparecer)
         {
             child.SetActive(false);
@@ -56,6 +62,10 @@ public class Cuerda : MonoBehaviour
     }
     public void Activar()
     {
+        if (AudioSource != null)
+        {
+            AudioSource.Play();
+        }
         act = true;
         desact = false;
         StartCoroutine(EsperaAct());

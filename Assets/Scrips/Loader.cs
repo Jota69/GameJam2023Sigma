@@ -18,7 +18,7 @@ public class Loader : MonoBehaviour
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
-
+            progressBar.value = progress;
             // Check if the load has finished
             if (operation.progress >= 0.9f)
             {
@@ -27,11 +27,8 @@ public class Loader : MonoBehaviour
                 {
                     yield return null;
                 }
-
                 progress = 1f;
             }
-
-            progressBar.value = progress;
             yield return null;
         }
         progressBar.value = 1f;

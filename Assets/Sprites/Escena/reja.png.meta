@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      reja_0: 1465337537337512622
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

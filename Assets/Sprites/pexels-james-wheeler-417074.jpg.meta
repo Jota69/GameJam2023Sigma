@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      pexels-james-wheeler-417074_0: 2945235612156634466
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

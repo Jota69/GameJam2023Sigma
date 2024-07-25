@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Brazo0011_0: 8156271494982933479
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

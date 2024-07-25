@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Chica bola_0: 967409514365456933
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Chico Bola_0: -3576173754955823511
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

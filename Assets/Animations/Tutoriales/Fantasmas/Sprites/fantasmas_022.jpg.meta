@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      fantasmas_022_0: -3537364691004743475
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

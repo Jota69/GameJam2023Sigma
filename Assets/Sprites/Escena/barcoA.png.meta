@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      barcoA_0: 711740106266745284
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Ocio0022_0: 8321570285868048464
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

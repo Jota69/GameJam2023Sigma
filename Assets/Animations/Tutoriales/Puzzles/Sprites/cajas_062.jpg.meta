@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      cajas_062_0: -7224355753945452288
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

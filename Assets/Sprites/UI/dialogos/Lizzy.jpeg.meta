@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Lizzy_0: 6053796776770971632
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

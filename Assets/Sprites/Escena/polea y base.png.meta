@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      polea y base_0: 4296323653853881962
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
